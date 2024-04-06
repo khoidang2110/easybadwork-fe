@@ -1,0 +1,23 @@
+.CardItem{
+  flex: 0 0 calc(33.33% - 20px); 
+  margin: 10px; 
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .fortyDeg{
+    left: -150px;
+  }
+  }
+  @media screen and (max-width: 767px) {
+    .fortyDeg{
+      left: 50px;
+    }
+    .headerUl{
+      display: flex;
+      justify-content: space-around;
+      padding-left: 5px;
+      padding-right: 5px;
+      font-size: 16px;
+    }
+  }

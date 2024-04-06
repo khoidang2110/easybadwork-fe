@@ -1,0 +1,133 @@
+.footer {
+bottom: 0;
+position: fixed;
+height: 90px;
+width: 100vw;
+padding-left: 0.5rem;
+padding-right: 1rem;
+}
+.fContainer{
+  height: 42px;
+  width: calc(100% - 2rem);
+  overflow: hidden;
+  bottom: 1.5rem;
+  position: fixed;
+  border-radius: .375rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(243 243 243 / var(--tw-bg-opacity));
+    transition-property: all;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    transition-duration: .2s;
+}
+.fButtonContainer{
+  width: calc(100% - 2rem);
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  padding-top: .375rem;
+    padding-bottom: .375rem;
+    padding-left: .375rem;
+    padding-right: .375rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(243 243 243 / var(--tw-bg-opacity));
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    z-index: 20;
+    bottom: 0;
+    position: fixed;
+    transition: padding 0.3s ease;
+   
+
+}
+
+.fbutton{
+  --tw-border-opacity: 1;
+    border-color: rgb(243 243 243 / var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(243 243 243 / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(0 0 0 / var(--tw-text-opacity));
+    display: flex;
+    height: 30px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: transparent;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+    position: relative;
+    font-weight: 300;
+}
+
+.fDropDown{
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+.fDropDownContent{
+  z-index: 10;
+    opacity: 1;
+    padding-bottom: 2.5rem;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 18px;
+    padding-right: 18px;
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    transition-duration: .5s;
+}
+
+
+
+.fbuttonClick{
+  transition: padding 0.2s ease;
+  padding-top: 3rem;
+}
+.fbuttonActive{
+  background-color:#d0f491;
+}
+
+.aa{
+  opacity: 1;
+  /* position: absolute; */
+  position: relative;
+  top: -50px;;
+  transition: opacity 1s ease;
+ 
+  padding-left: 10px;
+  padding-top: 10px;
+z-index: 10;
+}
+.aaDis{
+opacity: 0;
+position: absolute;
+width: 1px;
+height: 1px;
+z-index: 10;
+}
+.inputBg{
+  padding-top: 10px;
+  background-color:#f3f3f3;
+z-index: 10;
+min-height: 58px;
+border-bottom: 1px dashed black;
+    width: 100%;
+}
+.inputBg::placeholder {
+
+  color: black;
+}
