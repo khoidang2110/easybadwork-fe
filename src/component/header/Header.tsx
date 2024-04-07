@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "antd";
 import styles from "./styles.module.css";
 import Image from "next/image";
-import Menu from "../menu/Menu";
+
 import Link from "next/link";
 
 
