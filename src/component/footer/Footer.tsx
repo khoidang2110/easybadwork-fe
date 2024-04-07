@@ -85,13 +85,14 @@ const Footer: React.FC = () => {
                 isToggled && tabActive == "menu" ? styles.fbuttonActive : ""
               }`}
             >
-              <Image
-                width={25}
-                height={25}
-                src="/images/icons/menuFill.png"
+              {/* <Image
+                width={20}
+                height={14}
+                src="/images/icons/menu4.png"
                 alt="menu"
                
-              />
+              /> */}
+              <img src="/images/icons/menu4.png" className="w-5 h-3"/>
             </button>
 
             <button
