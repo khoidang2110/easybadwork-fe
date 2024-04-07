@@ -81,15 +81,16 @@ const Footer: React.FC = () => {
           <div className="flex justify-between">
             <button
               onClick={() => handleToggle("menu")}
-              className={`z-30 ${
+              className={`z-30 ${styles.menuButton} ${
                 isToggled && tabActive == "menu" ? styles.fbuttonActive : ""
               }`}
             >
               <Image
-                width={30}
-                height={30}
+                width={25}
+                height={25}
                 src="/images/icons/menuFill.png"
                 alt="menu"
+               
               />
             </button>
 
@@ -110,14 +111,14 @@ const Footer: React.FC = () => {
               SEARCH
             </button>
             <button
-              className={`z-30 ${styles.fbutton} ${
+              className={`z-30 ${styles.fbutton} ${styles.lineThrough} ${
                 isToggled && tabActive == "deadStock"
                   ? styles.fbuttonActive
                   : ""
               }`}
               onClick={() => handleToggle("deadStock")}
             >
-              DEAD STOCK
+              DEADSTOCK
             </button>
 
             <a

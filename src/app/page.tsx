@@ -7,7 +7,7 @@ import CarouselComponent from '../component/carousel/CarouselComponent';
 const Home = () => (
   <div className="App">
  
- <CarouselComponent/>
+ {/* <CarouselComponent/> */}
 
   </div>
 );

@@ -107,7 +107,7 @@ padding-right: 1rem;
   position: relative;
   top: -50px;;
   transition: opacity 1s ease;
- 
+ color: black;
   padding-left: 10px;
   padding-top: 10px;
 z-index: 10;
@@ -130,4 +130,11 @@ border-bottom: 1px dashed black;
 .inputBg::placeholder {
 
   color: black;
+}
+.lineThrough{
+  text-decoration: line-through;
+}
+.menuButton{
+  padding-left: .75rem;
+    padding-right: .75rem;
 }
