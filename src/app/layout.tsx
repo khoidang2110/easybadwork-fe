@@ -5,6 +5,7 @@ import React from 'react';
 import Header from '../component/header/Header';
 
 import Footer from "../component/footer/Footer";
+import MenuBot from "@/component/menubot/MenuBot";
 
 
 
@@ -23,8 +24,8 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
    
    {children}
      </div>
-   
-      <Footer/>
+   <MenuBot/>
+      {/* <Footer/> */}
     </body>
   </html>
 );

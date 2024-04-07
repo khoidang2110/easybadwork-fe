@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
-
-const Footer: React.FC = () => {
+import Link from "next/link";
+const MenuBot: React.FC = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [tabActive, setTabActive] = useState("");
 
@@ -124,7 +124,10 @@ const Footer: React.FC = () => {
               }`}
               onClick={() => handleToggle("deadStock")}
             >
-              DEADSTOCK
+                 <Link href={"/deadstock"}  className="">
+                 DEADSTOCK
+              </Link>
+             
             </button>
 
             <a
@@ -143,4 +146,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default MenuBot;

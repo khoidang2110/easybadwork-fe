@@ -11,6 +11,11 @@
 .shrink {
   padding: 10px;
 }
-.transition {
-transition:  0.4s;;
+.headerImg{
+  mix-blend-mode: difference;
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 40;
 }
