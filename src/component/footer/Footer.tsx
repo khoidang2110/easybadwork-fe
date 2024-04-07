@@ -27,13 +27,13 @@ const Footer: React.FC = () => {
         <div></div>
         <div
           className={`${styles.fButtonContainer} ${
-            isToggled&&tabActive!=="deadStock" ? styles.fbuttonClick : ""
+            isToggled&&tabActive!=="deadStock" ? styles.fButtonClick : ""
           }`}
         >
           <div>
             <div
               className={
-                isToggled && tabActive == "menu" ? styles.aa : styles.aaDis
+                isToggled && tabActive == "menu" ? styles.textShow : styles.textHide
               }
             >
               <p>ABOUT</p>
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
 
             <div
               className={
-                isToggled && tabActive == "shop" ? styles.aa : styles.aaDis
+                isToggled && tabActive == "shop" ? styles.textShow : styles.textHide
               }
             >
               <p>TEE</p>
@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
 
             <div
               className={
-                isToggled && tabActive == "search" ? styles.aa : styles.aaDis
+                isToggled && tabActive == "search" ? styles.textShow : styles.textHide
               }
             >
             <input type="text" placeholder="TYPE HERE" className={styles.inputBg}/>
@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
             </div>
             <div
               className={
-                isToggled && tabActive == "cart" ? styles.aa : styles.aaDis
+                isToggled && tabActive == "cart" ? styles.textShow : styles.textHide
               }
             >
             <p>YOUR CART IS EMPTY.</p>
@@ -81,8 +81,8 @@ const Footer: React.FC = () => {
           <div className="flex justify-between">
             <button
               onClick={() => handleToggle("menu")}
-              className={`z-30 ${styles.menuButton} ${
-                isToggled && tabActive == "menu" ? styles.fbuttonActive : ""
+              className={`z-30 ${styles.fButton} ${
+                isToggled && tabActive == "menu" ? styles.fButtonActive : ""
               }`}
             >
               {/* <Image
@@ -96,25 +96,25 @@ const Footer: React.FC = () => {
             </button>
 
             <button
-              className={`z-30  ${styles.fbutton} ${
-                isToggled && tabActive == "shop" ? styles.fbuttonActive : ""
+              className={`z-30  ${styles.fButton} ${
+                isToggled && tabActive == "shop" ? styles.fButtonActive : ""
               }`}
               onClick={() => handleToggle("shop")}
             >
               SHOP
             </button>
             <button
-              className={`z-30 ${styles.fbutton} ${
-                isToggled && tabActive == "search" ? styles.fbuttonActive : ""
+              className={`z-30 ${styles.fButton} ${
+                isToggled && tabActive == "search" ? styles.fButtonActive : ""
               }`}
               onClick={() => handleToggle("search")}
             >
               SEARCH
             </button>
             <button
-              className={`z-30 ${styles.fbutton} ${styles.lineThrough} ${
+              className={`z-30 ${styles.fButton} ${styles.lineThrough} ${
                 isToggled && tabActive == "deadStock"
-                  ? styles.fbuttonActive
+                  ? styles.fButtonActive
                   : ""
               }`}
               onClick={() => handleToggle("deadStock")}
@@ -123,8 +123,8 @@ const Footer: React.FC = () => {
             </button>
 
             <a
-              className={`z-30 ${styles.fbutton} ${
-                isToggled && tabActive == "cart" ? styles.fbuttonActive : ""
+              className={`z-30 ${styles.fButton} ${
+                isToggled && tabActive == "cart" ? styles.fButtonActive : ""
               }`}
               onClick={() => handleToggle("cart")}
             >

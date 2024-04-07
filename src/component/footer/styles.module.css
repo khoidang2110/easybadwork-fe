@@ -44,7 +44,7 @@ padding-right: 1rem;
 
 }
 
-.fbutton{
+.fButton{
   --tw-border-opacity: 1;
     border-color: rgb(243 243 243 / var(--tw-border-opacity));
     --tw-bg-opacity: 1;
@@ -93,15 +93,15 @@ padding-right: 1rem;
 
 
 
-.fbuttonClick{
+.fButtonClick{
   transition: padding 0.2s ease;
   padding-top: 3rem;
 }
-.fbuttonActive{
+.fButtonActive{
   background-color:#d0f491;
 }
 
-.aa{
+.textShow{
   opacity: 1;
   /* position: absolute; */
   position: relative;
@@ -112,7 +112,7 @@ padding-right: 1rem;
   padding-top: 10px;
 z-index: 10;
 }
-.aaDis{
+.textHide{
 opacity: 0;
 position: absolute;
 width: 1px;
@@ -134,7 +134,7 @@ border-bottom: 1px dashed black;
 .lineThrough{
   text-decoration: line-through;
 }
-.menuButton{
+/* .menuButton{
   padding-left: .75rem;
     padding-right: .75rem;
     border-radius: 6px;
@@ -142,4 +142,4 @@ border-bottom: 1px dashed black;
     border-width: 1px;
     border-color: transparent;
     position: relative;
-}
+} */
