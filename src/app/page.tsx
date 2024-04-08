@@ -7,7 +7,7 @@ import React from 'react';
 const Home = () => (
   <div className="App">
  
- {/* <CarouselComponent/> */}
+ home
 
   </div>
 );

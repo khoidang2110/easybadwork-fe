@@ -4,6 +4,17 @@
   width: 40%;
   margin: 10px;
 }
+.cardImg{
+  display: block;
+    width: 95% !important;
+  margin-top: 1px;
+  margin-inline-start: 1px;
+  margin-inline-end: 1px;
+}
+.itemName{
+  font-size: 10px;
+ 
+}
 
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {

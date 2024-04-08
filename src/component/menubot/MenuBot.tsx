@@ -1,15 +1,21 @@
+'use client'
 import React, { useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { usePathname } from "next/navigation";
 const MenuBot: React.FC = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [tabActive, setTabActive] = useState("");
 
+  console.log("istogled",isToggled);
+  console.log("tabActive",tabActive)
+  const router = useRouter();
+  const pathname = usePathname();
+  // console.log(pathname);
   const handleToggle = (position: any) => {
-    // console.log("position", position);
-    // console.log("isToggled", isToggled);
-    // console.log("tabActive", tabActive);
+   
     
     if (tabActive == "") {
       console.log("mở")
@@ -17,11 +23,25 @@ const MenuBot: React.FC = () => {
       setTabActive(position);
     } else if (tabActive == position) {
       console.log("đóng")
-      setIsToggled(!isToggled);
-      setTabActive("");
+      if(tabActive=='deadStock'){
+        router.push('/');
+        setIsToggled(!isToggled);
+        setTabActive("");
+      }else if(pathname=='/deadstock'){
+        console.log('page deadstock')
+        console.log(isToggled)
+       // setIsToggled(!isToggled);
+         setTabActive("deadStock");
+        
+      }else {
+        console.log('case 3 đóng')
+        setIsToggled(!isToggled);
+        setTabActive("");
+      }
+  
     } else {
       console.log("chuyển")
-      
+   
       setTabActive(position);
     }
   };
@@ -90,13 +110,7 @@ const MenuBot: React.FC = () => {
                 isToggled && tabActive == "menu" ? styles.fButtonActive : ""
               }`}
             >
-              {/* <Image
-                width={20}
-                height={14}
-                src="/images/icons/menu4.png"
-                alt="menu"
-               
-              /> */}
+           
               <img src="/images/icons/menu4.png" className="w-5 h-3"/>
             </button>
 

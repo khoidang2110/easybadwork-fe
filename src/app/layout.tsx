@@ -25,7 +25,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
    {children}
      </div>
    <MenuBot/>
-      {/* <Footer/> */}
+      <Footer/>
     </body>
   </html>
 );
