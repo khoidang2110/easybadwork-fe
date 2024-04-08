@@ -1,16 +1,12 @@
 'use client'
 import { useParams } from 'next/navigation'
-import Link from "next/link";
-import Image from "next/image";
+
 import { products } from '@/mockup';
-import { IProduct } from '@/interfaces/product';
-import { FC } from 'react';
 
-interface DetailProps {
-  item: IProduct;
-}
 
-const Detail: FC<DetailProps> = ({ item }) => {
+
+
+const Detail=() => {
   const params = useParams();
   console.log(params.id);
 
