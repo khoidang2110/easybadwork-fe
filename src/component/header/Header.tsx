@@ -15,7 +15,7 @@ const Header = () => {
   <div className=''>
   <div className="flex flex-col justify-between items-center ">
  
-  <Link href={"/"}  className="">  <Image width={45} height={45} src="/images/elogo.png" alt="menu" className={styles.headerImg}/> 
+  <Link href={"/"}  className="">  <Image width={70} height={80} src="/images/khimhead.png" alt="menu" className={styles.headerImg}/> 
       </Link>
     
    

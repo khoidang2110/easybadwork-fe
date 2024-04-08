@@ -1,6 +1,19 @@
 .CardItem{
-  flex: 0 0 calc(33.33% - 20px); 
-  margin: 10px; 
+  /* flex: 0 0 calc(33.33% - 20px); 
+  margin: 10px;  */
+  width: 40%;
+  margin: 10px;
+}
+.cardImg{
+  display: block;
+    width: 95% !important;
+  margin-top: 1px;
+  margin-inline-start: 1px;
+  margin-inline-end: 1px;
+}
+.itemName{
+  font-size: 10px;
+ 
 }
 
 

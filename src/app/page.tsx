@@ -7,7 +7,7 @@ import React from 'react';
 const Home = () => (
   <div className="App">
  
- home
+<img src="/images/bandana.png" alt="" />
 
   </div>
 );

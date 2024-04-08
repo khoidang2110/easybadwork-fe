@@ -1,0 +1,1 @@
+export const NO_IMAGE = "/images/temp/rectangle.png";

@@ -12,10 +12,10 @@
   padding: 10px;
 }
 .headerImg{
-  mix-blend-mode: difference;
+  /* mix-blend-mode: difference; */
   position: fixed;
   top: 18px;
-  left: 50%;
+  left: 51%;
   transform: translate(-50%);
   z-index: 40;
 }
