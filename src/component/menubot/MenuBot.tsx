@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { usePathname } from "next/navigation";
+import { products } from '@/mockup';
+
 const MenuBot: React.FC = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [tabActive, setTabActive] = useState("");
@@ -13,7 +15,11 @@ const MenuBot: React.FC = () => {
   console.log("tabActive",tabActive)
   const router = useRouter();
   const pathname = usePathname();
-  // console.log(pathname);
+   console.log(pathname);
+const pathnameId = pathname.slice(8);
+console.log('pathname id',pathnameId)
+  const currentProduct = products.find(product => product.id === pathnameId);
+console.log(currentProduct?.status)
   const handleToggle = (position: any) => {
    
     
@@ -24,10 +30,10 @@ const MenuBot: React.FC = () => {
     } else if (tabActive == position) {
       console.log("đóng")
       if(tabActive=='deadStock'){
-        router.push('/');
-        setIsToggled(!isToggled);
-        setTabActive("");
-      }else if(pathname=='/deadstock'){
+        router.push('/deadstock');
+        // setIsToggled(!isToggled);
+        // setTabActive("");
+      }else if(pathname=='/deadstock'||currentProduct?.status=='deadstock'){
         console.log('page deadstock')
         console.log(isToggled)
        // setIsToggled(!isToggled);
