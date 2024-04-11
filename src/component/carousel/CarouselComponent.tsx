@@ -1,36 +1,47 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Carousel } from 'antd';
+import { IProduct } from '@/interfaces/product';
 
+interface CarouselItemProps {
+  products:  string[];
+  // filterType:string
+}
 const contentStyle: React.CSSProperties = {
-  height: '520px',
-  lineHeight: '520px',
+  // width:'100%',
+  //  height: '520px',
+  // lineHeight: '520px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
 };
 
-const CarouselComponent: React.FC = () => (
-  <Carousel autoplay 
-  // effect="fade"
+const CarouselComponent: FC<CarouselItemProps> = ({ products = [] }) => { 
+  
+  
+  
+  return (
+  <Carousel 
+
   >
-    <div>
+{ products.map((imageUrl, index)=>(
+   <div key={index}>
     
    
-      <div style={contentStyle}><img src="/images/slider/slide1.png" alt="Description of the image"  /></div>
-    </div>
-    <div>
+   <div style={contentStyle}><img src={imageUrl} alt="Description of the image"  /></div>
+ </div>
+)
+  
+)
+
+}
+ 
+  
     
    
-      <div style={contentStyle}><img src="/images/slider/slide1.png" alt="Description of the image"  /></div>
-    </div>
-    <div>
-    
-   
-    <div style={contentStyle}><img src="/images/slider/slide1.png" alt="Description of the image"  /></div>
-  </div>
+ 
  
 
   </Carousel>
-);
+);}
 
 export default CarouselComponent;

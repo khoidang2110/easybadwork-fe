@@ -1,6 +1,6 @@
 "use client";
 import "./globals.css";
-import React from 'react';
+import React, { useState } from 'react';
 
 import Header from '../component/header/Header';
 
@@ -9,25 +9,38 @@ import MenuBot from "@/component/menubot/MenuBot";
 
 
 
+import { makeStore, AppStore } from '../redux/store'
+import { useRef } from 'react'
+import StoreProvider from "./StoreProvider";
 
 
+const RootLayout = ({ children }: React.PropsWithChildren) => {
+  
+  const [itemCount, setItemCount] = useState(0);
+  
+  const storeRef = useRef<AppStore>()
+  if (!storeRef.current) {
+    // Create the store instance the first time this renders
+    storeRef.current = makeStore()
+  }
 
-const RootLayout = ({ children }: React.PropsWithChildren) => (
+  return(
   <html lang="en">
     <body 
     className="p-2 bg-white"
   
     >
       <Header/>
-      
+      <StoreProvider>
      <div className="pt-10">
-   
-   {children}
+     {/* {React.cloneElement(children, { setItemCount })}  */}
+   {children }
      </div>
-   <MenuBot/>
+   <MenuBot itemCount={itemCount} />
+   </StoreProvider>
       <Footer/>
     </body>
   </html>
-);
+);}
 
 export default RootLayout;

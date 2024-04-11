@@ -1,13 +1,35 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { usePathname } from "next/navigation";
 import { products } from '@/mockup';
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { updateLocalStorageData } from "@/redux/slices/localStorageSlice";
+import { update } from "@/redux/slices/counterSlice";
 
-const MenuBot: React.FC = () => {
+
+const MenuBot: React.FC  <{itemCount:number}>  = ({ itemCount }) => {
+   const dispatch = useAppDispatch()
+
+  const countRedux = useAppSelector(state => state.counter.count);
+ // const countRedux = useAppSelector(state => state.counter.count);
+console.log("countRedux",countRedux)
+  useEffect(() => {
+    
+    const countString = localStorage.getItem('count');
+const count = countString ? parseInt(countString) : 0; 
+    if (count !== null) {
+      dispatch(update(count));
+    }
+    console.log('count load lan dau',count)
+  }, []);
+
+
   const [isToggled, setIsToggled] = useState(false);
   const [tabActive, setTabActive] = useState("");
 
@@ -157,7 +179,8 @@ console.log(currentProduct?.status)
               onClick={() => handleToggle("cart")}
             >
               {" "}
-              CART 0
+              CART {countRedux}
+              
             </a>
           </div>
         </div>
