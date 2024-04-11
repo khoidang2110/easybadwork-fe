@@ -1,6 +1,6 @@
 "use client";
 import "./globals.css";
-import React, { useState } from 'react';
+import React, { Children, useState } from 'react';
 
 import Header from '../component/header/Header';
 
@@ -16,14 +16,12 @@ import StoreProvider from "./StoreProvider";
 
 const RootLayout = ({ children }: React.PropsWithChildren) => {
   
-  const [itemCount, setItemCount] = useState(0);
-  
-  const storeRef = useRef<AppStore>()
-  if (!storeRef.current) {
-    // Create the store instance the first time this renders
-    storeRef.current = makeStore()
-  }
+  const itemCount = Children.count(children);
 
+  const storeRef = useRef<AppStore | null>(null);
+  if (!storeRef.current) {
+    storeRef.current = makeStore();
+  }
   return(
   <html lang="en">
     <body 
@@ -31,7 +29,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
   
     >
       <Header/>
-      <StoreProvider>
+      <StoreProvider count={itemCount}>
      <div className="pt-10">
      {/* {React.cloneElement(children, { setItemCount })}  */}
    {children }
