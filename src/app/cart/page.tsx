@@ -62,7 +62,7 @@ dispatch(updateItem(updatedCart));
  <div className="border-dashed border rounded border-black p-4 flex flex-row mb-2 " >
       
 
-<img  src={item.image[0]} alt="" className="mr-3" style={{width:'auto',height:'65px'}} />
+<img  src={item.image[0]} alt="" className="mr-3" style={{width:'65px',height:'auto',objectFit:"cover"}} />
  <div className="mr-10 w-full text-left">
    <p>{item.name}</p>
    <p>Size</p>
