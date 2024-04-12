@@ -66,7 +66,7 @@ dispatch(updateItem(updatedCart));
     </div>
 <div className="border-dashed border rounded border-black p-4 flex flex-row justify-between mb-2 mt-8 ">
   <p>SUMARY</p>
-  <p>3</p>
+  <p>{count}</p>
 </div>
 <div className="border-dashed border rounded border-black p-4 mb-2 text-left">
   <p>SUBTOTAL</p>
