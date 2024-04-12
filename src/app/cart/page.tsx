@@ -1,14 +1,22 @@
 "use client";
 import { Button } from "antd";
 
-import React from "react";
+import React, { FC } from "react";
 import { CloseOutlined} from '@ant-design/icons';
 import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { updateItem } from "@/redux/slices/cartSlice";
 import { update } from "@/redux/slices/counterSlice";
+import { IProduct } from "@/interfaces/product";
 
-const Cart = () => {
+
+interface ProductProps {
+  products: IProduct[];
+
+}
+
+
+const Cart: FC<ProductProps> = () => {
   let count = useAppSelector((state) => state.counter.count);
   const dispatch = useAppDispatch();
   const cartRedux = useAppSelector((state) => state.cart.items);

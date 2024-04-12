@@ -1,8 +1,8 @@
 // In slices/cartSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
+import { IProduct } from '@/interfaces/product';
 interface CartState {
-  items: string[]; // Assuming the cart contains string IDs
+  items: IProduct[]; // Assuming the cart contains string IDs
 }
 
 const initialState: CartState = {
@@ -13,11 +13,11 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem(state, action: PayloadAction<string>) {
+    addItem(state, action: PayloadAction<IProduct>) {
       state.items.push(action.payload);
      
     },
-    updateItem(state, action: PayloadAction<string[]>) {
+    updateItem(state, action: PayloadAction<IProduct[]>) {
       state.items = action.payload;
      
     },
