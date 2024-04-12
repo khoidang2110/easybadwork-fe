@@ -45,7 +45,7 @@ console.log("id item remove",id)
 const updatedCart = cartRedux.filter(item => item.id !== id);
 dispatch(updateItem(updatedCart));
 // trừ count khi xoá
-
+localStorage.setItem("cart", JSON.stringify(updatedCart));
 }
 
 
