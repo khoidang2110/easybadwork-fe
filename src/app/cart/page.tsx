@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "antd";
 
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { CloseOutlined} from '@ant-design/icons';
 import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
@@ -18,6 +18,19 @@ import { IProduct } from "@/interfaces/product";
 
 // const Cart: FC<ProductProps> = () => {
   const Cart  = () => {
+
+    useEffect(() => {
+      const cartString = localStorage.getItem("cart");
+      if(cartString){
+        const cart = JSON.parse(cartString)
+        dispatch(updateItem(cart));
+      }
+   
+   
+      
+    }, []);
+
+
   let count = useAppSelector((state) => state.counter.count);
   const dispatch = useAppDispatch();
   const cartRedux = useAppSelector((state) => state.cart.items);
