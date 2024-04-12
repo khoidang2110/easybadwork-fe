@@ -1,15 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import Image from "next/image";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { products } from "@/mockup";
-import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
+
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { updateLocalStorageData } from "@/redux/slices/localStorageSlice";
+
 import { update } from "@/redux/slices/counterSlice";
 
 const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
