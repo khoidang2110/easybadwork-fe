@@ -10,13 +10,14 @@ import { update } from "@/redux/slices/counterSlice";
 import { IProduct } from "@/interfaces/product";
 
 
-interface ProductProps {
-  products: IProduct[];
+// interface ProductProps {
+//   products: IProduct[];
 
-}
+// }
 
 
-const Cart: FC<ProductProps> = () => {
+// const Cart: FC<ProductProps> = () => {
+  const Cart  = () => {
   let count = useAppSelector((state) => state.counter.count);
   const dispatch = useAppDispatch();
   const cartRedux = useAppSelector((state) => state.cart.items);
