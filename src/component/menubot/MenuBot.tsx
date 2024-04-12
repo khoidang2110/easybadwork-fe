@@ -1,75 +1,70 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { products } from '@/mockup';
+import { products } from "@/mockup";
 import { useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { updateLocalStorageData } from "@/redux/slices/localStorageSlice";
 import { update } from "@/redux/slices/counterSlice";
 
+const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
+  const dispatch = useAppDispatch();
 
-const MenuBot: React.FC  <{itemCount:number}>  = ({ itemCount }) => {
-   const dispatch = useAppDispatch()
-
-  const countRedux = useAppSelector(state => state.counter.count);
- // const countRedux = useAppSelector(state => state.counter.count);
-console.log("countRedux",countRedux)
+  const countRedux = useAppSelector((state) => state.counter.count);
+  // const countRedux = useAppSelector(state => state.counter.count);
+  console.log("countRedux", countRedux);
   useEffect(() => {
-    
-    const countString = localStorage.getItem('count');
-const count = countString ? parseInt(countString) : 0; 
+    const countString = localStorage.getItem("count");
+    const count = countString ? parseInt(countString) : 0;
     if (count !== null) {
       dispatch(update(count));
     }
-    console.log('count load lan dau',count)
+    console.log("count load lan dau", count);
   }, []);
-
 
   const [isToggled, setIsToggled] = useState(false);
   const [tabActive, setTabActive] = useState("");
 
-  console.log("istogled",isToggled);
-  console.log("tabActive",tabActive)
+  console.log("istogled", isToggled);
+  console.log("tabActive", tabActive);
   const router = useRouter();
   const pathname = usePathname();
-   console.log(pathname);
-const pathnameId = pathname.slice(8);
-console.log('pathname id',pathnameId)
-  const currentProduct = products.find(product => product.id === pathnameId);
-console.log(currentProduct?.status)
+  console.log("pathname menu", pathname);
+  const pathnameId = pathname.slice(8);
+  console.log("pathname id", pathnameId);
+  const currentProduct = products.find((product) => product.id === pathnameId);
+  console.log(currentProduct?.status);
   const handleToggle = (position: any) => {
-   
-    
     if (tabActive == "") {
-      console.log("mở")
+      console.log("mở");
       setIsToggled(!isToggled);
       setTabActive(position);
     } else if (tabActive == position) {
-      console.log("đóng")
-      if(tabActive=='deadStock'){
-        router.push('/deadstock');
+      console.log("đóng");
+      if (tabActive == "deadStock") {
+        router.push("/deadstock");
         // setIsToggled(!isToggled);
         // setTabActive("");
-      }else if(pathname=='/deadstock'||currentProduct?.status=='deadstock'){
-        console.log('page deadstock')
-        console.log(isToggled)
-       // setIsToggled(!isToggled);
-         setTabActive("deadStock");
-        
-      }else {
-        console.log('case 3 đóng')
+      } else if (
+        pathname == "/deadstock" ||
+        currentProduct?.status == "deadstock"
+      ) {
+        setTabActive("deadStock");
+      } else if (pathname == "/cart") {
+        setTabActive("cart");
+      } else {
+        console.log("case 3 đóng");
         setIsToggled(!isToggled);
         setTabActive("");
       }
-  
     } else {
-      console.log("chuyển")
-   
+      console.log("chuyển");
+
       setTabActive(position);
     }
   };
@@ -80,13 +75,17 @@ console.log(currentProduct?.status)
         <div></div>
         <div
           className={`${styles.fButtonContainer} ${
-            isToggled && tabActive !== "deadStock" ? styles.fButtonClick : ""
+            isToggled && tabActive !== "deadStock" && tabActive !== "cart"
+              ? styles.fButtonClick
+              : ""
           }`}
         >
           <div>
             <div
               className={
-                isToggled && tabActive == "menu" ? styles.textShow : styles.textHide
+                isToggled && tabActive == "menu"
+                  ? styles.textShow
+                  : styles.textHide
               }
             >
               <p>ABOUT</p>
@@ -97,7 +96,9 @@ console.log(currentProduct?.status)
 
             <div
               className={
-                isToggled && tabActive == "shop" ? styles.textShow : styles.textHide
+                isToggled && tabActive == "shop"
+                  ? styles.textShow
+                  : styles.textHide
               }
             >
               <p>TEE</p>
@@ -111,15 +112,18 @@ console.log(currentProduct?.status)
 
             <div
               className={
-                isToggled && tabActive == "search" ? styles.textShow : styles.textHide
+                isToggled && tabActive == "search"
+                  ? styles.textShow
+                  : styles.textHide
               }
             >
-            <input type="text" placeholder="TYPE HERE" className={styles.inputBg}/>
-              
-              
-              
+              <input
+                type="text"
+                placeholder="TYPE HERE"
+                className={styles.inputBg}
+              />
             </div>
-            <div
+            {/* <div
               className={
                 isToggled && tabActive == "cart" ? styles.textShow : styles.textHide
               }
@@ -128,7 +132,7 @@ console.log(currentProduct?.status)
               
               
               
-            </div>
+            </div> */}
           </div>
 
           <div className="flex justify-between">
@@ -138,8 +142,7 @@ console.log(currentProduct?.status)
                 isToggled && tabActive == "menu" ? styles.fButtonActive : ""
               }`}
             >
-           
-              <img src="/images/icons/menu4.png" className="w-5 h-3"/>
+              <img src="/images/icons/menu4.png" className="w-5 h-3" />
             </button>
 
             <button
@@ -166,10 +169,9 @@ console.log(currentProduct?.status)
               }`}
               onClick={() => handleToggle("deadStock")}
             >
-                 <Link href={"/deadstock"}  className="">
-                 DEADSTOCK
+              <Link href={"/deadstock"} className="">
+                DEADSTOCK
               </Link>
-             
             </button>
 
             <a
@@ -178,9 +180,9 @@ console.log(currentProduct?.status)
               }`}
               onClick={() => handleToggle("cart")}
             >
-              {" "}
-              CART {countRedux}
-              
+              <Link href={"/cart"} className="">
+                CART {countRedux}
+              </Link>
             </a>
           </div>
         </div>

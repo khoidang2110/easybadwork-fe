@@ -1,13 +1,16 @@
 
-import rootReducer from './rootReducer'
-import counterReducer from './slices/counterSlice'
 
+import counterReducer from './slices/counterSlice'
+import cartReducer from './slices/cartSlice'
 
 import { configureStore } from '@reduxjs/toolkit'
 
 export const makeStore = () => {
   return configureStore({
-    reducer:rootReducer
+    reducer:{
+      counter: counterReducer,
+     cart: cartReducer
+    }
   })
 }
 

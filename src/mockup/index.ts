@@ -7,8 +7,8 @@ export const products: IProduct [] = [
         id: "1",
         status:'deadstock',
         type:'tshirt',
-        name: "mikey",
-        price:500000,
+        name: "cam",
+        price:550000,
         link:'/',
         description:
           " quisquam est, qui dolorem.",
@@ -24,7 +24,7 @@ export const products: IProduct [] = [
         id: "2",
         status:'deadstock',
         type:'tshirt',
-        name: "mikey",
+        name: "den",
         price:500000,
         link:'/',
         description:
@@ -41,8 +41,8 @@ export const products: IProduct [] = [
         id: "3",
         status:'deadstock',
         type:'tshirt',
-        name: "mikey",
-        price:500000,
+        name: "xanh",
+        price:900000,
         link:'/',
         description:
           " quisquam est, qui dolorem.",
@@ -58,8 +58,8 @@ export const products: IProduct [] = [
         id: "4",
         status:'deadstock',
         type:'tshirt',
-        name: "mikey",
-        price:500000,
+        name: "nau",
+        price:800000,
         link:'/',
         description:
           " quisquam est, qui dolorem.",
@@ -76,8 +76,8 @@ export const products: IProduct [] = [
         id: "5",
         status:'deadstock',
         type:'tshirt',
-        name: "mikey",
-        price:500000,
+        name: "orange",
+        price:700000,
         link:'/',
         description:
           " quisquam est, qui dolorem.",
