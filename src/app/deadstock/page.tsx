@@ -9,8 +9,8 @@ import { products } from '@/mockup'
 const DeadStock = () => (
   <div className='relative' >
 
-    <div className='pt-10 text-center'>
-      <h1>DEAD STOCK</h1>
+    <div className='pt-20 text-center'>
+      <h1 className='py-4 text-xl'>DEAD STOCK</h1>
       <p>this place showing sold out items</p>
     </div>
 <ProductList products={products} filterType='deadstock'/>

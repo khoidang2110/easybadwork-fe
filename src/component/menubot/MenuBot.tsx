@@ -30,6 +30,7 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
   console.log("pathname id", pathnameId);
   const currentProduct = products.find((product) => product.id === pathnameId);
   console.log(currentProduct?.status);
+
   const handleToggle = (position: any) => {
     if (tabActive == "") {
       console.log("mở");
@@ -78,6 +79,15 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
       setTabActive("deadstock");
     }
   }, []);
+useEffect(() => {
+  if(pathname=='/'||pathname=='/checkout'){
+    setTabActive('');
+      setIsToggled(false);
+  }
+
+
+}, [pathname]);
+
   return (
     <div className={styles.footer}>
       <div className={styles.fContainer}>
@@ -132,16 +142,7 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
                 className={styles.inputBg}
               />
             </div>
-            {/* <div
-              className={
-                isToggled && tabActive == "cart" ? styles.textShow : styles.textHide
-              }
-            >
-            <p>YOUR CART IS EMPTY.</p>
-              
-              
-              
-            </div> */}
+  
           </div>
 
           <div className="flex justify-between">
@@ -151,7 +152,7 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
                 isToggled && tabActive == "menu" ? styles.fButtonActive : ""
               }`}
             >
-              {/* <img src="/images/icons/menu4.png" className="w-5 h-3" /> */}
+             
               <svg
                 // className="w-5 h-3"
                 style={{width:'15px',height:'auto'}}
