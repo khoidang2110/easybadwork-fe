@@ -54,7 +54,7 @@ const Detail = () => {
         <p>S M L</p>
         <div
           className=" rounded p-4 mb-2  mt-8 "
-          style={{ backgroundColor: "#d0f491" }}
+          style={{ backgroundColor: "#002549" ,color:'white'}}
         >
           <button onClick={handleClick} className="w-full">Add to Cart</button>
         </div>

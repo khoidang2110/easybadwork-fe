@@ -88,11 +88,11 @@ localStorage.setItem("cart", JSON.stringify(updatedCart));
 <div className="border-dashed border rounded border-black p-4 mb-2 text-left">
   Add Note
 </div>
-<div className=" rounded p-4 mb-2  mt-8 " style={{backgroundColor:'#d0f491'}}>
+<div className=" rounded p-4 mb-2  mt-8 text-white" style={{backgroundColor:'#002549'}}>
 <button > CHECK OUT 500000</button>
 </div>
 
-<div className=" rounded  p-4 mb-2 " style={{backgroundColor:'#f3f3f3'}}>
+<div className=" rounded  p-4 mb-2 " style={{backgroundColor:'#d8d8d8'}}>
 <button >CONTINUE SHOPPING</button>
 </div>
 

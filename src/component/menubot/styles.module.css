@@ -98,7 +98,9 @@ padding-right: 1rem;
   padding-top: 3rem;
 }
 .fButtonActive{
-  background-color:#d0f491;
+  background-color:#002549;
+  fill:white;
+  color:white;
 }
 
 .textShow{
