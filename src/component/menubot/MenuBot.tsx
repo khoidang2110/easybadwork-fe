@@ -153,7 +153,8 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
             >
               {/* <img src="/images/icons/menu4.png" className="w-5 h-3" /> */}
               <svg
-                className="w-5 h-3"
+                // className="w-5 h-3"
+                style={{width:'15px',height:'auto'}}
                 version="1.0"
                 xmlns="http://www.w3.org/2000/svg"
                 width="64.000000pt"
