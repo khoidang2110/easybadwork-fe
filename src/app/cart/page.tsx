@@ -72,7 +72,7 @@ const Cart = () => {
             <div className="right-4">
               <Button
                 onClick={() => handleRemove(item.id)}
-                type="primary"
+                type="text"
                 shape="circle"
                 icon={<CloseOutlined />}
                 size={"small"}
