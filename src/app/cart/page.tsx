@@ -28,25 +28,27 @@ const Cart = () => {
   let count = useAppSelector((state) => state.counter.count);
   const dispatch = useAppDispatch();
   const cartRedux = useAppSelector((state) => state.cart.items);
-  console.log("cartRedux", cartRedux);
+   console.log("cartRedux", cartRedux);
 
-  const handleRemove = (id: string) => {
+  const handleRemove = (index: number) => {
     count = count - 1;
     localStorage.setItem("count", count.toString());
     dispatch(update(count));
 
-    console.log("id item remove", id);
-    const updatedCart = cartRedux.filter((item) => item.id !== id);
-    dispatch(updateItem(updatedCart));
-    // trừ count khi xoá
+    console.log("id item remove", index);
+    const updatedCart = cartRedux.filter((_, i) => i !== index);
+    console.log("updated cart khi xoa",updatedCart)
+   
+ 
     localStorage.setItem("cart", JSON.stringify(updatedCart));
+    dispatch(updateItem(updatedCart));
   };
 
   const totalPrice: number = cartRedux.reduce(
     (acc, product) => acc + product.price,
     0
   );
-  console.log("totalPrice", totalPrice);
+  // console.log("totalPrice", totalPrice);
   return (
     <div className="text-center pt-20 px-2">
       <h3 className="py-4 text-xl">YOUR CART</h3>
@@ -56,8 +58,8 @@ const Cart = () => {
       </div>
       {/*  nơi chứa list item */}
       <div>
-        {cartRedux.map((item) => (
-          <div className="border-dashed border rounded border-black p-4 flex flex-row mb-2 ">
+        {cartRedux.map((item,index) => (
+          <div className="border-dashed border rounded border-black p-4 flex flex-row mb-2 " key={index}>
             <img
               src={item.image[0]}
               alt=""
@@ -71,7 +73,7 @@ const Cart = () => {
             </div>
             <div className="right-4">
               <Button
-                onClick={() => handleRemove(item.id)}
+                onClick={() => handleRemove(index)}
                 type="text"
                 shape="circle"
                 icon={<CloseOutlined />}

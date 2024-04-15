@@ -16,28 +16,28 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
 
   const countRedux = useAppSelector((state) => state.counter.count);
   // const countRedux = useAppSelector(state => state.counter.count);
-  console.log("countRedux", countRedux);
+  // console.log("countRedux", countRedux);
 
   const [isToggled, setIsToggled] = useState(false);
   const [tabActive, setTabActive] = useState("");
 
-  console.log("istogled", isToggled);
-  console.log("tabActive", tabActive);
+  // console.log("istogled", isToggled);
+  // console.log("tabActive", tabActive);
   const router = useRouter();
   const pathname = usePathname();
-  console.log("pathname menu", pathname);
+  // console.log("pathname menu", pathname);
   const pathnameId = pathname.slice(8);
-  console.log("pathname id", pathnameId);
+  // console.log("pathname id", pathnameId);
   const currentProduct = products.find((product) => product.id === pathnameId);
-  console.log(currentProduct?.status);
+  // console.log(currentProduct?.status);
 
   const handleToggle = (position: any) => {
     if (tabActive == "") {
-      console.log("mở");
+      // console.log("mở");
       setIsToggled(!isToggled);
       setTabActive(position);
     } else if (tabActive == position) {
-      console.log("đóng");
+      // console.log("đóng");
       if (tabActive == "deadstock") {
         router.push("/deadstock");
         // setIsToggled(!isToggled);
@@ -50,12 +50,12 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
       } else if (pathname == "/cart") {
         setTabActive("cart");
       } else {
-        console.log("case 3 đóng");
+        // console.log("case 3 đóng");
         setIsToggled(!isToggled);
         setTabActive("");
       }
     } else {
-      console.log("chuyển");
+      // console.log("chuyển");
 
       setTabActive(position);
     }
@@ -66,7 +66,7 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
     if (count !== null) {
       dispatch(update(count));
     }
-    console.log("count load lan dau", count);
+    // console.log("count load lan dau", count);
     // handle menu bar active
     if (pathname == "/cart") {
       setIsToggled(!isToggled);
@@ -80,7 +80,7 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
     }
   }, []);
 useEffect(() => {
-  if(pathname=='/'||pathname=='/checkout'){
+  if(pathname=='/' || pathname=='/checkout'){
     setTabActive('');
       setIsToggled(false);
   }

@@ -4,7 +4,7 @@ export interface IProduct {
     type:string;
     name: string;
     price:number;
-    link:string;
+    // link:string;
     description: string;
     image: string[];
   }

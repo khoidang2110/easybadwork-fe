@@ -32,8 +32,9 @@ const Detail = () => {
 
     const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
     cartItems.push(currentProduct);
-    localStorage.setItem("cart", JSON.stringify(cartItems));
+console.log('cartitem',cartItems)
 
+    localStorage.setItem("cart", JSON.stringify(cartItems));
     dispatch(addItem(currentProduct));
   };
 

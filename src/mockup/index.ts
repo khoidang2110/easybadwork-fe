@@ -9,7 +9,7 @@ export const products: IProduct [] = [
         type:'tshirt',
         name: "cam",
         price:550000,
-        link:'/',
+        // link:'/',
         description:
           " quisquam est, qui dolorem.",
 
@@ -26,7 +26,7 @@ export const products: IProduct [] = [
         type:'tshirt',
         name: "den",
         price:500000,
-        link:'/',
+
         description:
           " quisquam est, qui dolorem.",
 
@@ -43,7 +43,7 @@ export const products: IProduct [] = [
         type:'tshirt',
         name: "xanh",
         price:900000,
-        link:'/',
+
         description:
           " quisquam est, qui dolorem.",
 
@@ -60,7 +60,7 @@ export const products: IProduct [] = [
         type:'tshirt',
         name: "nau",
         price:800000,
-        link:'/',
+ 
         description:
           " quisquam est, qui dolorem.",
 
@@ -78,7 +78,7 @@ export const products: IProduct [] = [
         type:'tshirt',
         name: "orange",
         price:700000,
-        link:'/',
+  
         description:
           " quisquam est, qui dolorem.",
 
@@ -96,7 +96,7 @@ export const products: IProduct [] = [
         type:'tshirt',
         name: "mikey",
         price:500000,
-        link:'/',
+   
         description:
           " quisquam est, qui dolorem.",
 
@@ -114,7 +114,7 @@ export const products: IProduct [] = [
         type:'tshirt',
         name: "mikey",
         price:500000,
-        link:'/',
+   
         description:
           " quisquam est, qui dolorem.",
 
