@@ -1,9 +1,11 @@
-import axios from 'axios';
-
-export const BASE_URL = 'http://localhost:8081';
-
+import axiosClient from './http-common';
 
 export const getListProduct = async () => {
-    const {data} = await axios.get(`${BASE_URL}/product/get-all-products`)
-    return data;
-   }
+  const { data } = await axiosClient.get(`/product/get-all-products`);
+  return data;
+};
+
+export const getFilterProduct = async (payload: any) => {
+  const { data } = await axiosClient.get(`/product/get-all-products?name=${payload}`);
+  return data;
+};

@@ -1,15 +1,16 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
+'use client';
+import React, { useEffect, useState } from 'react';
+import styles from './styles.module.css';
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
-import { products } from "@/mockup";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { products } from '@/mockup';
 
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
-import { update } from "@/redux/slices/counterSlice";
+import { update } from '@/redux/slices/counterSlice';
+import { getFilterProduct, getListProduct } from '@/utils/fetchFromAPI';
 
 const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
   // console.log("countRedux", countRedux);
 
   const [isToggled, setIsToggled] = useState(false);
-  const [tabActive, setTabActive] = useState("");
+  const [tabActive, setTabActive] = useState('');
 
   // console.log("istogled", isToggled);
   // console.log("tabActive", tabActive);
@@ -32,27 +33,24 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
   // console.log(currentProduct?.status);
 
   const handleToggle = (position: any) => {
-    if (tabActive == "") {
+    if (tabActive == '') {
       // console.log("mở");
       setIsToggled(!isToggled);
       setTabActive(position);
     } else if (tabActive == position) {
       // console.log("đóng");
-      if (tabActive == "deadstock") {
-        router.push("/deadstock");
+      if (tabActive == 'deadstock') {
+        router.push('/deadstock');
         // setIsToggled(!isToggled);
         // setTabActive("");
-      } else if (
-        pathname == "/deadstock" ||
-        currentProduct?.status == "deadstock"
-      ) {
-        setTabActive("deadstock");
-      } else if (pathname == "/cart") {
-        setTabActive("cart");
+      } else if (pathname == '/deadstock' || currentProduct?.status == 'deadstock') {
+        setTabActive('deadstock');
+      } else if (pathname == '/cart') {
+        setTabActive('cart');
       } else {
         // console.log("case 3 đóng");
         setIsToggled(!isToggled);
-        setTabActive("");
+        setTabActive('');
       }
     } else {
       // console.log("chuyển");
@@ -61,32 +59,55 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
     }
   };
   useEffect(() => {
-    const countString = localStorage.getItem("count");
+    const countString = localStorage.getItem('count');
     const count = countString ? parseInt(countString) : 0;
     if (count !== null) {
       dispatch(update(count));
     }
     // console.log("count load lan dau", count);
     // handle menu bar active
-    if (pathname == "/cart") {
+    if (pathname == '/cart') {
       setIsToggled(!isToggled);
-      setTabActive("cart");
-    } else if (
-      pathname == "/deadstock" ||
-      currentProduct?.status == "deadstock"
-    ) {
+      setTabActive('cart');
+    } else if (pathname == '/deadstock' || currentProduct?.status == 'deadstock') {
       setIsToggled(!isToggled);
-      setTabActive("deadstock");
+      setTabActive('deadstock');
     }
   }, []);
-useEffect(() => {
-  if(pathname=='/' || pathname=='/checkout'){
-    setTabActive('');
+  useEffect(() => {
+    if (pathname == '/' || pathname == '/checkout') {
+      setTabActive('');
       setIsToggled(false);
-  }
+    }
+  }, [pathname]);
 
+  const [product, setProduct] = useState(null);
 
-}, [pathname]);
+  useEffect(() => {
+    getListProduct()
+      .then((res) => {
+        console.log(res);
+        setProduct(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleFilter = (value: any) => {
+    console.log('value', value);
+    getFilterProduct(value);
+  };
+
+  const dataShop = [
+    { name: 'TEE', id: 1 },
+    { name: 'SHIRT', id: 2 },
+    { name: 'JACKET', id: 3 },
+    { name: 'BANDANA', id: 4 },
+    { name: 'ACCESSORIES', id: 5 },
+    { name: 'SILVER', id: 6 },
+    { name: 'DECORATION', id: 7 },
+  ];
 
   return (
     <div className={styles.footer}>
@@ -94,68 +115,38 @@ useEffect(() => {
         <div></div>
         <div
           className={`${styles.fButtonContainer} ${
-            isToggled && tabActive !== "deadstock" && tabActive !== "cart"
-              ? styles.fButtonClick
-              : ""
+            isToggled && tabActive !== 'deadstock' && tabActive !== 'cart' ? styles.fButtonClick : ''
           }`}
         >
           <div>
-            <div
-              className={
-                isToggled && tabActive == "menu"
-                  ? styles.textShow
-                  : styles.textHide
-              }
-            >
+            <div className={isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}>
               <p>ABOUT</p>
               <p>FAIRFAX THEATRE</p>
               <p>STORES</p>
               <p>CONTACT</p>
             </div>
 
-            <div
-              className={
-                isToggled && tabActive == "shop"
-                  ? styles.textShow
-                  : styles.textHide
-              }
-            >
-              <p>TEE</p>
-              <p>SHIRT</p>
-              <p>JACKET</p>
-              <p>BANDANA</p>
-              <p>ACCESSORIES</p>
-              <p>SILVER</p>
-              <p>DECORATION</p>
+            <div className={isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}>
+              {dataShop.map((item, index) => (
+                <p onClick={() => handleFilter(item.name)} key={item.id}>
+                  {item.name}
+                </p>
+              ))}
             </div>
 
-            <div
-              className={
-                isToggled && tabActive == "search"
-                  ? styles.textShow
-                  : styles.textHide
-              }
-            >
-              <input
-                type="text"
-                placeholder="TYPE HERE"
-                className={styles.inputBg}
-              />
+            <div className={isToggled && tabActive == 'search' ? styles.textShow : styles.textHide}>
+              <input type="text" placeholder="TYPE HERE" className={styles.inputBg} />
             </div>
-  
           </div>
 
           <div className="flex justify-between">
             <button
-              onClick={() => handleToggle("menu")}
-              className={`z-30 ${styles.fButton} ${
-                isToggled && tabActive == "menu" ? styles.fButtonActive : ""
-              }`}
+              onClick={() => handleToggle('menu')}
+              className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'menu' ? styles.fButtonActive : ''}`}
             >
-             
               <svg
                 // className="w-5 h-3"
-                style={{width:'15px',height:'auto'}}
+                style={{ width: '15px', height: 'auto' }}
                 version="1.0"
                 xmlns="http://www.w3.org/2000/svg"
                 width="64.000000pt"
@@ -164,9 +155,7 @@ useEffect(() => {
                 preserveAspectRatio="xMidYMid meet"
               >
                 <g
-                 className={`z-30 ${styles.fButton} ${
-                  isToggled && tabActive == "menu" ? styles.fButtonActive : ""
-                }`}
+                  className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'menu' ? styles.fButtonActive : ''}`}
                   transform="translate(0.000000,64.000000) scale(0.100000,-0.100000)"
                   fill="#000000"
                   stroke="none"
@@ -192,41 +181,33 @@ useEffect(() => {
             </button>
 
             <button
-              className={`z-30  ${styles.fButton} ${
-                isToggled && tabActive == "shop" ? styles.fButtonActive : ""
-              }`}
-              onClick={() => handleToggle("shop")}
+              className={`z-30  ${styles.fButton} ${isToggled && tabActive == 'shop' ? styles.fButtonActive : ''}`}
+              onClick={() => handleToggle('shop')}
             >
               SHOP
             </button>
             <button
-              className={`z-30 ${styles.fButton} ${
-                isToggled && tabActive == "search" ? styles.fButtonActive : ""
-              }`}
-              onClick={() => handleToggle("search")}
+              className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'search' ? styles.fButtonActive : ''}`}
+              onClick={() => handleToggle('search')}
             >
               SEARCH
             </button>
             <button
               className={`z-30 ${styles.fButton} ${styles.lineThrough} ${
-                isToggled && tabActive == "deadstock"
-                  ? styles.fButtonActive
-                  : ""
+                isToggled && tabActive == 'deadstock' ? styles.fButtonActive : ''
               }`}
-              onClick={() => handleToggle("deadstock")}
+              onClick={() => handleToggle('deadstock')}
             >
-              <Link href={"/deadstock"} className="">
+              <Link href={'/deadstock'} className="">
                 deadstock
               </Link>
             </button>
 
             <a
-              className={`z-30 ${styles.fButton} ${
-                isToggled && tabActive == "cart" ? styles.fButtonActive : ""
-              }`}
-              onClick={() => handleToggle("cart")}
+              className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'cart' ? styles.fButtonActive : ''}`}
+              onClick={() => handleToggle('cart')}
             >
-              <Link href={"/cart"} className="">
+              <Link href={'/cart'} className="">
                 CART {countRedux}
               </Link>
             </a>
