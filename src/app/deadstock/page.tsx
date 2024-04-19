@@ -1,12 +1,16 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { Card, Col, Row } from 'antd';
 import styles from "./styles.module.css";
 import ProductList from '@/component/product/productList';
 import { products } from '@/mockup'
+import { getListProduct } from '@/utils/fetchFromAPI';
 
-const DeadStock = () => (
+const DeadStock = () => {
+
+
+ return (
   <div className='relative' >
 
     <div className='pt-20 text-center'>
@@ -15,6 +19,6 @@ const DeadStock = () => (
     </div>
 <ProductList products={products} filterType='deadstock'/>
   </div>
-);
+);}
 
 export default DeadStock;

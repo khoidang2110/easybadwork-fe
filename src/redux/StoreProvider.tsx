@@ -1,7 +1,7 @@
 'use client'
 import { useRef } from 'react'
 import { Provider } from 'react-redux'
-import { makeStore, AppStore } from '../redux/store'
+import { makeStore, AppStore } from './store'
 // import { initializeCount } from '../redux/features/counterSlice'
 
 export default function StoreProvider({
