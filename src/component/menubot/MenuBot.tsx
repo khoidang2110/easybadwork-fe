@@ -96,7 +96,7 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
 
   const handleFilter = (value: any) => {
     console.log('value', value);
-    getFilterProduct(value);
+    getFilterProduct(value.toLowerCase());
   };
 
   const dataShop = [
