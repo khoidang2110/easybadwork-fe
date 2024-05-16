@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 
-const Header = () => {
+const HeaderComponent = () => {
 
 
 
@@ -33,4 +33,4 @@ const Header = () => {
 
 )};
 
-export default Header;
+export default HeaderComponent;

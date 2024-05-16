@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 
-const Footer: React.FC = () => {
+const FooterComponent: React.FC = () => {
 
   return (
 <div className="text-center pb-20">
@@ -11,4 +11,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default FooterComponent;

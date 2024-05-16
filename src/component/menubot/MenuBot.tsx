@@ -23,12 +23,12 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
   const [tabActive, setTabActive] = useState('');
 
   // console.log("istogled", isToggled);
-  // console.log("tabActive", tabActive);
+  // console.log("tabActive", tabActive);/
   const router = useRouter();
   const pathname = usePathname();
-  // console.log("pathname menu", pathname);
+  //console.log("pathname menu", pathname);
   const pathnameId = pathname.slice(8);
-  // console.log("pathname id", pathnameId);
+  //console.log("pathname id", pathnameId);
   const currentProduct = products.find((product) => product.id === pathnameId);
   // console.log(currentProduct?.status);
 

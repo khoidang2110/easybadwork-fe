@@ -24,18 +24,18 @@ const ProductList: FC<ProductListProps> = ({ products = [], filterType }) => {
         {filteredData.reverse().map((product) => (
           <div className={styles.CardItem}>
             <Card
-              key={product.id} // assuming each product has an id
+              key={product.product_id} // assuming each product has an id
               hoverable
               style={{ width: '100%' }}
               cover={
                 <div className={styles.cardImg}>
-                  <Link href={`/detail/${product.id}/`}>
+                  <Link href={`/detail/${product.product_id}/`}>
                     <img alt={product.name} src={product.image[0]} />
                   </Link>
                 </div>
               }
             >
-              <Meta title={product.name} description={`${product.price}VND`} />
+              <Meta title={product.name} description={`${product.price_vnd}VND`} />
             </Card>
           </div>
         ))}
