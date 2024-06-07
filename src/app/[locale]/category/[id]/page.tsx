@@ -5,18 +5,21 @@ import { Card, Col, Row } from 'antd';
 import styles from './styles.module.css';
 import ProductList from '@/component/product/productList';
 import { products } from '@/mockup';
-import { getListProduct } from '@/utils/fetchFromAPI';
+import { useParams } from 'next/navigation';
 
-const DeadStock = () => {
+
+const Category = () => {
+  const params = useParams();
+  console.log('category page', params.id);
   return (
     <div className="relative">
       <div className="pt-20 text-center">
-        <h1 className="py-4 text-xl">DEAD STOCK</h1>
-        <p>this place showing sold out items</p>
+        <h1 className="py-4 text-xl">cate:</h1>
+        {/* <p>this place showing sold out items</p> */}
       </div>
-      <ProductList products={products} filterType="deadstock" />
+      <ProductList filterType={params.id} noStock={false} />
     </div>
   );
 };
 
-export default DeadStock;
+export default Category ;

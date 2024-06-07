@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
-
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
@@ -9,11 +9,14 @@ import { products } from '@/mockup';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
-import { update } from '@/redux/slices/counterSlice';
-import { getFilterProduct, getListProduct } from '@/utils/fetchFromAPI';
+import { update } from '@/redux/features/counterSlice';
 
-const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
+import { useTranslations } from "next-intl";
+
+const MenuBot: React.FC<{  }> = ({  }) => {
+  const t = useTranslations('BotMenu');
   const dispatch = useAppDispatch();
+  const localeActive = useLocale();
 
   const countRedux = useAppSelector((state) => state.counter.count);
   // const countRedux = useAppSelector(state => state.counter.count);
@@ -22,37 +25,64 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
   const [isToggled, setIsToggled] = useState(false);
   const [tabActive, setTabActive] = useState('');
 
-  // console.log("istogled", isToggled);
-  // console.log("tabActive", tabActive);/
+ //console.log("istogled", isToggled);
+  // console.log("tabActive", tabActive);
   const router = useRouter();
   const pathname = usePathname();
-  //console.log("pathname menu", pathname);
+  const pathnameLocale= pathname.slice(3)
+  //console.log("pathname locale", pathnameLocale);
+  //const pathnameDetail = 
+  //lam lai pathname ID ( htem /vn)
   const pathnameId = pathname.slice(8);
+//console.log("pathnameId",pathnameId)
+// const pathnameCategory = pathname.substr(4,8);
+// console.log('pathnameCategory',pathnameCategory)
+  const pathnameAdmin = pathname.slice(4,9);
+  const pathnameInfo = pathname.slice(4,15);
+  //console.log('pathname info:',pathnameInfo)
+  let hideMenuBar = false;
+  if (pathnameAdmin === 'admin' || pathnameInfo==='information') {
+    hideMenuBar  = true;
+  }
+
   //console.log("pathname id", pathnameId);
   const currentProduct = products.find((product) => product.id === pathnameId);
   // console.log(currentProduct?.status);
 
   const handleToggle = (position: any) => {
+   // console.log('position',position)
     if (tabActive == '') {
-      // console.log("mở");
+       console.log("mở");
       setIsToggled(!isToggled);
       setTabActive(position);
     } else if (tabActive == position) {
       // console.log("đóng");
       if (tabActive == 'deadstock') {
-        router.push('/deadstock');
+        router.push(`/${localeActive}/deadstock`);
         // setIsToggled(!isToggled);
         // setTabActive("");
-      } else if (pathname == '/deadstock' || currentProduct?.status == 'deadstock') {
+      } else if (pathnameLocale == '/deadstock' || currentProduct?.status == 'deadstock') {
         setTabActive('deadstock');
-      } else if (pathname == '/cart') {
+      } else if (pathnameLocale == '/cart') {
         setTabActive('cart');
-      } else {
+      } 
+      // else if(tabActive=='shop'){
+        
+      //     // chọn 
+      //     console.log('case chọn')
+      //    // setIsToggled(!isToggled);
+      //    setIsToggled(!isToggled);
+      //     setTabActive('');
+             
+      // }
+      
+      else {
         // console.log("case 3 đóng");
         setIsToggled(!isToggled);
         setTabActive('');
       }
-    } else {
+    } 
+    else {
       // console.log("chuyển");
 
       setTabActive(position);
@@ -66,52 +96,59 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
     }
     // console.log("count load lan dau", count);
     // handle menu bar active
-    if (pathname == '/cart') {
+    if (pathnameLocale == '/cart') {
       setIsToggled(!isToggled);
       setTabActive('cart');
-    } else if (pathname == '/deadstock' || currentProduct?.status == 'deadstock') {
+    } else if (pathnameLocale == '/deadstock' || currentProduct?.status == 'deadstock') {
       setIsToggled(!isToggled);
       setTabActive('deadstock');
     }
+    //  else if ( )
   }, []);
+
   useEffect(() => {
-    if (pathname == '/' || pathname == '/checkout') {
+    if (pathnameLocale == '/' || pathnameLocale == '/checkout') {
       setTabActive('');
       setIsToggled(false);
     }
   }, [pathname]);
 
-  const [product, setProduct] = useState(null);
+  //const [product, setProduct] = useState(null);
 
-  useEffect(() => {
-    getListProduct()
-      .then((res) => {
-        console.log(res);
-        setProduct(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   getListProduct()
+  //     .then((res) => {
+  //       console.log(res);
+  //       setProduct(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   const handleFilter = (value: any) => {
-    console.log('value', value);
-    getFilterProduct(value.toLowerCase());
+    console.log('value filter', value);
+   // getFilterProduct(value.toLowerCase());
+        // chọn 
+       //   console.log('case chọn')
+          setTabActive('');
+          setIsToggled(false);
   };
 
   const dataShop = [
-    { name: 'TEE', id: 1 },
-    { name: 'SHIRT', id: 2 },
-    { name: 'JACKET', id: 3 },
-    { name: 'BANDANA', id: 4 },
-    { name: 'ACCESSORIES', id: 5 },
-    { name: 'SILVER', id: 6 },
-    { name: 'DECORATION', id: 7 },
+    { name: t('tee') , id: 'tee' },
+    { name: t('shirt'), id: 'shirt' },
+    { name: t('jacket'), id: 'jacket' },
+    { name: t('bandana'), id: 'bandana' },
+    { name:t('accessories'), id: 'accessories' },
+    { name: t('silver'), id: 'silver' },
+    { name: t('decoration'), id: 'decoration' },
   ];
 
   return (
+   
     <div className={styles.footer}>
-      <div className={styles.fContainer}>
+ {hideMenuBar? ("") : (  <div className={styles.fContainer}>
         <div></div>
         <div
           className={`${styles.fButtonContainer} ${
@@ -120,22 +157,30 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
         >
           <div>
             <div className={isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}>
-              <p>ABOUT</p>
-              <p>FAIRFAX THEATRE</p>
-              <p>STORES</p>
-              <p>CONTACT</p>
+              <p>{t('about')}</p>
+              <p>{t('fairfax')}</p>
+              <p>{t('stores')}</p>
+              <p>{t('contact')}</p>
+
+    
             </div>
 
             <div className={isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}>
               {dataShop.map((item, index) => (
+                <Link href={`/${localeActive}/category/${item.id}/`  }>
                 <p onClick={() => handleFilter(item.name)} key={item.id}>
                   {item.name}
                 </p>
+</Link>
+
+
+
+
               ))}
             </div>
 
             <div className={isToggled && tabActive == 'search' ? styles.textShow : styles.textHide}>
-              <input type="text" placeholder="TYPE HERE" className={styles.inputBg} />
+              <input type="text" placeholder={t('typeHere')} className={styles.inputBg} />
             </div>
           </div>
 
@@ -184,13 +229,13 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
               className={`z-30  ${styles.fButton} ${isToggled && tabActive == 'shop' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('shop')}
             >
-              SHOP
+          {t('shop')} 
             </button>
             <button
               className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'search' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('search')}
             >
-              SEARCH
+           {t('search')} 
             </button>
             <button
               className={`z-30 ${styles.fButton} ${styles.lineThrough} ${
@@ -198,8 +243,8 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
               }`}
               onClick={() => handleToggle('deadstock')}
             >
-              <Link href={'/deadstock'} className="">
-                deadstock
+              <Link href={`/${localeActive}/deadstock`} className="">
+              {t('deadstock')} 
               </Link>
             </button>
 
@@ -207,13 +252,14 @@ const MenuBot: React.FC<{ itemCount: number }> = ({ itemCount }) => {
               className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'cart' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('cart')}
             >
-              <Link href={'/cart'} className="">
-                CART {countRedux}
+              <Link href={`/${localeActive}/cart`} className="">
+              {t('cart')}  {countRedux}
               </Link>
             </a>
           </div>
         </div>
-      </div>
+      </div>)}
+    
     </div>
   );
 };

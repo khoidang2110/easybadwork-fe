@@ -1,15 +1,15 @@
 "use client";
 import { Button } from "antd";
-
+import { useLocale } from 'next-intl';
 import React, { FC, useEffect } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { updateItem } from "@/redux/slices/cartSlice";
-import { update } from "@/redux/slices/counterSlice";
+import { updateItem } from "@/redux/features/cartSlice";
+import { update } from "@/redux/features/counterSlice";
 import { IProduct } from "@/interfaces/product";
 import Link from "next/link";
-
+import { useTranslations } from "next-intl";
 // interface ProductProps {
 //   products: IProduct[];
 
@@ -17,6 +17,8 @@ import Link from "next/link";
 
 // const Cart: FC<ProductProps> = () => {
 const Cart = () => {
+  const localeActive = useLocale();
+  const t = useTranslations('cart');
   useEffect(() => {
     const cartString = localStorage.getItem("cart");
     if (cartString) {
@@ -43,18 +45,26 @@ const Cart = () => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     dispatch(updateItem(updatedCart));
   };
-
-  const totalPrice: number = cartRedux.reduce(
-    (acc, product) => acc + product.price,
+  let totalPrice: number = 0;
+if(localeActive=='vi'){
+  totalPrice = cartRedux.reduce(
+    (acc, product) => acc + product.price_vnd*product.quantity,
     0
   );
+}else {
+  totalPrice = cartRedux.reduce(
+    (acc, product) => acc + product.price_usd*product.quantity,
+    0
+  );
+}
+  
   // console.log("totalPrice", totalPrice);
   return (
     <div className="text-center pt-20 px-2">
-      <h3 className="py-4 text-xl">YOUR CART</h3>
+      <h3 className="py-4 text-xl">{t('yourCart')}</h3>
       <div className="flex flex-row justify-between px-3 py-4 text-sm">
-        <p>PRODUCT</p>
-        <p>REMOVE</p>
+        <p>{t('product')}</p>
+        <p>{t('remove')}</p>
       </div>
       {/*  nơi chứa list item */}
       <div>
@@ -68,8 +78,9 @@ const Cart = () => {
             />
             <div className="mr-10 w-full text-left">
               <p>{item.name}</p>
-              <p>Size</p>
-              <p>{item.price.toLocaleString()} Đ</p>
+              <p>{t('size')}: {item.size}</p>
+              <p>{t('quantity')}: {item.quantity}</p>
+              <p>{localeActive=='vi' ? (item?.price_vnd*(item.quantity) ).toLocaleString():(item?.price_usd*(item.quantity) ).toLocaleString() } {t('currency')}</p>
             </div>
             <div className="right-4">
               <Button
@@ -85,23 +96,24 @@ const Cart = () => {
         ))}
       </div>
       <div className="border-dashed border rounded border-black p-4 flex flex-row justify-between mb-2 mt-8 ">
-        <p>SUMARY</p>
+        <p>{t('summary')}</p>
         <p>{count}</p>
       </div>
       <div className="border-dashed border rounded border-black p-4 mb-2 text-left">
-        <p>SUBTOTAL</p>
-        <p>Taxes & shipping calculated at checkout</p>
+        <p>{t('subtotal')}</p>
+        <p>{t('taxes&ship')}</p>
       </div>
       <div className="border-dashed border rounded border-black p-4 mb-2 text-left">
-        Add Note
+      {t('addNote')}
       </div>
-      <Link href={`/checkout`}>
+      
+      <Link href={`/${localeActive}/information`} >
         <div
-          className=" rounded p-4 mb-2  mt-8 text-white flex justify-center"
+          className=" rounded p-4 mb-2  mt-8 text-white flex justify-between   "
           style={{ backgroundColor: "#002549" }}
         >
-          <button className="pr-2">CHECK OUT</button>
-          <p> {totalPrice.toLocaleString()} VND</p>
+          <button className="pr-2"> {t('checkOut')}</button>
+          <p> {totalPrice.toLocaleString()} {t('currency')}</p>
         </div>
       </Link>
       <Link href={`/`}>
@@ -110,7 +122,7 @@ const Cart = () => {
         style={{ backgroundColor: "#d8d8d8" }}
       >
       
-          <button>CONTINUE SHOPPING</button>
+          <button>{t('continueShopping')}</button>
     
       </div>
       </Link>

@@ -11,10 +11,10 @@ import { products } from '@/mockup';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
-import { update } from '@/redux/slices/counterSlice';
+import { update } from '@/redux/features/counterSlice';
 import { getFilterProduct, getListProduct } from '@/utils/fetchFromAPI';
 
-const MenuAdmin: React.FC<{ itemCount: number }> = ({ itemCount }) => {
+const MenuAdmin: React.FC<{  }> = ({  }) => {
   const dispatch = useAppDispatch();
 
   const countRedux = useAppSelector((state) => state.counter.count);
@@ -31,6 +31,16 @@ const MenuAdmin: React.FC<{ itemCount: number }> = ({ itemCount }) => {
   //console.log("pathname menu", pathname);
   const pathnameId = pathname.slice(8);
   //console.log("pathname id", pathnameId);
+
+  const pathnameLocale = pathname.slice(1,3);
+  console.log('pathname locale:',pathnameLocale)
+  // let adminPage = false;
+  // if (pathnameAdmin === 'admin') {
+  //   adminPage = true;
+  // }
+
+
+
   const currentProduct = products.find((product) => product.id === pathnameId);
   // console.log(currentProduct?.status);
 
@@ -116,19 +126,19 @@ const MenuAdmin: React.FC<{ itemCount: number }> = ({ itemCount }) => {
       icon:
        <ShopOutlined />,
        label: 'Shop',
-       onClick: () => router.push('/admin')
+       onClick: () => router.push(`/${pathnameLocale}/admin`)
     },
     {
       key: '2',
       icon: <ProductOutlined />,
       label: 'Stock Manager',
-      onClick: () => router.push('/admin/stockmanager')
+      onClick: () => router.push(`/${pathnameLocale}/admin/stockmanager`)
     },
     {
       key: '3',
       icon: <RiseOutlined />,
       label: 'Statistics',
-      onClick: () => router.push('/admin/statistics')
+      onClick: () => router.push(`/${pathnameLocale}/admin/statistics`)
     },
     {
       key: '4',

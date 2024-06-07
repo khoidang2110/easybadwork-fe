@@ -1,0 +1,47 @@
+{
+    "Index":{
+        "title":"hello"
+    },
+    "BotMenu":{
+        "shop":"SHOP",
+        "search":"SEARCH",
+        "deadstock":"DEADSTOCK",
+        "cart":"CART",
+        "about":"ABOUT",
+        "fairfax":"FAIRFAX THEATRE",
+        "stores":"STORES",
+        "contact":"CONTACT",
+        "tee":"TEE",
+        "shirt":"SHIRT",
+        "jacket":"JACKET",
+        "bandana":"BANDANA",
+        "accessories":"ACCESSORIES",
+        "silver":"SILVER",
+        "decoration":"DECORATION",
+        "typeHere":"TYPE HERE"
+    },
+    "cart":{
+        "yourCart":"YOUR CART",
+        "product":"PRODUCT",
+        "remove":"REMOVE",
+        "summary":"SUMMARY",
+        "subtotal":"SUBTOTAL",
+        "taxes&ship":"Taxes & shipping calculated at checkout",
+        "addNote":"Add Note",
+        "checkOut":"CHECK OUT",
+        "continueShopping":"CONTINUE SHOPPING",
+        "currency":"USD",
+        "size":"Size",
+        "quantity":"Quantity"
+    },
+    "detail":{
+        "currency":"USD",
+        "detail":"DETAIL",
+        "size":"SIZE",
+        "sizeChart":"Size Chart",
+        "only":"Only",
+        "left":"left",
+        "addToCart":"Add to Cart"
+
+    }
+}

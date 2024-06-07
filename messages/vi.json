@@ -1,0 +1,47 @@
+{
+    "Index":{
+        "title":" xin chao"
+    },
+    "BotMenu":{
+        "shop":"SẮM ĐỒ",
+        "search":"TÌM KIẾM",
+        "deadstock":"HẾT HÀNG",
+        "cart":"GIỎ HÀNG",
+        "about":"VỀ TÔI",
+        "fairfax":"TRIỄN LÃM",
+        "stores":"CỬA HÀNG",
+        "contact":"LIÊN HỆ",
+        "tee":"ÁO THUN",
+        "shirt":"SƠ MI",
+        "jacket":"ÁO KHOÁC",
+        "bandana":"KHĂN",
+        "accessories":"PHỤ KIỆN",
+        "silver":"TRANG SỨC BẠC",
+        "decoration":"TRANG TRÍ",
+        "typeHere":"NHẬP Ở ĐÂY"
+    },
+    "cart":{
+        "yourCart":"GIỎ HÀNG CỦA BẠN",
+        "product":"SẢN PHẨM",
+        "remove":"XOÁ",
+        "summary":"SỐ LƯỢNG SẢN PHẨM",
+        "subtotal":"TẠM TÍNH",
+        "taxes&ship":"Thuế & phí vận chuyển được tính khi thanh toán",
+        "addNote":"Thêm ghi chú",
+        "checkOut":"THANH TOÁN",
+        "continueShopping":"TIẾP TỤC MUA SẮM",
+        "currency":"VND",
+        "size":"Kích cỡ",
+        "quantity":"Số lượng"
+    },
+    "detail":{
+        "currency":"VND",
+        "detail":"Chi Tiết",
+        "size":"Kích cỡ",
+        "sizeChart":"Bảng kích thước",
+        "only":"Chỉ còn",
+        "left":"sản phẩm",
+        "addToCart":"Thêm vào giỏ hàng"
+
+    }
+}

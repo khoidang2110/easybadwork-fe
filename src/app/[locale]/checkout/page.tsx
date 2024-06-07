@@ -5,8 +5,8 @@ import React, { FC, useEffect } from "react";
 import { CloseOutlined} from '@ant-design/icons';
 import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { updateItem } from "@/redux/slices/cartSlice";
-import { update } from "@/redux/slices/counterSlice";
+import { updateItem } from "@/redux/features/cartSlice";
+import { update } from "@/redux/features/counterSlice";
 import { IProduct } from "@/interfaces/product";
 import Link from "next/link";
 
