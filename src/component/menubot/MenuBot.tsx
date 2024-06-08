@@ -13,7 +13,7 @@ import { update } from '@/redux/features/counterSlice';
 
 import { useTranslations } from "next-intl";
 
-const MenuBot: React.FC<{  }> = ({  }) => {
+const MenuBot = () => {
   const t = useTranslations('BotMenu');
   const dispatch = useAppDispatch();
   const localeActive = useLocale();
