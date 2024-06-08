@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import HeaderComponent from '../../component/header/HeaderComponent';
 
 import FooterComponent from '../../component/footer/FooterComponent';
-import MenuBot from '@/component/menuBot/MenuBot';
+import MenuBot from '../../component/menuBot/MenuBot';
 
 import { makeStore, AppStore } from '../../redux/store';
 import { useRef } from 'react';
