@@ -12,7 +12,7 @@ import { products } from '@/mockup';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
 import { update } from '@/redux/features/counterSlice';
-import { getFilterProduct, getListProduct } from '@/utils/fetchFromAPI';
+//import { getFilterProduct, getListProduct } from '@/utils/fetchFromAPI';
 
 const MenuAdmin: React.FC<{  }> = ({  }) => {
   const dispatch = useAppDispatch();

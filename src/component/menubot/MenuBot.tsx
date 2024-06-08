@@ -39,9 +39,10 @@ const MenuBot: React.FC<{  }> = ({  }) => {
 // console.log('pathnameCategory',pathnameCategory)
   const pathnameAdmin = pathname.slice(4,9);
   const pathnameInfo = pathname.slice(4,15);
-  //console.log('pathname info:',pathnameInfo)
+  const pathnamePayment = pathname.slice(4,11);
+  console.log('pathname pay:',pathnamePayment)
   let hideMenuBar = false;
-  if (pathnameAdmin === 'admin' || pathnameInfo==='information') {
+  if (pathnameAdmin === 'admin' || pathnameInfo==='information' || pathnamePayment ==='payment') {
     hideMenuBar  = true;
   }
 
