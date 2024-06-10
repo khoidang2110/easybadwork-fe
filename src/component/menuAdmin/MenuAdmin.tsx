@@ -70,22 +70,22 @@ const MenuAdmin: React.FC<{  }> = ({  }) => {
       setTabActive(position);
     }
   };
-  useEffect(() => {
-    const countString = localStorage.getItem('count');
-    const count = countString ? parseInt(countString) : 0;
-    if (count !== null) {
-      dispatch(update(count));
-    }
-    // console.log("count load lan dau", count);
-    // handle menu bar active
-    if (pathname == '/cart') {
-      setIsToggled(!isToggled);
-      setTabActive('cart');
-    } else if (pathname == '/deadstock' || currentProduct?.status == 'deadstock') {
-      setIsToggled(!isToggled);
-      setTabActive('deadstock');
-    }
-  }, []);
+  // useEffect(() => {
+  //   const countString = localStorage.getItem('count');
+  //   const count = countString ? parseInt(countString) : 0;
+  //   if (count !== null) {
+  //     dispatch(update(count));
+  //   }
+  //   // console.log("count load lan dau", count);
+  //   // handle menu bar active
+  //   if (pathname == '/cart') {
+  //     setIsToggled(!isToggled);
+  //     setTabActive('cart');
+  //   } else if (pathname == '/deadstock' || currentProduct?.status == 'deadstock') {
+  //     setIsToggled(!isToggled);
+  //     setTabActive('deadstock');
+  //   }
+  // }, []);
   useEffect(() => {
     if (pathname == '/' || pathname == '/checkout') {
       setTabActive('');
@@ -95,16 +95,16 @@ const MenuAdmin: React.FC<{  }> = ({  }) => {
 
   const [product, setProduct] = useState(null);
 
-  useEffect(() => {
-    getListProduct()
-      .then((res) => {
-        console.log(res);
-        setProduct(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   getListProduct()
+  //     .then((res) => {
+  //       console.log(res);
+  //       setProduct(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   const handleFilter = (value: any) => {
     console.log('value', value);
