@@ -61,8 +61,21 @@ console.log("item available",itemAvailable)
     dispatch(update(count));
 
     const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
-    const productWithSize:IProductCart = {...currentProduct,size:sizeSelect,quantity:quantity,image:fullImageURLs}
-    console.log("product with size",productWithSize)
+   // const productWithSize:IProductCart = {...currentProduct,size:sizeSelect,quantity:quantity,image:fullImageURLs}
+   const productWithSize: IProductCart = {
+    product_id: currentProduct!.product_id,
+    name: currentProduct!.name,
+    price_vnd: currentProduct!.price_vnd,
+    price_usd: currentProduct!.price_usd,
+    desc_vi: currentProduct!.desc_vi,
+    desc_en: currentProduct!.desc_en,
+    category: currentProduct!.category,
+    image: fullImageURLs,
+    size: sizeSelect,
+    quantity: quantity,
+    
+  }; 
+   console.log("product with size",productWithSize)
     //cartItems.push(currentProduct);
     cartItems.push(productWithSize);
 //console.log('cartitem',cartItems)
