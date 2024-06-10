@@ -39,3 +39,11 @@ export interface IProductCart {
   quantity: number; 
   size: string; 
 }
+
+
+export interface ProductListProps {
+  product:IProduct;
+  products: IProduct[];
+  filterType?:string;
+  noStock:boolean;
+}

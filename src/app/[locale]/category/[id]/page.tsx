@@ -10,14 +10,15 @@ import { useParams } from 'next/navigation';
 
 const Category = () => {
   const params = useParams();
-  console.log('category page', params.id);
+  const filterType = Array.isArray(params.id) ? params.id[0] : params.id;
+  
   return (
     <div className="relative">
       <div className="pt-20 text-center">
         <h1 className="py-4 text-xl">cate:</h1>
         {/* <p>this place showing sold out items</p> */}
       </div>
-      <ProductList filterType={params.id} noStock={false} />
+      <ProductList filterType={filterType} noStock={false} />
     </div>
   );
 };

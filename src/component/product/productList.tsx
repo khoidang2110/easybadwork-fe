@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 import { Card } from 'antd';
 import styles from './styles.module.css';
-import { IProduct } from '@/interfaces/product';
+import { IProduct, ProductListProps } from '@/interfaces/product';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -11,12 +11,6 @@ import { productService } from '@/service/service';
 
 const { Meta } = Card;
 
-interface ProductListProps {
-  product:IProduct;
-  products: IProduct[];
-  filterType: string;
-  noStock:boolean;
-}
 
 const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
   const localeActive = useLocale();
