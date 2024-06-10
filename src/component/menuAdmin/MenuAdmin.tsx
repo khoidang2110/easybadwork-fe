@@ -41,7 +41,7 @@ const MenuAdmin: React.FC<{  }> = ({  }) => {
 
 
 
-  const currentProduct = products.find((product) => product.id === pathnameId);
+  const currentProduct = products.find((product) => product.product_id === pathnameId);
   // console.log(currentProduct?.status);
 
   const handleToggle = (position: any) => {

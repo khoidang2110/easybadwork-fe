@@ -3,7 +3,7 @@ import { Carousel } from 'antd';
 import { IProduct } from '@/interfaces/product';
 
 interface CarouselItemProps {
-  products:  string[];
+  products: string[];
   // filterType:string
 }
 const contentStyle: React.CSSProperties = {
@@ -15,33 +15,18 @@ const contentStyle: React.CSSProperties = {
   alignItems: 'center',
 };
 
-const CarouselComponent: FC<CarouselItemProps> = ({ products = [] }) => { 
-  
-  
-  
+const CarouselComponent: FC<CarouselItemProps> = ({ products = [] }) => {
   return (
-  <Carousel 
-
-  >
-{ products.map((imageUrl, index)=>(
-   <div key={index}>
-    
-   
-   <div style={contentStyle}><img src={imageUrl} alt="Description of the image"  /></div>
- </div>
-)
-  
-)
-
-}
- 
-  
-    
-   
- 
- 
-
-  </Carousel>
-);}
+    <Carousel>
+      {products.map((imageUrl, index) => (
+        <div key={index}>
+          <div style={contentStyle}>
+            <img src={imageUrl} alt="Description of the image" />
+          </div>
+        </div>
+      ))}
+    </Carousel>
+  );
+};
 
 export default CarouselComponent;
