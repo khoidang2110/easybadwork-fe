@@ -44,32 +44,32 @@ const MenuAdmin: React.FC<{  }> = ({  }) => {
   const currentProduct = products.find((product) => product.product_id === pathnameId);
   // console.log(currentProduct?.status);
 
-  const handleToggle = (position: any) => {
-    if (tabActive == '') {
-      // console.log("mở");
-      setIsToggled(!isToggled);
-      setTabActive(position);
-    } else if (tabActive == position) {
-      // console.log("đóng");
-      if (tabActive == 'deadstock') {
-        router.push('/deadstock');
-        // setIsToggled(!isToggled);
-        // setTabActive("");
-      } else if (pathname == '/deadstock' || currentProduct?.status == 'deadstock') {
-        setTabActive('deadstock');
-      } else if (pathname == '/cart') {
-        setTabActive('cart');
-      } else {
-        // console.log("case 3 đóng");
-        setIsToggled(!isToggled);
-        setTabActive('');
-      }
-    } else {
-      // console.log("chuyển");
+  // const handleToggle = (position: any) => {
+  //   if (tabActive == '') {
+  //     // console.log("mở");
+  //     setIsToggled(!isToggled);
+  //     setTabActive(position);
+  //   } else if (tabActive == position) {
+  //     // console.log("đóng");
+  //     if (tabActive == 'deadstock') {
+  //       router.push('/deadstock');
+  //       // setIsToggled(!isToggled);
+  //       // setTabActive("");
+  //     } else if (pathname == '/deadstock' || currentProduct?.status == 'deadstock') {
+  //       setTabActive('deadstock');
+  //     } else if (pathname == '/cart') {
+  //       setTabActive('cart');
+  //     } else {
+  //       // console.log("case 3 đóng");
+  //       setIsToggled(!isToggled);
+  //       setTabActive('');
+  //     }
+  //   } else {
+  //     // console.log("chuyển");
 
-      setTabActive(position);
-    }
-  };
+  //     setTabActive(position);
+  //   }
+  // };
   // useEffect(() => {
   //   const countString = localStorage.getItem('count');
   //   const count = countString ? parseInt(countString) : 0;
