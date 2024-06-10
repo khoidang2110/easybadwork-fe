@@ -18,7 +18,7 @@ const Category = () => {
         <h1 className="py-4 text-xl">cate:</h1>
         {/* <p>this place showing sold out items</p> */}
       </div>
-      <ProductList filterType={filterType} noStock={false} />
+      <ProductList  products={products}  filterType={filterType} noStock={false} />
     </div>
   );
 };
