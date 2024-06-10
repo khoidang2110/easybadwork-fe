@@ -12,6 +12,7 @@ import { productService, stockService } from '@/service/service';
 import type { DrawerProps, RadioChangeEvent } from 'antd';
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
+import { IProduct, IProductCart } from '@/interfaces/product';
 const Detail = () => {
 
 
@@ -19,7 +20,7 @@ const Detail = () => {
   const localeActive = useLocale();
  const t = useTranslations('detail');
   // console.log('local active',localeActive)
-const [currentProduct, setCurrentProduct] = useState({});
+const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
 console.log("currentProduct", currentProduct);
 const baseURL = 'http://14.225.218.217:8081';
 const fullImageURLs = currentProduct?.image?.map(item => `${baseURL}${item.replace('/app', '')}`);
@@ -60,7 +61,8 @@ console.log("item available",itemAvailable)
     dispatch(update(count));
 
     const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
-   const productWithSize = {...currentProduct,size:sizeSelect,quantity:quantity,image:fullImageURLs}
+    const productWithSize:IProductCart = {...currentProduct,size:sizeSelect,quantity:quantity,image:fullImageURLs}
+    console.log("product with size",productWithSize)
     //cartItems.push(currentProduct);
     cartItems.push(productWithSize);
 //console.log('cartitem',cartItems)
