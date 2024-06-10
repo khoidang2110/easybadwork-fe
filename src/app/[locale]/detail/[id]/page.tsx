@@ -23,7 +23,7 @@ const Detail = () => {
 const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
 console.log("currentProduct", currentProduct);
 const baseURL = 'http://14.225.218.217:8081';
-const fullImageURLs = currentProduct?.image?.map(item => `${baseURL}${item.replace('/app', '')}`);
+const fullImageURLs = currentProduct?.image?.map(item => `${baseURL}${item.replace('/app', '')}`)|| [];
 console.log("fullImageURLs",fullImageURLs);
 
   const [stock, setStock] = useState<IStock[]>([]);
