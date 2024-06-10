@@ -106,10 +106,10 @@ const MenuAdmin: React.FC<{  }> = ({  }) => {
   //     });
   // }, []);
 
-  const handleFilter = (value: any) => {
-    console.log('value', value);
-    getFilterProduct(value.toLowerCase());
-  };
+  // const handleFilter = (value: any) => {
+  //   console.log('value', value);
+  //   getFilterProduct(value.toLowerCase());
+  // };
 
   const dataShop = [
     { name: 'TEE', id: 1 },
