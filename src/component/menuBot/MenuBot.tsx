@@ -47,7 +47,7 @@ const MenuBot = () => {
   }
 
   //console.log("pathname id", pathnameId);
-  const currentProduct = products.find((product) => product.id === pathnameId);
+  const currentProduct = products.find((product) => product.product_id === pathnameId);
   // console.log(currentProduct?.status);
 
   const handleToggle = (position: any) => {
@@ -62,7 +62,7 @@ const MenuBot = () => {
         router.push(`/${localeActive}/deadstock`);
         // setIsToggled(!isToggled);
         // setTabActive("");
-      } else if (pathnameLocale == '/deadstock' || currentProduct?.status == 'deadstock') {
+      } else if (pathnameLocale == '/deadstock') {
         setTabActive('deadstock');
       } else if (pathnameLocale == '/cart') {
         setTabActive('cart');
@@ -100,7 +100,7 @@ const MenuBot = () => {
     if (pathnameLocale == '/cart') {
       setIsToggled(!isToggled);
       setTabActive('cart');
-    } else if (pathnameLocale == '/deadstock' || currentProduct?.status == 'deadstock') {
+    } else if (pathnameLocale == '/deadstock') {
       setIsToggled(!isToggled);
       setTabActive('deadstock');
     }
