@@ -1,1 +1,1 @@
-export const NO_IMAGE = "/images/temp/rectangle.png";
+export const NO_IMAGE = "/images/rectangle.png";

@@ -10,6 +10,7 @@ import { update } from "@/redux/features/counterSlice";
 import { IProduct } from "@/interfaces/product";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { NO_IMAGE } from "@/constant";
 // interface ProductProps {
 //   products: IProduct[];
 
@@ -70,12 +71,27 @@ if(localeActive=='vi'){
       <div>
         {cartRedux.map((item,index) => (
           <div className="border-dashed border rounded border-black p-4 flex flex-row mb-2 " key={index}>
-            <img
-              src={item.image[0]}
+            {/* <img
+              src={ item.image[0] ?? NO_IMAGE}
               alt=""
               className="mr-3"
               style={{ width: "65px", height: "auto", objectFit: "cover" }}
-            />
+            /> */}
+            {item.image && item.image.length > 0 ? (
+              <img
+                src={item.image[0]}
+                alt=""
+                className="mr-3"
+                style={{ width: "65px", height: "auto", objectFit: "cover" }}
+              />
+            ) : (
+              <img
+                src={NO_IMAGE} // You can set a default image path if needed
+                alt="default"
+                className="mr-3"
+                style={{ width: "65px", height: "auto", objectFit: "cover" }}
+              />
+            )}
             <div className="mr-10 w-full text-left">
               <p>{item.name}</p>
               <p>{t('size')}: {item.size}</p>
