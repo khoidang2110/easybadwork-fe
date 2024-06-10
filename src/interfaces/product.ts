@@ -1,8 +1,10 @@
 
 
 export interface IStock {
+  stock_id:number;
   size: string;
   stock: number;
+  product_id:number;
 }
 
 export interface IProduct {

@@ -12,7 +12,7 @@ import { productService, stockService } from '@/service/service';
 import type { DrawerProps, RadioChangeEvent } from 'antd';
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
-import { IProduct, IProductCart } from '@/interfaces/product';
+import { IProduct, IProductCart, IStock } from '@/interfaces/product';
 const Detail = () => {
 
 
@@ -26,7 +26,7 @@ const baseURL = 'http://14.225.218.217:8081';
 const fullImageURLs = currentProduct?.image?.map(item => `${baseURL}${item.replace('/app', '')}`);
 console.log("fullImageURLs",fullImageURLs);
 
-  const [stock, setStock] = useState([]);
+  const [stock, setStock] = useState<IStock[]>([]);
 // const [sizeOption, setSizeOption] = useState([]);
 const [sizeSelect, setSizeSelect] = useState('');
 const [quantity, setQuantity] = useState(1);
@@ -34,7 +34,7 @@ console.log('sizeSelect',sizeSelect)
 const [itemAvailable, setItemAvailable] = useState(0);
 console.log("item available",itemAvailable)
 // console.log('sizeOption',sizeOption)
-  //console.log('stock',stock)
+  console.log('stock',stock)
 
   const [isToggled, setIsToggled] = useState(true);
   //const [sizeActive, setsizeActive] = useState('');
@@ -106,7 +106,7 @@ if(calculation=="-"){
 
   };
 
-  const handleSizeChange = (position: any) => {
+  const handleSizeChange = (position: string) => {
 //console.log('position',position)
 
     // if(sizeSelect==''){
@@ -140,7 +140,7 @@ if(calculation=="-"){
         // setProducts(res.data.content);
 
         // filter size hết
-        const filteredInventory = res.data.filter(item => item.stock !== 0);
+        const filteredInventory:IStock[] = res.data.filter((item:IStock) => item.stock !== 0);
         setStock(filteredInventory);
         // const options = filteredInventory.map(item=>({
         //   value:item.size,
@@ -202,7 +202,7 @@ if(currentProduct){
         <p className="uppercase text-xl mb-10">{currentProduct?.name}</p>
         <div className="mb-8">
           <p>{t('detail')}</p>
-          <p>{localeActive=='vi'?  currentProduct?.decs_vi : currentProduct?.decs_en}</p>
+          <p>{localeActive=='vi'?  currentProduct?.desc_vi : currentProduct?.desc_en}</p>
         </div>
         <div className="flex flex-row items-center  justify-between">
 
