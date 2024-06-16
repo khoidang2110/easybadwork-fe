@@ -82,7 +82,7 @@ if(localeActive=='vi'){
                 src={item.image[0]}
                 alt=""
                 className="mr-3"
-                style={{ width: "65px", height: "auto", objectFit: "cover" }}
+                style={{ width: "65px", height: "auto", objectFit: "contain" }}
               />
             ) : (
               <img
