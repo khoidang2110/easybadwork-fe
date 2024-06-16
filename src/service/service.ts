@@ -1,5 +1,5 @@
 import { axiosClient } from "./configs";
-import { IProduct } from '../interfaces/product';
+import { IOrder, IProduct } from '../interfaces/product';
 
 
 export let productService = {
@@ -15,5 +15,11 @@ export let productService = {
   export let stockService = {
     getStockById:(product_id:number)=>{
         return axiosClient.get(`/stock/get-stock-by-id?product_id=${product_id}`)
+    }
+  }
+
+  export let orderService = {
+    createOrder:(order:IOrder)=>{
+      return axiosClient.post(`/order/create-order`,order)
     }
   }

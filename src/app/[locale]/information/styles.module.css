@@ -1,0 +1,22 @@
+.navbar {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: fixed;
+  width: 100%;
+  top: 0; /* At the top */
+  z-index: 99;
+}
+
+.shrink {
+  padding: 10px;
+}
+.headerImg{
+  /* mix-blend-mode: difference; */
+  position: relative;
+  /* top: 18px; */
+  left: 51%;
+  transform: translate(-50%);
+  z-index: 40;
+  padding-bottom: 10px;
+}

@@ -41,7 +41,37 @@
         "sizeChart":"Size Chart",
         "only":"Only",
         "left":"left",
-        "addToCart":"Add to Cart"
+        "addToCart":"Add to Cart",
+        "inStock" : "In stock",
+        "lowStock" : "Low stock",
+        "noStock": "No stock"
 
+    },
+    "info":{
+        "cart":"Cart",
+        "information":"Information",
+        "payment":"Payment",
+        "shippingAddress":"SHIPPING ADDRESS",
+        "fullName":"Full Name",
+        "address":"Address",
+        "dist": "Dist",
+        "city": "City",
+        "phone": "Phone",
+        "continueToPayment":"CONTINUE TO PAYMENT",
+        "pleaseInputYour": "Please input your"
+    },
+    "payment":{
+        "cart":"Cart",
+        "information":"Information",
+        "payment":"Payment",
+        "orderTotal": "ORDER TOTAL",
+        "contact": "CONTACT",
+        "phone":"Phone",
+        "shipTo":"SHIP TO",
+        "change":"CHANGE",
+        "paymentMethod": "PAYMENT METHOD",
+        "banking": "BANKING",
+        "completeOrder":"COMPLETE ORDER", 
+        "currency":"USD"
     }
 }

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { productService } from '@/service/service';
+import { NO_IMAGE } from '@/constant';
 // import { getListProduct, getFilterProduct } from '../../utils/fetchFromAPI';
 
 const { Meta } = Card;
@@ -63,7 +64,7 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
                 <div className={styles.cardImg}>
                   <Link href={`/${localeActive}/detail/${product.product_id}/`  }>
                     {/* <img alt={product.name} src={product.image[0]} /> */}
-                    <img alt={product.name} src={`http://14.225.218.217:8081/${product.image[0]?.slice(5)}`} />
+                    <img alt={product.name} src={product.image[0] ? `http://14.225.218.217:8081/${product.image[0]?.slice(5)}` : NO_IMAGE} />
                   </Link>
                 </div>
               }

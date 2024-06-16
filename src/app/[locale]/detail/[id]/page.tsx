@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Drawer} from 'antd';
+import { Drawer,Select } from 'antd';
 import { useParams } from "next/navigation";
 import { products } from "@/mockup";
 import CarouselComponent from "@/component/carousel/CarouselComponent";
@@ -13,8 +13,11 @@ import type { DrawerProps, RadioChangeEvent } from 'antd';
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
 import { IProduct, IProductCart, IStock } from '@/interfaces/product';
+import { NO_IMAGE } from '@/constant';
 const Detail = () => {
-
+  const handleChange = (value: { value: string; label: React.ReactNode }) => {
+    console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+  };
 
 
   const localeActive = useLocale();
@@ -23,7 +26,10 @@ const Detail = () => {
 const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
 console.log("currentProduct", currentProduct);
 const baseURL = 'http://14.225.218.217:8081';
-const fullImageURLs = currentProduct?.image?.map(item => `${baseURL}${item.replace('/app', '')}`)|| [];
+let fullImageURLs = currentProduct?.image?.map(item => `${baseURL}${item.replace('/app', '')}`)|| [];
+if (fullImageURLs.length == 0){
+fullImageURLs = [NO_IMAGE]
+}
 console.log("fullImageURLs",fullImageURLs);
 
   const [stock, setStock] = useState<IStock[]>([]);
@@ -194,6 +200,19 @@ if(currentProduct){
   }
 }
 
+let showStock = t('noStock')
+//console.log('showstock',showStock)
+if(itemAvailable>3){
+  showStock= t('inStock')
+  //console.log('showstock in',showStock)
+}else if(itemAvailable<=3 && itemAvailable !=0){
+showStock = t('lowStock')
+//console.log('showstock low',showStock)
+}else if(itemAvailable==0){
+  showStock = t('noStock')
+ // console.log('showstock no',showStock)
+}
+
   return (
     <section className="pt-1">
       <CarouselComponent products={fullImageURLs} />
@@ -222,7 +241,11 @@ if(currentProduct){
         ))}
           </div>
 <div className='pt-2'>
-<p>{t('only')} {itemAvailable} {t('left')}</p>
+{/* <p>{t('only')} {itemAvailable} {t('left')}</p> */}
+<p>{showStock}</p>
+
+
+
 </div> { stock.length>0 && <div
           className=" rounded p-4 mb-2  mt-8 flex justify-between"
           style={{ borderColor:'black'   , borderWidth: '1px'}}

@@ -41,7 +41,37 @@
         "sizeChart":"Bảng kích thước",
         "only":"Chỉ còn",
         "left":"sản phẩm",
-        "addToCart":"Thêm vào giỏ hàng"
+        "addToCart":"Thêm vào giỏ hàng",
+        "inStock" : "Còn hàng",
+        "lowStock" : "Còn ít hàng",
+        "noStock": "Hết hàng"
 
+    },
+    "info":{
+        "cart":"Giỏ hàng",
+        "information":"Thông tin",
+        "payment":"Thanh Toán",
+        "shippingAddress":"ĐỊA CHỈ GIAO HÀNG",
+        "fullName":"Tên đầy đủ",
+        "address":"Địa chỉ",
+        "dist": "Quận",
+        "city": "Thành phố",
+        "phone": "Số điện thoại",
+        "continueToPayment":"TIẾP TỤC THANH TOÁN",
+        "pleaseInputYour": "Làm ơn nhập"
+    },
+    "payment":{
+        "cart":"Giỏ hàng",
+        "information":"Thông tin",
+        "payment":"Thanh Toán",
+        "orderTotal": "TỔNG ĐƠN HÀNG",
+        "contact": "LIÊN HỆ",
+        "phone":"Số điện thoại",
+        "shipTo":"GIAO HÀNG ĐẾN",
+        "change":"THAY ĐỔI",
+        "paymentMethod": "PHƯƠNG THỨC THANH TOÁN",
+        "banking": "CHUYỂN KHOẢN",
+        "completeOrder":"HOÀN TẤT ĐẶT HÀNG",
+        "currency":"VND"
     }
 }

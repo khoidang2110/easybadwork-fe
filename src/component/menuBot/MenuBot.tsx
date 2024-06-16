@@ -188,7 +188,7 @@ const MenuBot = () => {
           <div className="flex justify-between">
             <button
               onClick={() => handleToggle('menu')}
-              className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'menu' ? styles.fButtonActive : ''}`}
+              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi :  styles.fButton} ${isToggled && tabActive == 'menu' ? styles.fButtonActive : ''}`}
             >
               <svg
                 // className="w-5 h-3"
@@ -227,19 +227,19 @@ const MenuBot = () => {
             </button>
 
             <button
-              className={`z-30  ${styles.fButton} ${isToggled && tabActive == 'shop' ? styles.fButtonActive : ''}`}
+              className={`z-30  ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'shop' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('shop')}
             >
           {t('shop')} 
             </button>
             <button
-              className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'search' ? styles.fButtonActive : ''}`}
+              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'search' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('search')}
             >
            {t('search')} 
             </button>
             <button
-              className={`z-30 ${styles.fButton} ${styles.lineThrough} ${
+              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${styles.lineThrough} ${
                 isToggled && tabActive == 'deadstock' ? styles.fButtonActive : ''
               }`}
               onClick={() => handleToggle('deadstock')}
@@ -250,7 +250,7 @@ const MenuBot = () => {
             </button>
 
             <a
-              className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'cart' ? styles.fButtonActive : ''}`}
+              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'cart' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('cart')}
             >
               <Link href={`/${localeActive}/cart`} className="">

@@ -11,20 +11,24 @@ import { usePathname, useRouter } from 'next/navigation';
 
 
 const HeaderComponent = () => {
+  const localeActive = useLocale();
 
   const pathname = usePathname();
 
-  const pathnameLocale = pathname.slice(1,3);
-  console.log('pathname locale:',pathnameLocale)
+   const pathnameChild = pathname.slice(4,15);
+  console.log('pathname child:',pathnameChild)
   // let currentLocale = "en";
   // if (pathnameLocale === 'vi') {
   //   currentLocale = pathnameLocale;
   // }
-
+let hideHead = false;
+if(pathnameChild=="information" || pathnameChild=='payment'){
+  hideHead=true;
+}
   const [check, setCheck] = useState(true);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
- // const localActive = useLocale();
+
 
   
  // let onChecked = true;
@@ -41,7 +45,7 @@ const HeaderComponent = () => {
     });
   };
   useEffect(() => {
-    if(pathnameLocale=='en')
+    if(localeActive=='en')
     setCheck(false)
   
   
@@ -53,10 +57,11 @@ const HeaderComponent = () => {
     <div>
       <div className="">
         <div className="flex flex-col justify-between items-center ">
-          <Link href={'/'} className="pt-3">
+          {hideHead ? '' :  <Link href={'/'} className="pt-3">
             {' '}
             <Image width={90} height={90} src="/images/khimhead.png" alt="menu" className={styles.headerImg} />
-          </Link>
+          </Link> }
+         
         </div>
         
       </div>

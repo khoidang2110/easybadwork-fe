@@ -68,7 +68,30 @@ padding-right: 1rem;
     position: relative;
     font-weight: 300;
 }
-
+.fButtonVi{
+  --tw-border-opacity: 1;
+    border-color: rgb(243 243 243 / var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(243 243 243 / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(0 0 0 / var(--tw-text-opacity));
+    display: flex;
+    height: 30px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: transparent;
+    padding-left: .2rem;
+    padding-right: .2rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+    position: relative;
+    font-weight: 300;
+}
 .fDropDown{
   width: 100%;
   display: flex;

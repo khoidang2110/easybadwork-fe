@@ -39,3 +39,31 @@ export interface ProductListProps {
   filterType?:string;
   noStock:boolean;
 }
+
+export interface IInfo{
+  email?:string;
+  country?:string;
+  fullName?: string;
+  address?:string;
+  dist?:string;
+  city?:string;
+  phone?:string;
+}
+
+export interface ICartItem {
+  product_id: number;
+  size: string;
+  quantity: number;
+}
+
+export interface IOrder {
+  full_name: string;
+  email: string;
+  address: string;
+  dist?:string;
+  city?:string;
+  phone:string;
+  note?:string;
+  payment:string;
+  cart: ICartItem[];
+}
