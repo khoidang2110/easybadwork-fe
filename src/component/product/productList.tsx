@@ -64,7 +64,8 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
                 <div className={styles.cardImg}>
                   <Link href={`/${localeActive}/detail/${product.product_id}/`  }>
                     {/* <img alt={product.name} src={product.image[0]} /> */}
-                    <img alt={product.name} src={product.image[0] ? `http://14.225.218.217:8081/${product.image[0]?.slice(5)}` : NO_IMAGE} />
+                    {/* <img alt={product.name} src={product.image[0] ? `http://14.225.218.217:8081/${product.image[0]?.slice(5)}` : NO_IMAGE} /> */}
+                    <img alt={product.name} src={product.image[0] ? `https://api.easybadwork.com/${product.image[0]?.slice(5)}` : NO_IMAGE} />
                   </Link>
                 </div>
               }

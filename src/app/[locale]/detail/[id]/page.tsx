@@ -25,7 +25,8 @@ const Detail = () => {
   // console.log('local active',localeActive)
 const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
 console.log("currentProduct", currentProduct);
-const baseURL = 'http://14.225.218.217:8081';
+// const baseURL = 'http://14.225.218.217:8081';
+const baseURL = 'https://api.easybadwork.com/';
 let fullImageURLs = currentProduct?.image?.map(item => `${baseURL}${item.replace('/app', '')}`)|| [];
 if (fullImageURLs.length == 0){
 fullImageURLs = [NO_IMAGE]
