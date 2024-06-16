@@ -14,7 +14,8 @@ import styles from './styles.module.css';
 import Image from 'next/image';
 import { orderService } from '@/service/service';
 import { ICartItem, IOrder } from '@/interfaces/product';
-
+import { Button, Drawer } from 'antd';
+import type { DrawerProps } from 'antd';
 type FieldType = {
   email: string;
   country: string;
@@ -25,6 +26,14 @@ type FieldType = {
   phone: string;
 };
 const Payment = () => {
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   const dispatch = useAppDispatch();
   const [info, setInfo] = useState<FieldType>({
     email: '',
@@ -103,6 +112,7 @@ const newOrder:IOrder = {
 
         // form.resetFields();
         // setRandomNumber(Math.random());
+        showDrawer();
       })
       .catch((err) => {
         console.log('🚀 ~ file: New order.jsx:49 ~ onFinish ~ err:', err);
@@ -218,6 +228,29 @@ const newOrder:IOrder = {
           </button>
         </div>
       </Link>
+   
+      <Drawer
+        title=""
+        placement="top"
+        width={100}
+        // height={80}
+        closable={false}
+        onClose={onClose}
+        open={open}
+     style={{}}
+      >
+        <div>
+        <Image width={90} height={90} src="/images/khimhead.png" alt="menu" className={styles.headerImg} />
+        <p className='pt-10 font-bold'>CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</p>
+        <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
+          <button onClick={onClose} className="pr-2">
+            ĐÓNG
+          </button>
+        </div>
+        
+        </div>
+  
+      </Drawer>
     </div>
   );
 };
