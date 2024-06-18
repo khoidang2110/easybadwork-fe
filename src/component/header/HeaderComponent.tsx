@@ -22,7 +22,7 @@ const HeaderComponent = () => {
   //   currentLocale = pathnameLocale;
   // }
 let hideHead = false;
-if(pathnameChild=="information" || pathnameChild=='payment'){
+if(pathnameChild=="information" || pathnameChild=='payment' ){
   hideHead=true;
 }
   const [check, setCheck] = useState(true);

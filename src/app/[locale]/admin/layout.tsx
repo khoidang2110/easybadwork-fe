@@ -1,8 +1,9 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
   import { Button, Layout, Menu, theme } from 'antd';
 import MenuAdmin from '@/component/menuAdmin/MenuAdmin';
-
+import { useRouter } from 'next/navigation'
+import { useLocale } from 'next-intl';
   const { Header, Sider, Content } = Layout;
 
 export default function AdminLayout({
@@ -14,13 +15,26 @@ export default function AdminLayout({
  const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const router = useRouter();
+  const localeActive = useLocale();
+  let loginPage = false;
 
+useEffect(() => {
+ 
+  const loginInfo = localStorage?.getItem("USER");
+  console.log('login info',loginInfo)
 
+if (loginInfo ==`"welcome!"`) {
+  loginPage = true;
+ return;
+}else {
+  router.push(`/${localeActive}/login`);
+}
+}, []);
     return (
       <section>
        <body>
-               
-                      <Layout>
+               { loginPage ? <p> Please login</p> :<Layout>
             <Sider
               breakpoint="lg"
               collapsedWidth="0"
@@ -58,7 +72,8 @@ export default function AdminLayout({
               </Content>
         
             </Layout>
-          </Layout>
+          </Layout>}
+                      
          
             </body>
    

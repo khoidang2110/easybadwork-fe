@@ -3,7 +3,7 @@ import './globals.css';
 import React from 'react';
 
 import HeaderComponent from '../../component/header/HeaderComponent';
-
+//import { Toaster } from "react-hot-toast";
 import FooterComponent from '../../component/footer/FooterComponent';
 import MenuBot from '@/component/menuBot/MenuBot';
 
@@ -23,6 +23,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className="p-2 bg-white">
+      {/* <Toaster position="top-right" reverseOrder={false} /> */}
         <HeaderComponent />
         <StoreProvider>
           <div className="pt-10">
