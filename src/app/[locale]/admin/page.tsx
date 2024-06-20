@@ -38,7 +38,7 @@ interface DataType {
 
 
 const ShopPage = () => {
-  const baseURL = 'https://api.easybadwork.com';
+
   const [allProduct, setAllProduct] =  useState<any[]>([]);
   console.log('all product',allProduct)
 const [dayPick, setDayPick] = useState<string>('');
@@ -200,7 +200,7 @@ const LittleColumns: TableProps<LittleDataType>['columns'] = [
   }, []);
   return(
     
-  <div className="">
+  <>
     <div className='flex'>
     <p className='pb-2 pr-2'>Xem đơn đặt hàng theo ngày</p>
     <DatePicker className='mb-2' onChange={onChange} />
@@ -225,7 +225,7 @@ const LittleColumns: TableProps<LittleDataType>['columns'] = [
         <Table columns={LittleColumns} dataSource={currentOrder?.order_cart} />
 
       </Drawer>
-  </div>
+  </>
 );}
 
 export default ShopPage;

@@ -33,7 +33,7 @@ if (loginInfo ==`"welcome!"`) {
 }, []);
     return (
       <section>
-       <body>
+      
                { loginPage ? <p> Please login</p> :<Layout>
             <Sider
               breakpoint="lg"
@@ -75,7 +75,7 @@ if (loginInfo ==`"welcome!"`) {
           </Layout>}
                       
          
-            </body>
+           
    
       </section>
     )

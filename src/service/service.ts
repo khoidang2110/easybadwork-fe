@@ -24,6 +24,9 @@ export let productService = {
     },
     getStockByDay:(start_day:string,end_day:string)=>{
       return axiosClient.get(`/order/get-order-by-day?start_day=${start_day}&end_day=${end_day}&page=1&size=50`)
+    },
+    createStock:(value:any)=>{
+      return axiosClient.post(`/stock/create-stock`,value)
     }
   }
 

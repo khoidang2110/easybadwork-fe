@@ -16,13 +16,15 @@ const HeaderComponent = () => {
   const pathname = usePathname();
 
    const pathnameChild = pathname.slice(4,15);
-  console.log('pathname child:',pathnameChild)
+   const pathnameAdmin = pathname.slice(4,9);
+  //console.log('pathname child:',pathnameChild)
+  //console.log('header pathname admin:',pathnameAdmin);
   // let currentLocale = "en";
   // if (pathnameLocale === 'vi') {
   //   currentLocale = pathnameLocale;
   // }
 let hideHead = false;
-if(pathnameChild=="information" || pathnameChild=='payment' ){
+if(pathnameChild=="information" || pathnameChild=='payment' || pathnameAdmin=='admin' ){
   hideHead=true;
 }
   const [check, setCheck] = useState(true);
