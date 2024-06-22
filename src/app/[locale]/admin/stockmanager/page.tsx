@@ -1,55 +1,38 @@
-"use client"
+'use client';
 import React, { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  Cascader,
-  Checkbox,
-  ColorPicker,
- 
-  Form,
-  Input,
-  InputNumber,
- 
-  Select,
-  Slider,
-  Switch,
-  TreeSelect,
- 
-} from 'antd';
+import { Cascader, Checkbox, ColorPicker, Form, Input, InputNumber, Select, Slider, Switch, TreeSelect } from 'antd';
 import type { FormProps } from 'antd';
 import { categoryService, productService, stockService } from '@/service/service';
 import type { TableProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Space, Table, Tag, DatePicker, Button, Drawer, Radio, Modal  } from 'antd';
+import { Space, Table, Tag, DatePicker, Button, Drawer, Radio, Modal } from 'antd';
 import { message, Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
+import Category from '../../category/[id]/page';
 const { Dragger } = Upload;
 
 interface DataType {
-  order_id:string;
+  order_id: string;
   full_name: string;
-  email:string;
-  phone:string;
-
- 
+  email: string;
+  phone: string;
 }
-// interface StockDataType {
-//   product_id:number;
-//   size: string;
-//  stock: number;
-//  stock_id: number;
-
-// }
+interface StockDataType {
+  product_id: number;
+  size: string;
+  stock: number;
+  stock_id: number;
+}
 type FieldType = {
   category_is: number;
   name: string;
   price_vnd: number;
   price_usd: number;
-  desc_vi:string;
-  desc_en:string;
-file:any;
-
+  desc_vi: string;
+  desc_en: string;
+  file: any;
 };
 type FieldTypeStock = {
   size: string;
@@ -78,26 +61,32 @@ const props: UploadProps = {
   },
 };
 const StockManager = () => {
+  const [formStock] = Form.useForm();
+  const [formProduct] = Form.useForm();
   const baseURL = 'https://api.easybadwork.com';
-  const [allProduct, setAllProduct] =  useState<any[]>([
-
-  ]);
-  const [allCategory, setAllCategory]  = useState<any[]>([]);
+  const [randomNumber, setRandomNumber] = useState(11);
+  const [allProduct, setAllProduct] = useState<any[]>([]);
+  const [allCategory, setAllCategory] = useState<any[]>([]);
   const [openStock, setOpenStock] = useState(false);
   const [open, setOpen] = useState(false);
-const [currentProduct, setCurrentProduct] = useState<any>(null);
-const [currentStock, setCurrentStock] = useState<any[]>([]);
-  // console.log('category',allCategory)
+  const [currentProduct, setCurrentProduct] = useState<any>(null);
+  const [currentStock, setCurrentStock] = useState<any[]>([]);
+
+  const [currentStockItem, setCurrentStockItem] = useState<any[]>([]);
+  const [modalStockTitle, setModalStockTitle] = useState('Add stock');
+  const [modalProductTitle, setModalProductTitle] = useState('Add product');
+  console.log('all category',allCategory)
   // console.log('all product',allProduct)
-  console.log('current stock',currentStock)
-console.log('current product',currentProduct)
+  console.log('current stock', currentStock);
+  console.log('current product', currentProduct);
+  //add product layout
   const columns: TableProps<DataType>['columns'] = [
     {
       title: 'Image',
       dataIndex: 'image',
       key: 'image',
       // render: (item) => <a>{item.slice(4)}</a>,
-      render: (item) => item ? <img src={baseURL + `${item[0]?.slice(4)}`} alt="product" width={50} /> : 'No image',
+      render: (item) => (item ? <img src={baseURL + `${item[0]?.slice(4)}`} alt="product" width={50} /> : 'No image'),
     },
     {
       title: 'Category',
@@ -117,32 +106,28 @@ console.log('current product',currentProduct)
     {
       title: 'Price_usd',
       key: 'price_usd',
-    dataIndex:'price_usd',
-      
+      dataIndex: 'price_usd',
     },
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-       <button
-        // onClick={() => showDrawer(record)}
-        >
-
-       <a>Edit</a>
-       </button>
-       <button
-        onClick={()=>showDrawerStock(record)}
-        >
-
-       <a>Stock</a>
-       </button>
+          <button onClick={() => showModalProduct('Update product',record)}>
+            <a>Edit</a>
+          </button>
+          <button onClick={() => showDrawerStock(record)}>
+            <a>Stock</a>
+          </button>
+          <button onClick={() => deleteProduct(record.product_id)} >
+            <a>Delete</a>
+          </button>
         </Space>
       ),
     },
-
   ];
-  const stockColumns: TableProps<DataType>['columns'] = [
+  //add stock layout
+  const stockColumns: TableProps<StockDataType>['columns'] = [
     {
       title: 'Size',
       dataIndex: 'size',
@@ -154,27 +139,38 @@ console.log('current product',currentProduct)
       dataIndex: 'stock',
       key: 'stock',
     },
-    
+
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a>Update </a>
-          <a>Delete</a>
+          <button onClick={() => showModalStock('Update stock', record)}>
+            {' '}
+            <a>Update </a>{' '}
+          </button>
+
+          <button onClick={() => deleteStock(record.stock_id)}>
+            <a>Delete </a>
+          </button>
         </Space>
       ),
     },
-  ]; 
+  ];
 
-
-//modal
-  const showModal = () => {
+  //modal product input
+  const showModalProduct = (value: string,record:any) => {
     setOpen(true);
+    setModalProductTitle(value);
+    setCurrentProduct(record);
+    setRandomNumber(Math.random());
   };
+// on finish product
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    console.log('Success:', values);
 
- const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-  console.log('Success:', values);
+//case create new product
+if (modalProductTitle == 'Add product'){
   const formData = new FormData();
 
   Object.keys(values).forEach((key) => {
@@ -187,232 +183,359 @@ console.log('current product',currentProduct)
 
   try {
     const res = await productService.createProduct(formData);
-    console.log('formData truyền vào',formData)
-    console.log("Product Create Response:", res.data);
+    console.log('formData truyền vào', formData);
+    console.log('Product Create Response:', res.data);
     setOpen(false);
     message.success(` PRODUCT CREATED.`);
   } catch (err) {
-    console.error("Product Create Error:", err);
+    console.error('Product Create Error:', err);
   }
-};
+}else if(modalProductTitle=='Update product'){
+  //case update product
+  const newValue = {...values,product_id:currentProduct.product_id}
+  console.log('new value update', newValue);
 
-const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
+productService
+.updateProduct(newValue)
+.then((result) => {
+  console.log(result)
+   message.success(` PRODUCT UPDATED.`);
+   setOpen(false);
+   fetchAllProduct();
+}).catch((err) => {
+  console.log(err)
+});
 
+}
+   
 
-const showDrawerStock = (record) => {
-  setOpenStock(true);
-  setCurrentProduct(record)
-  //setCurrentStock
- // console.log('get info stock',record)
-};
+//case update product
 
-const onCloseStock = () => {
-  setOpenStock(false);
-};
-// modal add stock 
-const [isModalOpenStock, setIsModalOpenStock] = useState(false);
+  };
 
-const showModalStock = () => {
-  setIsModalOpenStock(true);
-};
+  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
 
-const handleOkStock = () => {
-  setIsModalOpenStock(false);
-};
+  const showDrawerStock = (record) => {
+    setOpenStock(true);
 
-const handleCancelStock = () => {
-  setIsModalOpenStock(false);
-};
-// form add size - stock
-const onFinishStock: FormProps<FieldTypeStock>['onFinish'] = async (values) => {
-  console.log('Success stock:', values);
-  const newValues = { ...values, product_id: currentProduct.product_id };
-  try {
-    const res = await stockService.createStock(newValues);
-    console.log('Stock Create Response:', res.data);
-    message.success(`STOCK CREATED.`);
+    setCurrentProduct(record);
+    //setCurrentStock
+    // console.log('get info stock',record)
+  };
+
+  const onCloseStock = () => {
+    setOpenStock(false);
+  };
+  // modal add stock
+  const [isModalOpenStock, setIsModalOpenStock] = useState(false);
+
+  const showModalStock = (value: string, record) => {
+    setIsModalOpenStock(true);
+    setModalStockTitle(value);
+    //console.log('record update pick',record)
+    setCurrentStockItem(record);
+    // lay size vào stock render
+    // "size":"L",
+    // "stock":12,
+    // "product_id":1
+    setRandomNumber(Math.random());
+  };
+
+  const handleOkStock = () => {
     setIsModalOpenStock(false);
-    // setOpenStock(false);
-  } catch (err) {
-    console.error("Stock Create Error:", err);
-  }
-};
+  };
 
-const onFinishFailedStock: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-  console.log('Failed stock:', errorInfo);
-};
+  const handleCancelStock = () => {
+    setIsModalOpenStock(false);
+  };
+  // form add size - stock
+  const onFinishStock: FormProps<FieldTypeStock>['onFinish'] = async (values) => {
+    console.log('Success stock:', values);
 
+    // if title add ->
+    if (modalStockTitle == 'Add stock') {
+      const newValues = { ...values, product_id: currentProduct.product_id };
+      try {
+        const res = await stockService.createStock(newValues);
+        console.log('Stock Create Response:', res.data);
+        message.success(`STOCK CREATED.`);
+        setIsModalOpenStock(false);
+        // setOpenStock(false);
+        setRandomNumber(Math.random());
+      } catch (err) {
+        console.error('Stock Create Error:', err);
+      }
+    } else if (modalStockTitle == 'Update stock') {
+      //if title update ->
+      const newValues = { ...values, product_id: currentProduct.product_id };
+      try {
+        const res = await stockService.updateStock(newValues);
+        console.log('Stock update Response:', res.data);
+        message.success(`STOCK UPDATED.`);
+        setIsModalOpenStock(false);
+        // setOpenStock(false);
+        setRandomNumber(Math.random());
+      } catch (err) {
+        console.error('Stock update Error:', err);
+      }
+    }
+  };
 
-useEffect(() => {
-  if (currentProduct) {
+  const onFinishFailedStock: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+    console.log('Failed stock:', errorInfo);
+  };
+  const fetchCurrentStock = () => {
+    if (currentProduct) {
+      stockService
+        .getStockById(currentProduct.product_id)
+        .then((res) => {
+          const takeData = res.data;
+          console.log(res.data);
+          console.log('res.data.type', takeData[0].type);
+          if (res.data.slice(0, 2) == 'No') {
+            console.log('case1');
+            setCurrentStock([]);
+            // setCurrentStock([{
+            //   product_id: 0,
+            //   size:'',
+            //   stock:0,
+            //   stock_id:0
+            // }]);
+          } else {
+            console.log('case2');
+            setCurrentStock(res.data);
+          }
+          // setCurrentStock(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  const deleteStock = (stock_id: number) => {
     stockService
-      .getStockById(currentProduct.product_id)
+      .deleteStock(stock_id)
       .then((res) => {
-        setCurrentStock(res.data);
-      }).catch((err) => {
+        console.log(res);
+        message.success(`You just delete the product.`);
+        fetchAllProduct()
+      })
+      .catch((err) => {
         console.log(err);
       });
+    setRandomNumber(Math.random());
+  };
+  const deleteProduct = (product_id:number)=>{
+    productService
+    .deleteProduct(product_id)
+    .then((result) => {
+      console.log(result)
+      message.success(`product deleted.`);
+      fetchAllProduct();
+    }).catch((err) => {
+      console.log(err);
+    });
   }
-}, [openStock, currentProduct]);
 
-//get all product
-useEffect(() => {
-    
-  productService
-  .getAllProduct()
-  .then((res) => {
- 
-   console.log(res)
-setAllProduct(res.data)
-  })
-  .catch((err) => {
-  
-    console.log(err);
-  });
+  useEffect(() => {
+    fetchCurrentStock();
+  }, [openStock, currentProduct]);
+  useEffect(() => {
+    fetchCurrentStock();
+  }, [randomNumber]);
 
-}, []);
-// get all category
+const fetchAllProduct = () => {
+ productService
+      .getAllProduct()
+      .then((res) => {
+        console.log(res);
+        const filteredArray = res.data.filter(item => item.delete === false);
+        setAllProduct(filteredArray.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+}
+  //get all product
+  useEffect(() => {
+   fetchAllProduct()
+  }, []);
+  // get all category
   useEffect(() => {
     categoryService
-    .getAllCategory()
-    .then((res) => {
-      //console.log("product api", res);
-      // setProducts(res.data.content);
+      .getAllCategory()
+      .then((res) => {
+        //console.log("product api", res);
+        // setProducts(res.data.content);
 
-      setAllCategory(res.data);
-    })
-    .catch((err) => {});
-  
-   
-   
+        setAllCategory(res.data);
+      })
+      .catch((err) => {});
   }, []);
+  // set field modal stock
+  useEffect(() => {
+    console.log(' chạy set field stock');
+
+    formStock.setFieldsValue({
+      // email:info.email,
+      // country:info.country,
+
+      size: currentStockItem?.size,
+      stock: currentStockItem?.stock,
+    });
+  }, [randomNumber]);
+  const getCategoryId = (categoryName:string) => {
+    const category = allCategory.find(cat => cat.category_name === categoryName);
+    return category ? category.category_id : null;
+  };
+  //get field product
+  useEffect(() => {
+    const categoryId = getCategoryId(currentProduct?.category);
+  
+    formProduct.setFieldsValue({
+   
+      category_id:categoryId,  
+      desc_vi: currentProduct?.desc_vi,
+      desc_en: currentProduct?.desc_en,
+      name: currentProduct?.name,
+      
+      price_usd: currentProduct?.price_usd,
+      price_vnd:currentProduct?.price_vnd,
+      
+      // size: currentStockItem?.size,
+      // stock: currentStockItem?.stock,
+    });
+  }, [randomNumber]);
+
+
+  //search name of product
+  
+
+
   return (
-  <>
- <Button type="primary" className='mb-2'onClick={showModal}>Add product</Button>
- <Table columns={columns} dataSource={allProduct} />
- <Modal
-        title="Title"
-        open={open}
-        footer={''}
-       
-        onCancel={() => setOpen(false)}
-      >
-        <p>
-
-        <Form
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
-        layout="horizontal"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        style={{ maxWidth: 600 }}
-      >
-    
-    <Form.Item label="Category"
-        
-         name="category_id"
-         rules={[{ required: true, message: 'Please input'}]}>
-          <Select>{
-            allCategory.map(item=>(
-<Select.Option value={item.category_id} >{item.category_name}</Select.Option>
-            ))
-            }
-           
-          </Select>
-        </Form.Item>
-        <Form.Item label="name" name='name' >
-          <Input />
-        </Form.Item>
-        <Form.Item label="price_vnd" name="price_vnd" >
-        <InputNumber />
-        </Form.Item>
-        <Form.Item label="price_usd" name="price_usd">
-        <InputNumber />
-        </Form.Item>
-        <Form.Item label="desc_vi" name="desc_vi">
-        <TextArea rows={2} />
-        </Form.Item>
-        <Form.Item label="desc_en" name="desc_en">
-        <TextArea rows={2} />
-        </Form.Item>
-       
-        <Form.Item label="Upload" valuePropName="fileList" name="file" getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}>
-            {/* <Upload beforeUpload={() => false} listType="picture">
-              <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload> */}
-              <Dragger {...props}>
-    <p className="ant-upload-drag-icon">
-      <InboxOutlined />
-    </p>
-    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-
-  </Dragger>
-          </Form.Item>
-        
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button type="primary" htmlType="submit">
-        Submit
+    <>
+      <Button type="primary" className="mb-2" onClick={() => showModalProduct('Add product')}>
+        Add product
       </Button>
-    </Form.Item>
-      </Form>
+      <Table columns={columns} dataSource={allProduct} />
+      <Modal title={modalProductTitle} open={open} footer={''} onCancel={() => setOpen(false)}>
+        <p>
+          <Form
+          form={formProduct}
+            labelCol={{ span: 4 }}
+            wrapperCol={{ span: 14 }}
+            layout="horizontal"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            style={{ maxWidth: 600 }}
+          >
+            <Form.Item label="Category" name="category_id" rules={[{ required: true, message: 'Please input' }]}>
+              <Select>
+                {allCategory.map((item) => (
+                  <Select.Option value={item.category_id}>{item.category_name}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item label="name" name="name">
+              <Input />
+            </Form.Item>
+            <Form.Item label="price_vnd" name="price_vnd">
+              <InputNumber />
+            </Form.Item>
+            <Form.Item label="price_usd" name="price_usd">
+              <InputNumber />
+            </Form.Item>
+            <Form.Item label="desc_vi" name="desc_vi">
+              <TextArea rows={2} />
+            </Form.Item>
+            <Form.Item label="desc_en" name="desc_en">
+              <TextArea rows={2} />
+            </Form.Item>
+{/* up hình */}
+{modalProductTitle=='Add product'?  <Form.Item
+              label="Upload"
+              valuePropName="fileList"
+              name="file"
+              getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+            >
+         
+              <Dragger {...props}>
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+              </Dragger>
+            </Form.Item> :''}
+           
+
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </p>
       </Modal>
-      <Drawer title="Stock manager" onClose={onCloseStock} open={openStock}         placement='left'>
-        <div className=''>
-<div>
-
-        <p>{currentProduct?.name}</p>
-        <img src={baseURL + `${currentProduct?.image[0]?.slice(4)}`} alt="product" width={200} /> 
-        <Button type="primary" className='mb-2' onClick={showModalStock}>Add stock</Button>
-</div>
-</div>
-<div>
-<Table columns={stockColumns} dataSource={currentStock} />
-</div>
-      
-       
+      <Drawer title="Stock manager" onClose={onCloseStock} open={openStock} placement="left">
+        <div className="">
+          <div>
+            <p>{currentProduct?.name}</p>
+            <img src={baseURL + `${currentProduct?.image[0]?.slice(4)}`} alt="product" width={200} />
+            <Button type="primary" className="mb-2" onClick={() => showModalStock('Add stock')}>
+              Add stock
+            </Button>
+          </div>
+        </div>
+        <div>
+          <Table columns={stockColumns} dataSource={currentStock} />
+        </div>
       </Drawer>
       {/* modal add stock */}
-      <Modal title="Add stock" open={isModalOpenStock} onOk={handleOkStock} onCancel={handleCancelStock}     footer={''}>
-      <Form
-    // name="basic"
-    labelCol={{ span: 8 }}
-    wrapperCol={{ span: 16 }}
-    style={{ maxWidth: 600 }}
-    
-    // initialValues={{ remember: true }}
-    onFinish={onFinishStock}
-    onFinishFailed={onFinishFailedStock}
-    // autoComplete="off"
-  >
-    <Form.Item<FieldTypeStock>
-      label="Size"
-      name="size"
-      rules={[{ required: true, message: 'Please input your Size!' }]}
-    >
-      <Input />
-    </Form.Item>
+      <Modal
+        title={modalStockTitle}
+        open={isModalOpenStock}
+        onOk={handleOkStock}
+        onCancel={handleCancelStock}
+        footer={''}
+      >
+        <Form
+          // name="basic"
+          form={formStock}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ maxWidth: 600 }}
+          // initialValues={{ remember: true }}
+          onFinish={onFinishStock}
+          onFinishFailed={onFinishFailedStock}
+          // autoComplete="off"
+        >
+          <Form.Item<FieldTypeStock>
+            label="Size"
+            name="size"
+            rules={[{ required: true, message: 'Please input your Size!' }]}
+          >
+            <Input />
+          </Form.Item>
 
-    <Form.Item<FieldTypeStock>
-      label="Stock"
-      name="stock"
-      rules={[{ required: true, message: 'Please input your Stock!' }]}
-    >
-      <Input />
-    </Form.Item>
+          <Form.Item<FieldTypeStock>
+            label="Stock"
+            name="stock"
+            rules={[{ required: true, message: 'Please input your Stock!' }]}
+          >
+            <Input />
+          </Form.Item>
 
-    
-
-    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
       </Modal>
-  </>
-)};
+    </>
+  );
+};
 
 export default StockManager;

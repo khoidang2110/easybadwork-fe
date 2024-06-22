@@ -5,7 +5,7 @@ import { Space, Table, Tag, DatePicker, Button, Drawer, Radio } from 'antd';
 import type { TableProps } from 'antd';
 
 import type { DatePickerProps } from 'antd';
-import { productService, stockService } from '@/service/service';
+import { orderService, productService } from '@/service/service';
 import type { DrawerProps, RadioChangeEvent } from 'antd';
 
 
@@ -166,8 +166,8 @@ const LittleColumns: TableProps<LittleDataType>['columns'] = [
 
   useEffect(() => {
     if (dayPick) {
-      stockService
-        .getStockByDay(dayPick, dayPick)
+      orderService
+        .getOrderByDay(dayPick, dayPick)
         .then((res) => {
           if (res.data === 'No order found') {
             setOrderList([]);

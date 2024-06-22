@@ -1,14 +1,14 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 
-import { Breadcrumb, ConfigProvider } from 'antd';
+import { Breadcrumb, ConfigProvider, Spin } from 'antd';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { updateItem } from '@/redux/features/cartSlice';
 import type { RadioChangeEvent } from 'antd';
 import { Input, Radio, Space } from 'antd';
-
+import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl';
 import styles from './styles.module.css';
 import Image from 'next/image';
@@ -26,13 +26,18 @@ type FieldType = {
   phone: string;
 };
 const Payment = () => {
+  const router = useRouter()
   const [open, setOpen] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false); // New loading state
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
+    router.push(`/${localeActive}/`);
+    // xoá local storage count, cart
+    localStorage.removeItem('count');
+    localStorage.removeItem('cart');
   };
   const dispatch = useAppDispatch();
   const [info, setInfo] = useState<FieldType>({
@@ -58,7 +63,7 @@ const Payment = () => {
   };
 
   const onFinishPayment = () => {
-    
+    setIsLoading(true); 
     const aggregateCartItems = (cart: any[]) => {
       return cart.reduce((acc: ICartItem[], item) => {
         const existingItem = acc.find(
@@ -117,8 +122,10 @@ const newOrder:IOrder = {
       .catch((err) => {
         console.log('🚀 ~ file: New order.jsx:49 ~ onFinish ~ err:', err);
         //  message.error("Đăng ký thất bại");
+      })
+      .finally(() => {
+        setIsLoading(false); // Set loading to false when the payment process ends
       });
-
 
   };
 
@@ -228,7 +235,7 @@ const newOrder:IOrder = {
           </button>
         </div>
       </Link>
-   
+      {isLoading && <Spin />} {/* Show spinner when loading */}
       <Drawer
         title=""
         placement="top"
