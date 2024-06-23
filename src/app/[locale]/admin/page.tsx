@@ -50,7 +50,7 @@ const ShopPage = () => {
 
   const [allProduct, setAllProduct] =  useState<any[]>([]);
   console.log('all product',allProduct)
-const [dayPick, setDayPick] = useState<string[]>([]);
+const [dayPick, setDayPick] = useState<string>();
 const [orderList, setOrderList] = useState<DataType[]>([]);
 const [open, setOpen] = useState(false);
 const [currentOrder, setCurrentOrder] = useState<DataType | null>(null);
@@ -59,7 +59,7 @@ const [currentOrder, setCurrentOrder] = useState<DataType | null>(null);
 //const data :DataType[] = []
 console.log( 'order list',orderList)
 console.log('day pick',dayPick)
-  const onChange: DatePickerProps['onChange'] = (date, dateString:string[]) => {
+  const onChange: DatePickerProps['onChange'] = (date, dateString:string) => {
     //console.log(date, dateString);
     setDayPick(dateString);
   };
