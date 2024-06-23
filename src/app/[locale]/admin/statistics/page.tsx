@@ -5,9 +5,11 @@ import type { DatePickerProps } from 'antd';
 import { orderService, productService } from '@/service/service';
 import { ICartItem, IOrder, IOrderInfo, IProduct } from '@/interfaces/product';
 import { Moment } from 'moment'; 
+import { Dayjs } from 'dayjs'; 
 const { RangePicker } = DatePicker;
 
 const Statistics = () => {
+  
   const [dayPick, setDayPick] = useState<string[]>(["", ""]);
   const [orderList, setOrderList] = useState<IOrderInfo[]>([]);
   //console.log('orderList',orderList)
@@ -25,11 +27,11 @@ const Statistics = () => {
   //     setDayPick(["", ""]);
   //   }
   // };
-  const onChange = (dates: Moment[] | null, dateStrings: [string, string]) => {
-    if (dates && dates.length === 2) {
+  const onChange = (dates: [Dayjs?, Dayjs?], dateStrings: [string, string]) => {
+    if (dates[0] && dates[1]) {
       const [startDate, endDate] = dateStrings;
       setDayPick([startDate, endDate]);
-     // console.log('start', startDate, 'end', endDate);
+      console.log('start', startDate, 'end', endDate);
     } else {
       setDayPick(["", ""]);
     }
