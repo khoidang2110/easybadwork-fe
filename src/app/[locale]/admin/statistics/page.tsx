@@ -18,21 +18,14 @@ const Statistics = () => {
   const [totalSum, setTotalSum] = useState<number>(0);
 
  
-  // const onChange: DatePickerProps['onChange'] = (dates,dateStrings) => {
-  //   if (Array.isArray(dateStrings) && dateStrings.length === 2) {
-  //     const [startDate, endDate] = dateStrings;
-  //     setDayPick([startDate, endDate]);
-  //     console.log('start', startDate, 'end', endDate);
-  //   } else {
-  //     setDayPick(["", ""]);
-  //   }
-  // };
-  const onChange = (dates: [Dayjs?, Dayjs?], dateStrings: [string, string]) => {
-    if (dates[0] && dates[1]) {
-      const [startDate, endDate] = dateStrings;
-      setDayPick([startDate, endDate]);
-      console.log('start', startDate, 'end', endDate);
+
+  const onRangeChange = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
+    if (dates) {
+      //console.log('From: ', dates[0], ', to: ', dates[1]);
+      console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+      setDayPick([dateStrings[0], dateStrings[1]]);
     } else {
+      console.log('Clear');
       setDayPick(["", ""]);
     }
   };
@@ -59,10 +52,10 @@ const Statistics = () => {
       orderService
         .getOrderByDay(dayPick[0], dayPick[1])
         .then((res) => {
-         // console.log('info order get by day',res.data)
+         console.log('info order get by day',res.data)
           if (res.data === 'No order found') {
-           //console.log('case not found')
-            setOrderList([]);
+           console.log('case not found')
+            setOrderListUpdated([]);
           } else {
            
             setOrderList(res.data);
@@ -71,6 +64,8 @@ const Statistics = () => {
         .catch((err) => {
           console.error(err);
         });
+    }else  {
+      setOrderList([]);
     }
   }, [dayPick]);
 
@@ -143,7 +138,7 @@ const Statistics = () => {
   return (
     <div className=''>
       <p>Xem doanh thu</p>
-      <RangePicker onChange={onChange}  size='large' />
+      <RangePicker onChange={onRangeChange}  size='large' />
       <p>Doanh thu: {totalSum} VND</p>
       <Table columns={columns} dataSource={orderListUpdated} rowKey="order_id" />
     </div>
