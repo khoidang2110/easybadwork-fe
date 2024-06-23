@@ -8,6 +8,15 @@ import type { DatePickerProps } from 'antd';
 import { orderService, productService } from '@/service/service';
 import type { DrawerProps, RadioChangeEvent } from 'antd';
 
+interface LittleDataType {
+  order_cart_id: number;
+  order_id: string;
+  product_id: number;
+ image:string;
+ name:string;
+  quantity: number;
+  size: string;
+}
 
 interface DataType {
   order_id:string;
@@ -128,15 +137,7 @@ const columns: TableProps<DataType>['columns'] = [
   },
 ];
 
-interface LittleDataType {
-  order_cart_id: number;
-  order_id: string;
-  product_id: number;
- image:string;
- name:string;
-  quantity: number;
-  size: string;
-}
+
 
 const LittleColumns: TableProps<LittleDataType>['columns'] = [
   {
