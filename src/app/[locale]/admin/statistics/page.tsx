@@ -119,8 +119,8 @@ const Statistics = () => {
       title: 'Bill',
       dataIndex: 'order_cart',
       key: 'bill',
-      render: (order_cart:ICartItem[]) => {
-        const bill = order_cart?.reduce((total, item) => total + (item.quantity * item.price_vnd), 0);
+      render: (order_cart: ICartItem[]) => {
+        const bill = order_cart?.reduce((total, item) => total + (item.quantity * (item.price_vnd ?? 0)), 0);
         return <span>{bill} VND</span>;
       },
     },
