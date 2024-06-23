@@ -4,27 +4,36 @@ import { DatePicker, Table } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { orderService, productService } from '@/service/service';
 import { ICartItem, IOrder, IOrderInfo, IProduct } from '@/interfaces/product';
-
+import { Moment } from 'moment'; 
 const { RangePicker } = DatePicker;
 
 const Statistics = () => {
   const [dayPick, setDayPick] = useState<string[]>(["", ""]);
   const [orderList, setOrderList] = useState<IOrderInfo[]>([]);
+  //console.log('orderList',orderList)
   const [orderListUpdated, setOrderListUpdated] = useState<IOrderInfo[]>([]);
   const [allProduct, setAllProduct] = useState<IProduct[]>([]);
   const [totalSum, setTotalSum] = useState<number>(0);
 
  
-  const onChange: DatePickerProps['onChange'] = (dates,dateStrings) => {
-    if (Array.isArray(dateStrings) && dateStrings.length === 2) {
+  // const onChange: DatePickerProps['onChange'] = (dates,dateStrings) => {
+  //   if (Array.isArray(dateStrings) && dateStrings.length === 2) {
+  //     const [startDate, endDate] = dateStrings;
+  //     setDayPick([startDate, endDate]);
+  //     console.log('start', startDate, 'end', endDate);
+  //   } else {
+  //     setDayPick(["", ""]);
+  //   }
+  // };
+  const onChange = (dates: Moment[] | null, dateStrings: [string, string]) => {
+    if (dates && dates.length === 2) {
       const [startDate, endDate] = dateStrings;
       setDayPick([startDate, endDate]);
-      console.log('start', startDate, 'end', endDate);
+     // console.log('start', startDate, 'end', endDate);
     } else {
       setDayPick(["", ""]);
     }
   };
-
   const fetchAllProduct = () => {
     productService
       .getAllProduct()
@@ -44,13 +53,16 @@ const Statistics = () => {
   };
 
   useEffect(() => {
-    if (dayPick) {
+    if (dayPick[0] && dayPick[1]) {
       orderService
         .getOrderByDay(dayPick[0], dayPick[1])
         .then((res) => {
+         // console.log('info order get by day',res.data)
           if (res.data === 'No order found') {
+           //console.log('case not found')
             setOrderList([]);
           } else {
+           
             setOrderList(res.data);
           }
         })
