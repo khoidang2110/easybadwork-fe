@@ -3,15 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { DatePicker, Table } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { orderService, productService } from '@/service/service';
-import { IProduct } from '@/interfaces/product';
+import { IOrder, IOrderInfo, IProduct } from '@/interfaces/product';
 
 const { RangePicker } = DatePicker;
 
 const Statistics = () => {
   const [dayPick, setDayPick] = useState<string[]>(["", ""]);
-  const [orderList, setOrderList] = useState([]);
-  const [orderListUpdated, setOrderListUpdated] = useState([]);
-  const [allProduct, setAllProduct] = useState<any[]>([]);
+  const [orderList, setOrderList] = useState<IOrderInfo[]>([]);
+  const [orderListUpdated, setOrderListUpdated] = useState<IOrderInfo[]>([]);
+  const [allProduct, setAllProduct] = useState<IProduct[]>([]);
   const [totalSum, setTotalSum] = useState<number>(0);
 
  
@@ -70,7 +70,7 @@ const Statistics = () => {
       const updatedOrders = orderList.map(order => ({
         ...order,
         order_cart: order.order_cart.map(cartItem => {
-          const product = allProduct.find(p => p.product_id === cartItem.product_id);
+          const product = allProduct.find(p => p.product_id === cartItem.product_id.toString());
           return product
             ? { ...cartItem, price_vnd: product.price_vnd, price_usd: product.price_usd }
             : cartItem;
@@ -81,7 +81,7 @@ const Statistics = () => {
       const filteredOrders = updatedOrders
         .filter(order => !order.deleted)
         .map(order => order.order_cart.map(cartItem => {
-          const product = allProduct.find(p => p.product_id === cartItem.product_id);
+          const product = allProduct.find(p => p.product_id === cartItem.product_id.toString());
           return {
             price_vnd: product ? product.price_vnd : 0,
             quantity: cartItem.quantity
@@ -98,7 +98,7 @@ const Statistics = () => {
       title: 'Order id',
       dataIndex: 'order_id',
       key: 'order_id',
-      render: (text) => <a>{text}</a>,
+      render: (text:string) => <a>{text}</a>,
     },
     {
       title: 'Name',

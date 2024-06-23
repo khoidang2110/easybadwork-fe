@@ -19,18 +19,8 @@ export interface IProduct {
   stock: IStock[];
   delete:boolean;
 }
-// export interface IProductPrice {
-//   product_id: string;
-//   name: string;
-//   price_vnd: number;
-//   price_usd: number;
-//   desc_vi: string;
-//   desc_en: string;
-//   category: string;
-//   image: string[];
-//   stock: IStock[];
-  
-// }
+
+
 
 export interface IProductCart {
   product_id: string;
@@ -79,4 +69,26 @@ export interface IOrder {
   note?:string;
   payment:string;
   cart: ICartItem[];
+  deleted?: boolean;
+}
+export interface IOrderCart {
+  order_cart_id:number;
+  size:string;
+  quantity:number;
+  order_id:string;
+  product_id:number;
+
+}
+export interface IOrderInfo {
+order_id:string;
+date:string;
+full_name:string;
+email:string;
+address:string;
+dist?:string;
+city?:string;
+phone:string;
+payment:string;
+deleted:boolean;
+order_cart:IOrderCart[]
 }
