@@ -7,14 +7,21 @@ import { orderService, productService } from '@/service/service';
 const { RangePicker } = DatePicker;
 
 const Statistics = () => {
-  const [dayPick, setDayPick] = useState<string[]>();
+  const [dayPick, setDayPick] = useState<string[]>(["", ""]);
   const [orderList, setOrderList] = useState([]);
   const [orderListUpdated, setOrderListUpdated] = useState([]);
   const [allProduct, setAllProduct] = useState<any[]>([]);
   const [totalSum, setTotalSum] = useState<number>(0);
 
-  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    setDayPick(dateString);
+ 
+  const onChange: DatePickerProps['onChange'] = (dates,dateStrings) => {
+    if (Array.isArray(dateStrings) && dateStrings.length === 2) {
+      const [startDate, endDate] = dateStrings;
+      setDayPick([startDate, endDate]);
+      console.log('start', startDate, 'end', endDate);
+    } else {
+      setDayPick(["", ""]);
+    }
   };
 
   const fetchAllProduct = () => {
@@ -51,6 +58,7 @@ const Statistics = () => {
         });
     }
   }, [dayPick]);
+
 
   useEffect(() => {
     fetchAllProduct();
@@ -120,7 +128,7 @@ const Statistics = () => {
   return (
     <div className=''>
       <p>Xem doanh thu</p>
-      <RangePicker onChange={onChange} />
+      <RangePicker onChange={onChange}  size='large' />
       <p>Doanh thu: {totalSum} VND</p>
       <Table columns={columns} dataSource={orderListUpdated} rowKey="order_id" />
     </div>
