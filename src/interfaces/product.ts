@@ -57,6 +57,8 @@ export interface ICartItem {
   product_id: number;
   size: string;
   quantity: number;
+  price_vnd?: number;
+  price_usd?: number;
 }
 
 export interface IOrder {

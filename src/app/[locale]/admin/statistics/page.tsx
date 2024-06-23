@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DatePicker, Table } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { orderService, productService } from '@/service/service';
-import { IOrder, IOrderInfo, IProduct } from '@/interfaces/product';
+import { ICartItem, IOrder, IOrderInfo, IProduct } from '@/interfaces/product';
 
 const { RangePicker } = DatePicker;
 
@@ -119,7 +119,7 @@ const Statistics = () => {
       title: 'Bill',
       dataIndex: 'order_cart',
       key: 'bill',
-      render: (order_cart) => {
+      render: (order_cart:ICartItem[]) => {
         const bill = order_cart?.reduce((total, item) => total + (item.quantity * item.price_vnd), 0);
         return <span>{bill} VND</span>;
       },
