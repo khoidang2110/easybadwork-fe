@@ -50,7 +50,7 @@ const ShopPage = () => {
 
   const [allProduct, setAllProduct] =  useState<any[]>([]);
   console.log('all product',allProduct)
-const [dayPick, setDayPick] = useState<string | string[]>();
+const [dayPick, setDayPick] = useState<string | string[]>('');
 const [orderList, setOrderList] = useState<DataType[]>([]);
 const [open, setOpen] = useState(false);
 const [currentOrder, setCurrentOrder] = useState<DataType | null>(null);
@@ -166,7 +166,7 @@ const LittleColumns: TableProps<LittleDataType>['columns'] = [
 
 
   useEffect(() => {
-    if (dayPick) {
+    if (typeof dayPick === 'string' && dayPick) {
       orderService
         .getOrderByDay(dayPick, dayPick)
         .then((res) => {
