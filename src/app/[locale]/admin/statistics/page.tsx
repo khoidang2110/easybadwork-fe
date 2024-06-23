@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DatePicker, Table } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { orderService, productService } from '@/service/service';
+import { IProduct } from '@/interfaces/product';
 
 const { RangePicker } = DatePicker;
 
@@ -29,8 +30,8 @@ const Statistics = () => {
       .getAllProduct()
       .then((res) => {
         const filtered = res.data
-          .filter(product => !product.delete)
-          .map(product => ({
+          .filter((product:IProduct) => !product.delete)
+          .map((product:IProduct) => ({
             product_id: product.product_id,
             price_vnd: product.price_vnd,
             price_usd: product.price_usd
