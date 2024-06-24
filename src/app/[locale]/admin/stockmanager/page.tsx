@@ -161,7 +161,7 @@ const StockManager = () => {
         <Space size="middle">
           <button onClick={() => showModalStock('Update stock', record)}>
             {' '}
-            <a>Update </a>{' '}
+            <a>Set </a>{' '}
           </button>
 
           <button onClick={() => deleteStock(record.stock_id)}>
@@ -201,6 +201,7 @@ if (modalProductTitle == 'Add product'){
     console.log('Product Create Response:', res.data);
     setOpen(false);
     message.success(` PRODUCT CREATED.`);
+    fetchAllProduct();
   } catch (err) {
     console.error('Product Create Error:', err);
   }
@@ -497,7 +498,8 @@ const fetchAllProduct = () => {
         <div className="">
           <div>
             <p>{currentProduct?.name}</p>
-            <img src={baseURL + `${currentProduct?.image[0]?.slice(4)}`} alt="product" width={200} />
+            {currentProduct ?  <img src={baseURL + `${currentProduct?.image[0]?.slice(4)}`} alt="product" width={200} /> :''  }
+           
             <Button type="primary" className="mb-2" onClick={() => showModalStock('Add stock',0)}>
               Add stock
             </Button>
@@ -529,9 +531,13 @@ const fetchAllProduct = () => {
           <Form.Item<FieldTypeStock>
             label="Size"
             name="size"
+           
             rules={[{ required: true, message: 'Please input your Size!' }]}
           >
-            <Input />
+            <Input 
+            
+             disabled={modalStockTitle === 'Add stock' ? false : true} 
+             />
           </Form.Item>
 
           <Form.Item<FieldTypeStock>
