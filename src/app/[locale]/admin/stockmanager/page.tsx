@@ -11,6 +11,7 @@ import { message, Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import Category from '../../category/[id]/page';
+import { IProduct } from '@/interfaces/product';
 const { Dragger } = Upload;
 
 interface DataType {
@@ -18,6 +19,19 @@ interface DataType {
   full_name: string;
   email: string;
   phone: string;
+}
+interface ProductDataType {
+  image: string;
+  category: string;
+  name: string;
+  price_vnd: string;
+  price_usd:string;
+  action:IProduct;
+  
+}
+
+interface IProductId {
+  product_id:number;
 }
 interface StockDataType {
   product_id: number;
@@ -65,7 +79,7 @@ const StockManager = () => {
   const [formProduct] = Form.useForm();
   const baseURL = 'https://api.easybadwork.com';
   const [randomNumber, setRandomNumber] = useState(11);
-  const [allProduct, setAllProduct] = useState<any[]>([]);
+  const [allProduct, setAllProduct] = useState<IProduct[]>([]);
   const [allCategory, setAllCategory] = useState<any[]>([]);
   const [openStock, setOpenStock] = useState(false);
   const [open, setOpen] = useState(false);
@@ -80,7 +94,7 @@ const StockManager = () => {
   console.log('current stock', currentStock);
   console.log('current product', currentProduct);
   //add product layout
-  const columns: TableProps<DataType>['columns'] = [
+  const columns: TableProps<ProductDataType>['columns'] = [
     {
       title: 'Image',
       dataIndex: 'image',
@@ -218,11 +232,12 @@ productService
   };
 
   const showDrawerStock = (record) => {
+    console.log('get info stock',record)
     setOpenStock(true);
 
     setCurrentProduct(record);
     //setCurrentStock
-    // console.log('get info stock',record)
+  
   };
 
   const onCloseStock = () => {
