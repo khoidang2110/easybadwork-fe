@@ -11,7 +11,7 @@ import { message, Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import Category from '../../category/[id]/page';
-import { IProduct } from '@/interfaces/product';
+import { IProduct,IProductCart } from '@/interfaces/product';
 const { Dragger } = Upload;
 
 interface DataType {
@@ -229,7 +229,7 @@ productService
     console.log('Failed:', errorInfo);
   };
 
-  const showDrawerStock = (record) => {
+  const showDrawerStock = (record:IProduct) => {
     console.log('get info stock',record)
     setOpenStock(true);
 
@@ -244,7 +244,7 @@ productService
   // modal add stock
   const [isModalOpenStock, setIsModalOpenStock] = useState(false);
 
-  const showModalStock = (value: string, record) => {
+  const showModalStock = (value: string, record:IProduct) => {
     setIsModalOpenStock(true);
     setModalStockTitle(value);
     //console.log('record update pick',record)
