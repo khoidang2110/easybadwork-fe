@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
-import { products } from '@/mockup';
+
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
