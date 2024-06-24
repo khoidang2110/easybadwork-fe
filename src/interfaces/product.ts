@@ -37,8 +37,8 @@ export interface IProductCart {
 
 
 export interface ProductListProps {
- // product:IProduct;
-  products: IProduct[];
+
+ // products: IProduct[];
   filterType?:string;
   noStock:boolean;
 }

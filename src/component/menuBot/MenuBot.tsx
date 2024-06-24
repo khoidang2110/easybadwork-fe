@@ -48,7 +48,7 @@ const MenuBot = () => {
   }
 
   //console.log("pathname id", pathnameId);
-  const currentProduct = products.find((product) => product.product_id === pathnameId);
+  //const currentProduct = products.find((product) => product.product_id === pathnameId);
   // console.log(currentProduct?.status);
 
   const handleToggle = (position: any) => {
