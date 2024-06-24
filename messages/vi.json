@@ -11,13 +11,18 @@
         "fairfax":"HOẠT ĐỘNG",
         "stores":"CỬA HÀNG",
         "contact":"LIÊN HỆ",
-        "tee":"ÁO THUN",
+
+         "tShirt":"ÁO THUN",
+        "headWear":"NÓN",
+        "bandana":"BANDANA",
+        "bodyCover":"ÁO KHOÁC",
+        "footWear":"VỚ",
         "shirt":"SƠ MI",
-        "jacket":"ÁO KHOÁC",
-        "bandana":"KHĂN",
-        "accessories":"PHỤ KIỆN",
-        "silver":"TRANG SỨC BẠC",
-        "decoration":"TRANG TRÍ",
+        "decoration":"TRANG SỨC",
+        "kid":"TRẺ EM HÔM NAY",
+        "sliver":"TRANG SỨC BẠC",
+
+
         "typeHere":"NHẬP Ở ĐÂY"
     },
     "cart":{

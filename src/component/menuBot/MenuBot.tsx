@@ -137,14 +137,27 @@ const MenuBot = () => {
           setIsToggled(false);
   };
 
+  // "tShirt":"T-SHIRT",
+  // "headWear":"HEAD WEAR",
+  // "bandana":"BANDANA",
+  // "bodyCover":"BODY COVER",
+  // "footWear":"FOOT WEAR",
+  // "shirt":"SHIRT",
+  // "decoration":"DECORATION",
+  // "kid":"KID",
+  // "sliver":"SLIVER",
+
+
   const dataShop = [
-    { name: t('tee') , id: 'tee' },
-    { name: t('shirt'), id: 'shirt' },
-    { name: t('jacket'), id: 'jacket' },
-    { name: t('bandana'), id: 'bandana' },
-    { name:t('accessories'), id: 'accessories' },
-    { name: t('silver'), id: 'silver' },
-    { name: t('decoration'), id: 'decoration' },
+    { name: t('tShirt') , id: 'T-SHIRT' },
+    { name: t('headWear'), id: 'HEADWEAR' },
+    { name: t('bodyCover'), id: 'BODYCOVER' },
+    { name: t('bandana'), id: 'BANDANA' },
+    { name:t('footWear'), id: 'FOOTWEAR' },
+    { name: t('sliver'), id: 'SLIVER' },
+    { name: t('shirt'), id: 'SHIRT' },
+    { name: t('decoration'), id: 'DECORATION' },
+    { name: t('kid'), id: 'KID' },
   ];
 
   return (

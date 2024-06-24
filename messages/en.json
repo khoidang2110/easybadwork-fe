@@ -11,13 +11,17 @@
         "fairfax":"FAIRFAX THEATRE",
         "stores":"STORES",
         "contact":"CONTACT",
-        "tee":"TEE",
-        "shirt":"SHIRT",
-        "jacket":"JACKET",
+
+        "tShirt":"T-SHIRT",
+        "headWear":"HEAD WEAR",
         "bandana":"BANDANA",
-        "accessories":"ACCESSORIES",
-        "silver":"SILVER",
+        "bodyCover":"BODY COVER",
+        "footWear":"FOOT WEAR",
+        "shirt":"SHIRT",
         "decoration":"DECORATION",
+        "kid":"KID",
+        "sliver":"SLIVER",
+
         "typeHere":"TYPE HERE"
     },
     "cart":{
