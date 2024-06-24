@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Drawer,Select } from 'antd';
 import { useParams } from "next/navigation";
-import { products } from "@/mockup";
+
 import CarouselComponent from "@/component/carousel/CarouselComponent";
 import styles from './styles.module.css';
 import { useAppDispatch, useAppSelector } from "@/redux/hook";

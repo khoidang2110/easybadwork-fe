@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { Card, Col, Row } from 'antd';
 import styles from './styles.module.css';
 import ProductList from '@/component/product/productList';
-import { products } from '@/mockup';
+
 
 
 const DeadStock = () => {
