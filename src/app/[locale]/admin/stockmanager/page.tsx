@@ -20,15 +20,16 @@ interface DataType {
   email: string;
   phone: string;
 }
-interface ProductDataType {
-  image: string;
-  category: string;
-  name: string;
-  price_vnd: string;
-  price_usd:string;
- product_id:number;
+// interface ProductDataType {
+//   record:IProduct;
+//   image: string;
+//   category: string;
+//   name: string;
+//   price_vnd: string;
+//   price_usd:string;
+//  product_id:number;
   
-}
+// }
 
 
 interface StockDataType {
@@ -82,9 +83,9 @@ const StockManager = () => {
   const [openStock, setOpenStock] = useState(false);
   const [open, setOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<any>(null);
-  const [currentStock, setCurrentStock] = useState<any[]>([]);
+  const [currentStock, setCurrentStock] = useState<StockDataType[]>([]);
 
-  const [currentStockItem, setCurrentStockItem] = useState<any[]>([]);
+  const [currentStockItem, setCurrentStockItem] = useState<StockDataType>();
   const [modalStockTitle, setModalStockTitle] = useState('Add stock');
   const [modalProductTitle, setModalProductTitle] = useState('Add product');
   console.log('all category',allCategory)
@@ -92,7 +93,7 @@ const StockManager = () => {
   console.log('current stock', currentStock);
   console.log('current product', currentProduct);
   //add product layout
-  const columns: TableProps<ProductDataType>['columns'] = [
+  const columns: TableProps<IProduct>['columns'] = [
     {
       title: 'Image',
       dataIndex: 'image',
@@ -244,7 +245,7 @@ productService
   // modal add stock
   const [isModalOpenStock, setIsModalOpenStock] = useState(false);
 
-  const showModalStock = (value: string, record:IProduct) => {
+  const showModalStock = (value: string, record:StockDataType) => {
     setIsModalOpenStock(true);
     setModalStockTitle(value);
     //console.log('record update pick',record)
@@ -340,9 +341,9 @@ productService
       });
     setRandomNumber(Math.random());
   };
-  const deleteProduct = (product_id:number)=>{
+  const deleteProduct = (product_id:string)=>{
     productService
-    .deleteProduct(product_id)
+    .deleteProduct(Number( product_id))
     .then((result) => {
       console.log(result)
       message.success(`product deleted.`);
