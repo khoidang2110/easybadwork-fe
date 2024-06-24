@@ -26,13 +26,11 @@ interface ProductDataType {
   name: string;
   price_vnd: string;
   price_usd:string;
-  action:IProduct;
+ product_id:number;
   
 }
 
-interface IProductId {
-  product_id:number;
-}
+
 interface StockDataType {
   product_id: number;
   size: string;
