@@ -246,7 +246,7 @@ productService
   // modal add stock
   const [isModalOpenStock, setIsModalOpenStock] = useState(false);
 
-  const showModalStock = (value: string, record:StockDataType) => {
+  const showModalStock = (value: string, record:StockDataType | any) => {
     setIsModalOpenStock(true);
     setModalStockTitle(value);
     //console.log('record update pick',record)
@@ -366,7 +366,7 @@ const fetchAllProduct = () => {
       .getAllProduct()
       .then((res) => {
         console.log(res);
-        const filteredArray = res.data.filter(item => item.delete === false);
+        const filteredArray = res.data.filter((item:IProduct) => item.delete === false);
         setAllProduct(filteredArray.reverse());
       })
       .catch((err) => {
@@ -431,7 +431,7 @@ const fetchAllProduct = () => {
 
   return (
     <>
-      <Button type="primary" className="mb-2" onClick={() => showModalProduct('Add product')}>
+      <Button type="primary" className="mb-2" onClick={() => showModalProduct('Add product',0)}>
         Add product
       </Button>
       <Table columns={columns} dataSource={allProduct} />
@@ -498,7 +498,7 @@ const fetchAllProduct = () => {
           <div>
             <p>{currentProduct?.name}</p>
             <img src={baseURL + `${currentProduct?.image[0]?.slice(4)}`} alt="product" width={200} />
-            <Button type="primary" className="mb-2" onClick={() => showModalStock('Add stock')}>
+            <Button type="primary" className="mb-2" onClick={() => showModalStock('Add stock',0)}>
               Add stock
             </Button>
           </div>
