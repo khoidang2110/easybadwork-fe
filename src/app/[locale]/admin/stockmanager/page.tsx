@@ -298,7 +298,7 @@ productService
     }
   };
 
-  const onFinishFailedStock: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+  const onFinishFailedStock: FormProps<FieldTypeStock>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed stock:', errorInfo);
   };
   const fetchCurrentStock = () => {
