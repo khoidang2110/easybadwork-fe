@@ -46,7 +46,8 @@ type FieldType = {
   desc_vi: string;
   desc_en: string;
   file: any;
-};
+} & { [key: string]: any };
+
 type FieldTypeStock = {
   size: string;
   stock: string;
@@ -190,7 +191,7 @@ if (modalProductTitle == 'Add product'){
     if (key === 'file') {
       formData.append(key, values[key][0].originFileObj);
     } else {
-      formData.append(key, values[key]);
+      formData.append(key, values[key] as any);
     }
   });
 
