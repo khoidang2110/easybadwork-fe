@@ -41,7 +41,7 @@ const MenuAdmin: React.FC<{  }> = ({  }) => {
 
 
 
-  const currentProduct = products.find((product) => product.product_id === pathnameId);
+ // const currentProduct = products.find((product) => product.product_id === pathnameId);
   // console.log(currentProduct?.status);
 
   // const handleToggle = (position: any) => {
@@ -120,6 +120,7 @@ const MenuAdmin: React.FC<{  }> = ({  }) => {
     { name: 'SILVER', id: 6 },
     { name: 'DECORATION', id: 7 },
   ];
+  
   const items = [
     {
       key: '1',
