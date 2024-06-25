@@ -305,14 +305,14 @@ const MenuBot = () => {
               {/* {t('cart')}  */}
               {/* <ShoppingCartOutlined style={{ fontSize: "20px" }}  /> */}
              { isToggled && tabActive == 'cart' ? <Image
-            width={33}
-            height={33}
+            width={30}
+            height={30}
             src="/images/icons/cartActive3.png"
             alt="cart"
            className='pr-1'
           /> :<Image
-          width={33}
-          height={33}
+          width={30}
+          height={30}
           src="/images/icons/cart3.png"
           alt="cart"
          className='pr-1'
