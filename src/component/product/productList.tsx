@@ -22,12 +22,16 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
     productService
       .getProductListById(filterType)
       .then((res) => {
-        console.log("product api", res);
-        // setProducts(res.data.content);
-  
-        setProducts(res.data);
+        if (Array.isArray(res.data)) {
+          setProducts(res.data);
+        } else {
+          console.warn('Unexpected response data:', res.data);
+          setProducts([]);
+        }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.error("Failed to fetch products", err);
+      });
   }, []);
 
   let filteredData = products;
@@ -37,9 +41,10 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
       product.stock.length === 0 || product.stock.every(stockItem => stockItem.stock === 0)
     );
     // console.log('case1 filter dead')
-  } else {
+  } 
+  else if (filterType !== '') {
     // console.log('case2 filter dead')
-    const productsWithStock = filteredData.filter(product => 
+    const productsWithStock = filteredData?.filter(product => 
       product.stock.length > 0 && !product.stock.every(stockItem => stockItem.stock === 0)
     );
     filteredData = productsWithStock.filter(product => product.category === filterType);
@@ -56,7 +61,7 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
         <p>this place showing sold out items</p> */}
       </div>
       <div className="flex flex-wrap justify-center">
-        {filteredData.reverse().map((product) => (
+        {filteredData?.reverse().map((product) => (
           <div className={styles.CardItem}>
             <Card
               key={product.product_id} // assuming each product has an id

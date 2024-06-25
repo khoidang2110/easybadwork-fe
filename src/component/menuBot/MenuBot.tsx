@@ -253,7 +253,7 @@ const MenuBot = () => {
            {t('search')} 
             </button>
             <button
-              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${styles.lineThrough} ${
+              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton}  ${
                 isToggled && tabActive == 'deadstock' ? styles.fButtonActive : ''
               }`}
               onClick={() => handleToggle('deadstock')}
