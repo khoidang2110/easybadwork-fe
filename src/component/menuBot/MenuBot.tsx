@@ -5,7 +5,9 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
-
+import {
+SearchOutlined
+} from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
@@ -251,7 +253,8 @@ const MenuBot = () => {
               className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'search' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('search')}
             >
-           {t('search')} 
+           {/* {t('search')}  */}
+           <SearchOutlined style={{ fontSize: "20px" }} />
             </button>
             <button
               className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton}  ${
