@@ -149,15 +149,15 @@ const MenuBot = () => {
 
 
   const dataShop = [
-    { name: t('tShirt') , id: 'T-SHIRT' },
-    { name: t('headWear'), id: 'HEADWEAR' },
-    { name: t('bodyCover'), id: 'BODYCOVER' },
-    { name: t('bandana'), id: 'BANDANA' },
-    { name:t('footWear'), id: 'FOOTWEAR' },
-    { name: t('sliver'), id: 'SLIVER' },
-    { name: t('shirt'), id: 'SHIRT' },
-    { name: t('decoration'), id: 'DECORATION' },
-    { name: t('kid'), id: 'KID' },
+    { name: t('t-shirt') , id: 't-shirt' },
+    { name: t('head-wear'), id: 'head-wear' },
+    { name: t('body-cover'), id: 'body-coverR' },
+    { name: t('bandana'), id: 'bandana' },
+    { name:t('footwear'), id: 'footwear' },
+    { name: t('sliver'), id: 'sliver' },
+    { name: t('shirt'), id: 'shirt' },
+    { name: t('decoration'), id: 'decoration' },
+    { name: t('kid'), id: 'kid' },
   ];
 
   return (
@@ -182,7 +182,7 @@ const MenuBot = () => {
 
             <div className={isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}>
               {dataShop.map((item, index) => (
-                <Link href={`/${localeActive}/category/${item.id}/`  }>
+                <Link href={`/${localeActive}/category/${item.id}/`  } key={index}>
                 <p onClick={() => handleFilter(item.name)} key={item.id}>
                   {item.name}
                 </p>

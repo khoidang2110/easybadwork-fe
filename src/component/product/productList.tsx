@@ -20,7 +20,7 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
 
   useEffect(() => {
     productService
-      .getProductList()
+      .getAllProduct()
       .then((res) => {
         console.log("product api", res);
         // setProducts(res.data.content);
@@ -31,12 +31,14 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
   }, []);
 
   let filteredData = products;
-
-  if (noStock) {
+// console.log('dead noStock',noStock)
+  if (noStock&&filterType=='') {
     filteredData = products.filter(product => 
       product.stock.length === 0 || product.stock.every(stockItem => stockItem.stock === 0)
     );
+    // console.log('case1 filter dead')
   } else {
+    // console.log('case2 filter dead')
     const productsWithStock = filteredData.filter(product => 
       product.stock.length > 0 && !product.stock.every(stockItem => stockItem.stock === 0)
     );

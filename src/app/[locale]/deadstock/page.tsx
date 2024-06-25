@@ -14,7 +14,7 @@ const DeadStock = () => {
         <h1 className="py-4 text-xl">DEAD STOCK</h1>
         <p>this place showing sold out items</p>
       </div>
-      <ProductList filterType="deadstock" noStock={true} />
+      <ProductList filterType='' noStock={true} />
     </div>
   );
 };
