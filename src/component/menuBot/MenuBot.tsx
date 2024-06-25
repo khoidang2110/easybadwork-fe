@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import {
-SearchOutlined
+SearchOutlined,
+ShoppingCartOutlined 
 } from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
@@ -272,7 +273,9 @@ const MenuBot = () => {
               onClick={() => handleToggle('cart')}
             >
               <Link href={`/${localeActive}/cart`} className="">
-              {t('cart')}  {countRedux}
+              {/* {t('cart')}  */}
+              <ShoppingCartOutlined style={{ fontSize: "20px" }}  />
+               {' '}{countRedux}
               </Link>
             </a>
           </div>
