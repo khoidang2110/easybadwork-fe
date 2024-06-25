@@ -39,7 +39,7 @@ export interface IProductCart {
 export interface ProductListProps {
 
  // products: IProduct[];
-  filterType?:string;
+  filterType?:string|undefined;
   noStock:boolean;
 }
 

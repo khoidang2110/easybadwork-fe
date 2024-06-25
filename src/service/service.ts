@@ -3,8 +3,8 @@ import { IOrder, IProduct } from '../interfaces/product';
 
 
 export let productService = {
-    getProductListById: () => {
-        return axiosClient.get(`/product/get-products-category/?categoryName=&page=1&size=50`);
+    getProductListById: (categoryName:string|undefined) => {
+        return axiosClient.get(`/product/get-products-category/?categoryName=${categoryName}&page=1&size=50`);
         // return axiosClient.get<IProduct[]>(`/product/get-products-category/?categoryName=&page=1&size=5`);
       },
       getProductById: (product_id:number)=>{

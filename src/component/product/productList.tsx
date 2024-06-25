@@ -20,7 +20,7 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
 
   useEffect(() => {
     productService
-      .getAllProduct()
+      .getProductListById(filterType)
       .then((res) => {
         console.log("product api", res);
         // setProducts(res.data.content);
