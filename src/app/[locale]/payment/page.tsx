@@ -151,7 +151,7 @@ const newOrder:IOrder = {
   }, []);
 
   return (
-    <div className="text-center  px-2">
+    <div className="text-center  px-2 roboto">
       <Image width={90} height={90} src="/images/ebw_logo2.png" alt="menu" className={styles.headerImg} />
       <Breadcrumb
         className="flex justify-center"

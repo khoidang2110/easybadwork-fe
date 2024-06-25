@@ -49,7 +49,8 @@
         "addToCart":"Thêm vào giỏ hàng",
         "inStock" : "Còn hàng",
         "lowStock" : "Còn ít hàng",
-        "noStock": "Hết hàng"
+        "noStock": "Hết hàng",
+        "itemAddedToCart":"Sản phẩm đã được thêm vào giỏ hàng"
 
     },
     "info":{

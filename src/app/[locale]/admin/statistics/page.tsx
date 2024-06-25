@@ -124,6 +124,12 @@ const Statistics = () => {
       dataIndex: 'phone',
       key: 'phone',
     },
+    ,
+    {
+      title: 'Payment',
+      dataIndex: 'payment',
+      key: 'payment',
+    },
     {
       title: 'Bill',
       dataIndex: 'order_cart',

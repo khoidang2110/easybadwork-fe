@@ -6,11 +6,17 @@ import HeaderComponent from '../../component/header/HeaderComponent';
 //import { Toaster } from "react-hot-toast";
 import FooterComponent from '../../component/footer/FooterComponent';
 import MenuBot from '@/component/menuBot/MenuBot';
+import {Roboto} from 'next/font/google';
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import StoreProvider from './StoreProvider';
 
+const roboto_init = Roboto ({
+  subsets:['latin'],
+  weight:'400',
+  variable:'--font-roboto',
+});
 
 export default async function LocaleLayout({
   children,
@@ -22,7 +28,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   return (
     <html lang={locale}>
-      <body className="p-2 bg-white">
+      <body className={`${roboto_init.variable} p-2 bg-white`}>
       {/* <Toaster position="top-right" reverseOrder={false} /> */}
         <HeaderComponent />
         <StoreProvider>

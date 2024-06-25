@@ -48,7 +48,8 @@
         "addToCart":"Add to Cart",
         "inStock" : "In stock",
         "lowStock" : "Low stock",
-        "noStock": "No stock"
+        "noStock": "No stock",
+         "itemAddedToCart":"Item added to cart"
 
     },
     "info":{

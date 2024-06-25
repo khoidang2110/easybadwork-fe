@@ -65,7 +65,9 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
   console.log('Filtered Data', filteredData);
 
 
-
+  function formatNumber(num:number) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   return (
     <div className="relative">
       <div className="pt-10 text-center">
@@ -89,7 +91,7 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
                 </div>
               }
             >
-              <Meta title={product.name} description={showItem && `${product.price_vnd} VND`} />
+              <Meta title={product.name} description={showItem && `${formatNumber(product.price_vnd)} VND`} className='roboto' />
             </Card>
           </div>
         ))}

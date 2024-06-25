@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Drawer,Select } from 'antd';
+import { Drawer, message } from 'antd';
 import { useParams } from "next/navigation";
 
 import CarouselComponent from "@/component/carousel/CarouselComponent";
@@ -90,6 +90,7 @@ console.log("item available",itemAvailable)
     localStorage.setItem("cart", JSON.stringify(cartItems));
    // dispatch(addItem(currentProduct));
    dispatch(addItem(productWithSize));
+   message.success( t('itemAddedToCart'));
   };
 
 

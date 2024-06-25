@@ -175,7 +175,7 @@ const MenuBot = () => {
           }`}
         >
           <div>
-            <div className={isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}>
+            <div className={`roboto ${isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}`}>
             <Link href={`https://www.khimdang.com/`  } >
               <p>{t('about')}</p>
             </Link>
@@ -185,7 +185,7 @@ const MenuBot = () => {
     
             </div>
 
-            <div className={isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}>
+            <div className={` roboto ${isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}`}>
               {dataShop.map((item, index) => (
                 <Link href={`/${localeActive}/category/${item.id}/`  } key={index}>
                 <p onClick={() => handleFilter(item.name)} key={item.id}>
@@ -200,7 +200,7 @@ const MenuBot = () => {
             </div>
 
             <div className={isToggled && tabActive == 'search' ? styles.textShow : styles.textHide}>
-              <input type="text" placeholder={t('typeHere')} className={styles.inputBg} />
+              <input type="text" placeholder={t('typeHere')} className={` roboto ${styles.inputBg}`} />
             </div>
           </div>
 
@@ -260,7 +260,7 @@ const MenuBot = () => {
             </button>
 
             <button
-              className={`z-30  ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'shop' ? styles.fButtonActive : ''}`}
+              className={`z-30 roboto   ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'shop' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('shop')}
             >
           {t('shop')} 
@@ -287,7 +287,7 @@ const MenuBot = () => {
            {/* <SearchOutlined style={{ fontSize: "20px" }} /> */}
             </button>
             <button
-              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton}  ${
+              className={`z-30 roboto ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton}  ${
                 isToggled && tabActive == 'deadstock' ? styles.fButtonActive : ''
               }`}
               onClick={() => handleToggle('deadstock')}
@@ -317,7 +317,7 @@ const MenuBot = () => {
           alt="cart"
          className='pr-1'
         /> }  
-          <p className='text-sm'>  {countRedux}</p>
+          <p className='text-sm roboto'>  {countRedux}</p>
              
               </Link>
             </a>

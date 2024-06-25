@@ -23,6 +23,7 @@ interface DataType {
   full_name: string;
   email:string;
   phone:string;
+  payment:string;
   order_cart?: LittleDataType[];
  
 }
@@ -122,6 +123,12 @@ const columns: TableProps<DataType>['columns'] = [
     title: 'Phone',
     key: 'phone',
     dataIndex: 'phone',
+  },
+  ,
+  {
+    title: 'Payment',
+    key: 'payment',
+    dataIndex: 'payment',
   },
   {
     title: 'Action',
