@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
+import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import {
@@ -208,7 +209,7 @@ const MenuBot = () => {
               onClick={() => handleToggle('menu')}
               className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi :  styles.fButton} ${isToggled && tabActive == 'menu' ? styles.fButtonActive : ''}`}
             >
-              <svg
+              {/* <svg
                 // className="w-5 h-3"
                 style={{ width: '15px', height: 'auto' }}
                 version="1.0"
@@ -241,7 +242,21 @@ const MenuBot = () => {
 17 8 12 7 21 -2 32 -12 14 -52 16 -311 16 -259 0 -299 -2 -311 -16z"
                   />
                 </g>
-              </svg>
+              </svg> */}
+              { isToggled && tabActive == 'menu'  ?   <Image
+            width={30}
+            height={30}
+            src="/images/icons/menuActive.png"
+            alt="menu"
+           
+          /> :  <Image
+          width={30}
+          height={30}
+          src="/images/icons/menu.png"
+          alt="menu"
+         
+        />}
+               
             </button>
 
             <button
@@ -255,7 +270,21 @@ const MenuBot = () => {
               onClick={() => handleToggle('search')}
             >
            {/* {t('search')}  */}
-           <SearchOutlined style={{ fontSize: "20px" }} />
+           {isToggled && tabActive == 'search' ?   <Image
+            width={30}
+            height={30}
+            src="/images/icons/searchActive.png"
+            alt="search"
+           
+          />:   <Image
+          width={30}
+          height={30}
+          src="/images/icons/search.png"
+          alt="search"
+         
+        />}
+         
+           {/* <SearchOutlined style={{ fontSize: "20px" }} /> */}
             </button>
             <button
               className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton}  ${
@@ -272,10 +301,24 @@ const MenuBot = () => {
               className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'cart' ? styles.fButtonActive : ''}`}
               onClick={() => handleToggle('cart')}
             >
-              <Link href={`/${localeActive}/cart`} className="">
+              <Link href={`/${localeActive}/cart`} className="flex ">
               {/* {t('cart')}  */}
-              <ShoppingCartOutlined style={{ fontSize: "20px" }}  />
-               {' '}{countRedux}
+              {/* <ShoppingCartOutlined style={{ fontSize: "20px" }}  /> */}
+             { isToggled && tabActive == 'cart' ? <Image
+            width={30}
+            height={30}
+            src="/images/icons/cartActive.png"
+            alt="cart"
+           className='pr-1'
+          /> :<Image
+          width={30}
+          height={30}
+          src="/images/icons/cart.png"
+          alt="cart"
+         className='pr-1'
+        /> }  
+          <p className='text-sm'>  {countRedux}</p>
+             
               </Link>
             </a>
           </div>
