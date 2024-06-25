@@ -246,13 +246,13 @@ const MenuBot = () => {
               { isToggled && tabActive == 'menu'  ?   <Image
             width={30}
             height={30}
-            src="/images/icons/menuActive.png"
+            src="/images/icons/menuActive3.png"
             alt="menu"
            
           /> :  <Image
           width={30}
           height={30}
-          src="/images/icons/menu.png"
+          src="/images/icons/menu3.png"
           alt="menu"
          
         />}
@@ -273,13 +273,13 @@ const MenuBot = () => {
            {isToggled && tabActive == 'search' ?   <Image
             width={30}
             height={30}
-            src="/images/icons/searchActive.png"
+            src="/images/icons/searchActive3.png"
             alt="search"
            
           />:   <Image
           width={30}
           height={30}
-          src="/images/icons/search.png"
+          src="/images/icons/search3.png"
           alt="search"
          
         />}
@@ -305,15 +305,15 @@ const MenuBot = () => {
               {/* {t('cart')}  */}
               {/* <ShoppingCartOutlined style={{ fontSize: "20px" }}  /> */}
              { isToggled && tabActive == 'cart' ? <Image
-            width={30}
-            height={30}
-            src="/images/icons/cartActive.png"
+            width={33}
+            height={33}
+            src="/images/icons/cartActive3.png"
             alt="cart"
            className='pr-1'
           /> :<Image
-          width={30}
-          height={30}
-          src="/images/icons/cart.png"
+          width={33}
+          height={33}
+          src="/images/icons/cart3.png"
           alt="cart"
          className='pr-1'
         /> }  
