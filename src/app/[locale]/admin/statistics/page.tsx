@@ -3,25 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { DatePicker, Table } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { orderService, productService } from '@/service/service';
-import { ICartItem, IOrder, IOrderInfo, IProduct } from '@/interfaces/product';
-import { Moment } from 'moment'; 
-import { Dayjs } from 'dayjs'; 
+import { ICartItem, IOrderInfo, IProduct } from '@/interfaces/product';
+import { Dayjs } from 'dayjs';
 const { RangePicker } = DatePicker;
 
 const Statistics = () => {
-  
+
   const [dayPick, setDayPick] = useState<string[]>(["", ""]);
   const [orderList, setOrderList] = useState<IOrderInfo[]>([]);
-  //console.log('orderList',orderList)
   const [orderListUpdated, setOrderListUpdated] = useState<IOrderInfo[]>([]);
   const [allProduct, setAllProduct] = useState<IProduct[]>([]);
   const [totalSum, setTotalSum] = useState<number>(0);
 
- 
-
   const onRangeChange = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
     if (dates) {
-      //console.log('From: ', dates[0], ', to: ', dates[1]);
       console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
       setDayPick([dateStrings[0], dateStrings[1]]);
     } else {
@@ -29,13 +24,14 @@ const Statistics = () => {
       setDayPick(["", ""]);
     }
   };
+
   const fetchAllProduct = () => {
     productService
       .getAllProduct()
       .then((res) => {
         const filtered = res.data
-          .filter((product:IProduct) => !product.delete)
-          .map((product:IProduct) => ({
+          .filter((product: IProduct) => !product.delete)
+          .map((product: IProduct) => ({
             product_id: product.product_id,
             price_vnd: product.price_vnd,
             price_usd: product.price_usd
@@ -52,23 +48,21 @@ const Statistics = () => {
       orderService
         .getOrderByDay(dayPick[0], dayPick[1])
         .then((res) => {
-         console.log('info order get by day',res.data)
+          console.log('info order get by day', res.data)
           if (res.data === 'No order found') {
-           console.log('case not found')
+            console.log('case not found')
             setOrderListUpdated([]);
           } else {
-           
             setOrderList(res.data);
           }
         })
         .catch((err) => {
           console.error(err);
         });
-    }else  {
+    } else {
       setOrderList([]);
     }
   }, [dayPick]);
-
 
   useEffect(() => {
     fetchAllProduct();
@@ -107,7 +101,7 @@ const Statistics = () => {
       title: 'Order id',
       dataIndex: 'order_id',
       key: 'order_id',
-      render: (text:string) => <a>{text}</a>,
+      render: (text: string) => <a>{text}</a>,
     },
     {
       title: 'Name',
@@ -124,7 +118,6 @@ const Statistics = () => {
       dataIndex: 'phone',
       key: 'phone',
     },
-    ,
     {
       title: 'Payment',
       dataIndex: 'payment',
@@ -144,7 +137,7 @@ const Statistics = () => {
   return (
     <div className=''>
       <p>Xem doanh thu</p>
-      <RangePicker onChange={onRangeChange}  size='large' />
+      <RangePicker onChange={onRangeChange} size='large' />
       <p>Doanh thu: {totalSum} VND</p>
       <Table columns={columns} dataSource={orderListUpdated} rowKey="order_id" />
     </div>
