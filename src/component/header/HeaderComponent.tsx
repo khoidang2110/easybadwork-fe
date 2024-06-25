@@ -61,7 +61,7 @@ if(pathnameChild=="information" || pathnameChild=='payment' || pathnameAdmin=='a
         <div className="flex flex-col justify-between items-center ">
           {hideHead ? '' :  <Link href={'/'} className="pt-3">
             {' '}
-            <Image width={90} height={90} src="/images/khimhead.png" alt="menu" className={styles.headerImg} />
+            <Image width={90} height={90} src="/images/ebw_logo2.png" alt="menu" className={styles.headerImg} />
           </Link> }
          
         </div>

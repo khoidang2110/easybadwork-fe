@@ -5,6 +5,7 @@ import styles from './styles.module.css';
 import { IProduct, ProductListProps } from '@/interfaces/product';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { productService } from '@/service/service';
 import { NO_IMAGE } from '@/constant';
@@ -14,7 +15,18 @@ const { Meta } = Card;
 
 
 const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
+  const pathname = usePathname();
   const localeActive = useLocale();
+  const pathnameDeadStock = pathname.slice(4);
+  console.log('pathnameDeadStock',pathnameDeadStock)
+
+  let showItem = true;
+  if(pathnameDeadStock == 'deadstock'){
+    console.log('case dead stock')
+    showItem = false;
+  }
+
+
   const [products, setProducts] = useState<IProduct[]>([]);
   console.log("product api state",products)
 
@@ -77,7 +89,7 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
                 </div>
               }
             >
-              <Meta title={product.name} description={`${product.price_vnd} VND`} />
+              <Meta title={product.name} description={showItem && `${product.price_vnd} VND`} />
             </Card>
           </div>
         ))}

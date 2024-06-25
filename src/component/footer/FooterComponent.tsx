@@ -18,7 +18,7 @@ const FooterComponent: React.FC = () => {
   return (
     <div>
 {adminPage ? ( ""):(<div className="text-center pb-20">
-  KhimDang copyright 2024
+  EasyBadWork copyright 2024
 </div>)}
     </div>
 

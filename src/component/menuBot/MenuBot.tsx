@@ -172,8 +172,9 @@ const MenuBot = () => {
         >
           <div>
             <div className={isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}>
+            <Link href={`https://www.khimdang.com/`  } >
               <p>{t('about')}</p>
-              <p>{t('fairfax')}</p>
+            </Link>
               <p>{t('stores')}</p>
               <p>{t('contact')}</p>
 
