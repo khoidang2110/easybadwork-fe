@@ -1,176 +1,135 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from 'react';
-import { Space, Table, Tag, DatePicker, Button, Drawer, Radio } from 'antd';
+import { Space, Table, DatePicker, Drawer } from 'antd';
 import type { TableProps } from 'antd';
-
 import type { DatePickerProps } from 'antd';
 import { orderService, productService } from '@/service/service';
-import type { DrawerProps, RadioChangeEvent } from 'antd';
+import type { DrawerProps } from 'antd';
 
 interface LittleDataType {
   order_cart_id: number;
   order_id: string;
   product_id: number;
- image:string;
- name:string;
+  image: string;
+  name: string;
   quantity: number;
   size: string;
 }
 
 interface DataType {
-  order_id:string;
+  order_id: string;
   full_name: string;
-  email:string;
-  phone:string;
-  payment:string;
+  email: string;
+  phone: string;
+  payment: string;
   order_cart?: LittleDataType[];
- 
 }
 
-
-
-// const data: DataType[] = [
-//   {
-//     order_id: '1',
-//     full_name: 'John Brown',
-//     email: '32',
-//     phone: '123',
-    
-//   },
-//   {
-//     order_id: '23',
-//     full_name: 'John Brown',
-//     email: '32',
-//     phone: '234',
-//   }
-// ];
-
-
 const ShopPage = () => {
+  const [allProduct, setAllProduct] = useState<any[]>([]);
+  console.log('all product', allProduct);
+  const [dayPick, setDayPick] = useState<string>('');
+  const [orderList, setOrderList] = useState<DataType[]>([]);
+  const [open, setOpen] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState<DataType | null>(null);
+  console.log('order list', orderList);
+  console.log('day pick', dayPick);
 
-  const [allProduct, setAllProduct] =  useState<any[]>([]);
-  console.log('all product',allProduct)
-const [dayPick, setDayPick] = useState<string>('');
-const [orderList, setOrderList] = useState<DataType[]>([]);
-const [open, setOpen] = useState(false);
-const [currentOrder, setCurrentOrder] = useState<DataType | null>(null);
-// const [listProduct, setListProduct] = useState<any[]>([]);
-//console.log('list product',listProduct)
-//const data :DataType[] = []
-console.log( 'order list',orderList)
-console.log('day pick',dayPick)
-  const onChange: DatePickerProps['onChange'] = (date,dateString) => {
-   // console.log('date',date, 'dateStringg', dateString);
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     setDayPick(dateString.toString());
   };
 
- 
-  
-  // const [currentId, setCurrentId] = useState<number>(0);
-
-
-  console.log('currentOrder',currentOrder);
-  
+  console.log('currentOrder', currentOrder);
 
   const showDrawer = async (order: DataType) => {
-console.log('order pick',order)
+    console.log('order pick', order);
 
     setOpen(true);
-    // const toNumber = Number(order.order_id)
-    // setCurrentId(toNumber)
-   // setCurrentOrder(order);
-   if (order.order_cart) {
-    const updatedCart = order.order_cart.map((item) => {
-      const product = allProduct.find((p) => p.product_id === item.product_id);
-      return {
-        ...item,
-        name: product ? product.name : item.name,
-        image: product ? product.image[0] : item.image,
-      };
-    });
+    if (order.order_cart) {
+      const updatedCart = order.order_cart.map((item) => {
+        const product = allProduct.find((p) => p.product_id === item.product_id);
+        return {
+          ...item,
+          name: product ? product.name : item.name,
+          image: product ? product.image[0] : item.image,
+        };
+      });
 
-    setCurrentOrder({ ...order, order_cart: updatedCart });
-  } else {
-    setCurrentOrder(order);
-  }
-};
+      setCurrentOrder({ ...order, order_cart: updatedCart });
+    } else {
+      setCurrentOrder(order);
+    }
+  };
 
   const onClose = () => {
     setOpen(false);
     setCurrentOrder(null);
   };
 
- 
-const columns: TableProps<DataType>['columns'] = [
-  {
-    title: 'Order id',
-    dataIndex: 'order_id',
-    key: 'order_id',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Name',
-    dataIndex: 'full_name',
-    key: 'full_name',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  },
-  {
-    title: 'Phone',
-    key: 'phone',
-    dataIndex: 'phone',
-  },
-  ,
-  {
-    title: 'Payment',
-    key: 'payment',
-    dataIndex: 'payment',
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-     <button onClick={() => showDrawer(record)}>
-     <a>Detail</a>
-     </button>
-     
-      </Space>
-    ),
-  },
-];
+  const columns: TableProps<DataType>['columns'] = [
+    {
+      title: 'Order id',
+      dataIndex: 'order_id',
+      key: 'order_id',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Name',
+      dataIndex: 'full_name',
+      key: 'full_name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Phone',
+      key: 'phone',
+      dataIndex: 'phone',
+    },
+    {
+      title: 'Payment',
+      key: 'payment',
+      dataIndex: 'payment',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <button onClick={() => showDrawer(record)}>
+            <a>Detail</a>
+          </button>
+        </Space>
+      ),
+    },
+  ];
 
-
-
-const LittleColumns: TableProps<LittleDataType>['columns'] = [
-  {
-    title: 'Image',
-    dataIndex: 'image',
-    key: 'image',
-    render: (text) => text ? <img src={text} alt="product" width={50} /> : 'No image',
-  },
-  {
-    title: 'Product Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Size',
-    dataIndex: 'size',
-    key: 'size',
-  },
-  {
-    title: 'Quantity',
-    dataIndex: 'quantity',
-    key: 'quantity',
-  },
-
-];
-
+  const LittleColumns: TableProps<LittleDataType>['columns'] = [
+    {
+      title: 'Image',
+      dataIndex: 'image',
+      key: 'image',
+      render: (text) => (text ? <img src={text} alt="product" width={50} /> : 'No image'),
+    },
+    {
+      title: 'Product Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Size',
+      dataIndex: 'size',
+      key: 'size',
+    },
+    {
+      title: 'Quantity',
+      dataIndex: 'quantity',
+      key: 'quantity',
+    },
+  ];
 
   useEffect(() => {
     if (typeof dayPick === 'string' && dayPick) {
@@ -187,40 +146,31 @@ const LittleColumns: TableProps<LittleDataType>['columns'] = [
           console.error(err);
         });
     }
-  
   }, [dayPick]);
 
-
   useEffect(() => {
-    
     productService
-    .getAllProduct()
-    .then((res) => {
-   
-     console.log(res)
-  setAllProduct(res.data)
-    })
-    .catch((err) => {
-    
-      console.log(err);
-    });
-  
+      .getAllProduct()
+      .then((res) => {
+        console.log(res);
+        setAllProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-  // const dateFormat = 'YYYY/MM/DD';
 
-  return(
-    
-  <>
-    <div className='flex'>
-    <p className='pb-2 pr-2'>Xem đơn đặt hàng theo ngày</p>
-    <DatePicker className='mb-2' onChange={onChange} size='large' />
-   {/* <DatePicker format={dateFormat} className='mb-2' onChange={onChange}/>  */}
-    </div>
+  return (
+    <>
+      <div className='flex'>
+        <p className='pb-2 pr-2'>Xem đơn đặt hàng theo ngày</p>
+        <DatePicker className='mb-2' onChange={onChange} size='large' />
+      </div>
 
- <Table columns={columns} dataSource={orderList} />
+      <Table columns={columns} dataSource={orderList} />
 
- <Drawer
-        title="Oder Detail"
+      <Drawer
+        title="Order Detail"
         placement='left'
         closable={false}
         onClose={onClose}
@@ -231,12 +181,12 @@ const LittleColumns: TableProps<LittleDataType>['columns'] = [
         <p>Số order {currentOrder?.order_id}</p>
         <p>Tên {currentOrder?.full_name}</p>
         <p>Số điện thoại {currentOrder?.phone}</p>
-        <p>Email {currentOrder?.email}</p> 
+        <p>Email {currentOrder?.email}</p>
         <p>Đơn hàng</p>
         <Table columns={LittleColumns} dataSource={currentOrder?.order_cart} />
-
       </Drawer>
-  </>
-);}
+    </>
+  );
+};
 
 export default ShopPage;
