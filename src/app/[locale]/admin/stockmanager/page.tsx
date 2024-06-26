@@ -160,6 +160,9 @@ const StockManager = () => {
 
   //modal product input
   const showModalProduct = (value: string,record:any) => {
+    if (modalProductTitle === 'Add product'){
+      formProduct.resetFields();
+    }
     formProduct.resetFields(['file']);
     setOpen(true);
     setModalProductTitle(value);
@@ -167,9 +170,18 @@ const StockManager = () => {
     setRandomNumber(Math.random());
   };
 
+  const hideModalProduct = () =>{
+    formProduct.resetFields();
+    setOpen(false)
+  }
+
 const onFinish = async (values:FieldType) => {
   const formData = new FormData();
-  
+     // Multiply price_vnd by 1000 if provided
+     if (values.price_vnd) {
+      values.price_vnd = values.price_vnd * 1000;
+    }
+
   try {
     if (modalProductTitle === 'Add product') {
       console.log('Success: new ', values);
@@ -255,7 +267,7 @@ const newValues:FieldType = {...values,product_id:currentProduct.product_id}
     setIsModalOpenStock(false);
   };
 
-  const handleCancelStock = () => {
+  const handleCancelStock:any = () => {
     setIsModalOpenStock(false);
   };
   // form add size - stock
@@ -400,21 +412,18 @@ const fetchAllProduct = () => {
   };
   //get field product
   useEffect(() => {
-    const categoryId = getCategoryId(currentProduct?.category);
-  
+     if (currentProduct) {
+    const categoryId = getCategoryId(currentProduct.category);
+    
     formProduct.setFieldsValue({
-   
-      category_id:categoryId,  
-      desc_vi: currentProduct?.desc_vi,
-      desc_en: currentProduct?.desc_en,
-      name: currentProduct?.name,
-      
-      price_usd: currentProduct?.price_usd,
-      price_vnd:currentProduct?.price_vnd,
-      
-      // size: currentStockItem?.size,
-      // stock: currentStockItem?.stock,
+      category_id: categoryId,
+      desc_vi: currentProduct.desc_vi,
+      desc_en: currentProduct.desc_en,
+      name: currentProduct.name,
+      price_usd: currentProduct.price_usd,
+      price_vnd: currentProduct.price_vnd / 1000,
     });
+  }
   }, [randomNumber]);
 
 
@@ -428,7 +437,7 @@ const fetchAllProduct = () => {
         Add product
       </Button>
       <Table columns={columns} dataSource={allProduct} />
-      <Modal title={modalProductTitle} open={open} footer={''} onCancel={() => setOpen(false)}>
+      <Modal title={modalProductTitle} open={open} footer={''} onCancel={hideModalProduct}>
         <p>
           <Form
           form={formProduct}
@@ -450,10 +459,10 @@ const fetchAllProduct = () => {
               <Input />
             </Form.Item>
             <Form.Item label="price_vnd" name="price_vnd">
-              <InputNumber />
+              <InputNumber addonAfter="000" style={{ width: 150 }} />
             </Form.Item>
             <Form.Item label="price_usd" name="price_usd">
-              <InputNumber />
+              <InputNumber style={{ width: 150 }} />
             </Form.Item>
             <Form.Item label="desc_vi" name="desc_vi">
               <TextArea rows={2} />
