@@ -23,7 +23,7 @@ export interface IProduct {
 
 
 export interface IProductCart {
-  product_id: string;
+  product_id: number;
   name: string;
   price_vnd: number;
   price_usd: number;
