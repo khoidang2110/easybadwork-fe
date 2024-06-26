@@ -160,6 +160,7 @@ const StockManager = () => {
 
   //modal product input
   const showModalProduct = (value: string,record:any) => {
+    formProduct.resetFields(['file']);
     setOpen(true);
     setModalProductTitle(value);
     setCurrentProduct(record);
@@ -466,6 +467,7 @@ const fetchAllProduct = () => {
               valuePropName="fileList"
               name="file"
               getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+             
             >
          
               <Dragger {...props}>
