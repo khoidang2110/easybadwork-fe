@@ -335,7 +335,7 @@ const newValues:FieldType = {...values,product_id:currentProduct.product_id}
       });
     setRandomNumber(Math.random());
   };
-  const deleteProduct = (product_id:string)=>{
+  const deleteProduct = (product_id:number)=>{
     productService
     .deleteProduct(Number( product_id))
     .then((result) => {
