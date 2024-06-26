@@ -189,7 +189,7 @@ const onFinish = async (values:FieldType) => {
       message.success('PRODUCT CREATED.');
     } else if (modalProductTitle === 'Update product') {
       console.log('Success: updated ', values);
-const newValues = {...values,product_id:currentProduct.product_id}
+const newValues:FieldType = {...values,product_id:currentProduct.product_id}
       // Ensure product_id is included
       //formData.append('product_id', currentProduct.product_id);
 
