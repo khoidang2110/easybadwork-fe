@@ -14,22 +14,7 @@ import Category from '../../category/[id]/page';
 import { IProduct,IProductCart } from '@/interfaces/product';
 const { Dragger } = Upload;
 
-interface DataType {
-  order_id: string;
-  full_name: string;
-  email: string;
-  phone: string;
-}
-// interface ProductDataType {
-//   record:IProduct;
-//   image: string;
-//   category: string;
-//   name: string;
-//   price_vnd: string;
-//   price_usd:string;
-//  product_id:number;
-  
-// }
+
 
 
 interface StockDataType {
@@ -46,6 +31,7 @@ type FieldType = {
   desc_vi: string;
   desc_en: string;
   file: any;
+  product_id?:number;
 } & { [key: string]: any };
 
 type FieldTypeStock = {
@@ -62,7 +48,7 @@ const props: UploadProps = {
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
+      // console.log(info.file, info.fileList);
     }
     if (status === 'done') {
       // message.success(`${info.file.name} file uploaded successfully.`);
@@ -71,7 +57,7 @@ const props: UploadProps = {
     }
   },
   onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
+    // console.log('Dropped files', e.dataTransfer.files);
   },
 };
 const StockManager = () => {
@@ -179,54 +165,59 @@ const StockManager = () => {
     setCurrentProduct(record);
     setRandomNumber(Math.random());
   };
-// on finish product
-  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    console.log('Success:', values);
 
-//case create new product
-if (modalProductTitle == 'Add product'){
+const onFinish = async (values:FieldType) => {
   const formData = new FormData();
-
-  Object.keys(values).forEach((key) => {
-    if (key === 'file') {
-      formData.append(key, values[key][0].originFileObj);
-    } else {
-      formData.append(key, values[key] as any);
-    }
-  });
-
+  
   try {
-    const res = await productService.createProduct(formData);
-    console.log('formData truyền vào', formData);
-    console.log('Product Create Response:', res.data);
+    if (modalProductTitle === 'Add product') {
+      console.log('Success: new ', values);
+
+      // Add fields to formData
+      Object.keys(values).forEach((key) => {
+        if (key === 'file' && values[key]?.length > 0) {
+          // Only append file if it exists
+          formData.append(key, values[key][0].originFileObj);
+        } else if (key !== 'file') {
+          formData.append(key, values[key] as any);
+        }
+      });
+
+      await productService.createProduct(formData);
+      
+      
+      message.success('PRODUCT CREATED.');
+    } else if (modalProductTitle === 'Update product') {
+      console.log('Success: updated ', values);
+const newValues = {...values,product_id:currentProduct.product_id}
+      // Ensure product_id is included
+      //formData.append('product_id', currentProduct.product_id);
+
+      // Add fields to formData
+      Object.keys(newValues).forEach((key) => {
+        if (key === 'file' && newValues[key]?.length > 0) {
+          // Only append file if it exists
+          formData.append(key, newValues[key][0].originFileObj);
+        } else if (key !== 'file') {
+          formData.append(key, newValues[key] as any);
+        }
+      });
+      formData.forEach((value, key) => {
+        console.log(`formData update Product: ${key} = ${value}`);
+      });
+      await productService.updateProduct(formData);
+      
+     
+      message.success('PRODUCT UPDATED.');
+    }
     setOpen(false);
-    message.success(` PRODUCT CREATED.`);
     fetchAllProduct();
   } catch (err) {
-    console.error('Product Create Error:', err);
+    console.error('Product Save Error:', err);
+    message.error('Error saving product');
   }
-}else if(modalProductTitle=='Update product'){
-  //case update product
-  const newValue = {...values,product_id:currentProduct.product_id}
-  console.log('new value update', newValue);
+};
 
-productService
-.updateProduct(newValue)
-.then((result) => {
-  console.log(result)
-   message.success(` PRODUCT UPDATED.`);
-   setOpen(false);
-   fetchAllProduct();
-}).catch((err) => {
-  console.log(err)
-});
-
-}
-   
-
-//case update product
-
-  };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -470,7 +461,7 @@ const fetchAllProduct = () => {
               <TextArea rows={2} />
             </Form.Item>
 {/* up hình */}
-{modalProductTitle=='Add product'?  <Form.Item
+ <Form.Item
               label="Upload"
               valuePropName="fileList"
               name="file"
@@ -483,7 +474,7 @@ const fetchAllProduct = () => {
                 </p>
                 <p className="ant-upload-text">Click or drag file to this area to upload</p>
               </Dragger>
-            </Form.Item> :''}
+            </Form.Item> 
            
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

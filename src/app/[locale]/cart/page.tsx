@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "antd";
 import { useLocale } from 'next-intl';
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
@@ -20,6 +20,12 @@ import { NO_IMAGE } from "@/constant";
 const Cart = () => {
   const localeActive = useLocale();
   const t = useTranslations('cart');
+  const [note, setNote] = useState('');
+console.log('note',note)
+  const handleChangeNote = (event:any) => {
+    setNote(event.target.value);
+  };
+
   useEffect(() => {
     const cartString = localStorage.getItem("cart");
     if (cartString) {
@@ -46,6 +52,11 @@ const Cart = () => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     dispatch(updateItem(updatedCart));
   };
+const handleContinue =()=>{
+  localStorage.setItem("note",note);
+}
+
+
   let totalPrice: number = 0;
 if(localeActive=='vi'){
   totalPrice = cartRedux.reduce(
@@ -117,18 +128,20 @@ if(localeActive=='vi'){
       </div>
       <div className="border-dashed border rounded border-black p-4 mb-2 text-left">
         <p>{t('subtotal')}</p>
-        <p>{t('taxes&ship')}</p>
+        <div className="flex justify-between">
+        <p>{t('taxes&ship')} </p> <p> {totalPrice.toLocaleString()} {t('currency')}</p>
+        </div>
+       
       </div>
-      <div className="border-dashed border rounded border-black p-4 mb-2 text-left">
-      {t('addNote')}
-      </div>
+      <input type="text" placeholder={t('addNote')} value={note} onChange={handleChangeNote}   className="w-full border-dashed border rounded border-black p-4 mb-2 text-left"/>
+      
       
       <Link href={`/${localeActive}/information`} >
         <div
           className=" rounded p-4 mb-2  mt-8 text-white flex justify-between   "
           style={{ backgroundColor: "#002549" }}
         >
-          <button className="pr-2"> {t('checkOut')}</button>
+          <button className="pr-2" onClick={handleContinue}> {t('checkOut')}</button>
           <p> {totalPrice.toLocaleString()} {t('currency')}</p>
         </div>
       </Link>
@@ -138,7 +151,7 @@ if(localeActive=='vi'){
         style={{ backgroundColor: "#d8d8d8" }}
       >
       
-          <button>{t('continueShopping')}</button>
+          <button onClick={handleContinue}>{t('continueShopping')}</button>
     
       </div>
       </Link>

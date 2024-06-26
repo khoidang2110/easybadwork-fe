@@ -63,7 +63,8 @@ const Payment = () => {
   };
 
   const onFinishPayment = () => {
-    setIsLoading(true); 
+    const note = localStorage.getItem('note') || "";
+
     const aggregateCartItems = (cart: any[]) => {
       return cart.reduce((acc: ICartItem[], item) => {
         const existingItem = acc.find(
@@ -95,12 +96,12 @@ const newOrder:IOrder = {
   dist:info.dist,
   city:info.city,
   phone:info.phone,
-  note:"note làm sau",
+  note:note,
   payment:paymentMethod,
   cart:filteredCart,
 }
 
-
+// console.log('newOrder',newOrder)
 
     orderService
       .createOrder(newOrder)
@@ -108,15 +109,7 @@ const newOrder:IOrder = {
         console.log(' New oder.jsx:45 ~ .then ~ res:', res);
         localStorage.removeItem("cart");
         localStorage.removeItem("count");
-        // message.success("Đăng ký thành công");
-        //  navigate("/");
-        // setTimeout(() => {
-        //   // window.location.href = "/";
-
-        // }, 1000);
-
-        // form.resetFields();
-        // setRandomNumber(Math.random());
+      
         showDrawer();
       })
       .catch((err) => {
