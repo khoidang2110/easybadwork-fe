@@ -8,7 +8,9 @@ import { Dayjs } from 'dayjs';
 const { RangePicker } = DatePicker;
 
 const Statistics = () => {
-
+  function formatNumber(num:number) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   const [dayPick, setDayPick] = useState<string[]>(["", ""]);
   const [orderList, setOrderList] = useState<IOrderInfo[]>([]);
   console.log('order list',orderList)
@@ -130,16 +132,16 @@ const Statistics = () => {
       key: 'bill',
       render: (order_cart: ICartItem[]) => {
         const bill = order_cart?.reduce((total, item) => total + (item.quantity * (item.price_vnd ?? 0)), 0);
-        return <span>{bill} VND</span>;
+        return <span>{formatNumber(bill)} VND</span>;
       },
     },
   ];
-
+  
   return (
     <div className=''>
       <p>Xem doanh thu</p>
       <RangePicker onChange={onRangeChange} size='large' />
-      <p>Doanh thu: {totalSum} VND</p>
+      <p>Doanh thu: {formatNumber(totalSum)} VND</p>
       <Table columns={columns} dataSource={orderListUpdated} rowKey="order_id" />
     </div>
   );
