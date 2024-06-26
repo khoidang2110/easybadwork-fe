@@ -11,8 +11,11 @@ const Statistics = () => {
 
   const [dayPick, setDayPick] = useState<string[]>(["", ""]);
   const [orderList, setOrderList] = useState<IOrderInfo[]>([]);
+  console.log('order list',orderList)
   const [orderListUpdated, setOrderListUpdated] = useState<IOrderInfo[]>([]);
+  console.log('order list update price',orderListUpdated)
   const [allProduct, setAllProduct] = useState<IProduct[]>([]);
+  console.log('all product',allProduct)
   const [totalSum, setTotalSum] = useState<number>(0);
 
   const onRangeChange = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
@@ -73,7 +76,7 @@ const Statistics = () => {
       const updatedOrders = orderList.map(order => ({
         ...order,
         order_cart: order.order_cart.map(cartItem => {
-          const product = allProduct.find(p => p.product_id === cartItem.product_id.toString());
+          const product = allProduct.find(p => p.product_id === cartItem.product_id);
           return product
             ? { ...cartItem, price_vnd: product.price_vnd, price_usd: product.price_usd }
             : cartItem;
@@ -83,18 +86,16 @@ const Statistics = () => {
 
       const filteredOrders = updatedOrders
         .filter(order => !order.deleted)
-        .map(order => order.order_cart.map(cartItem => {
-          const product = allProduct.find(p => p.product_id === cartItem.product_id.toString());
-          return {
-            price_vnd: product ? product.price_vnd : 0,
-            quantity: cartItem.quantity
-          };
-        }))
+        .map(order => order.order_cart.map(cartItem => ({
+          price_vnd: cartItem.price_vnd ?? 0,
+          quantity: cartItem.quantity
+        })))
         .flat();
       const totalSum = filteredOrders.reduce((sum, item) => sum + (item.price_vnd * item.quantity), 0);
       setTotalSum(totalSum);
     }
   }, [orderList, allProduct]);
+  
 
   const columns = [
     {

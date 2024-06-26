@@ -8,7 +8,7 @@ export interface IStock {
 }
 
 export interface IProduct {
-  product_id: string;
+  product_id: number;
   name: string;
   price_vnd: number;
   price_usd: number;
@@ -79,6 +79,8 @@ export interface IOrderCart {
   quantity:number;
   order_id:string;
   product_id:number;
+  price_vnd?:number;
+  price_usd?:number;
 
 }
 export interface IOrderInfo {

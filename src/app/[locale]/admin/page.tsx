@@ -15,6 +15,7 @@ interface LittleDataType {
   name: string;
   quantity: number;
   size: string;
+  price_vnd:number;
 }
 
 interface DataType {
@@ -53,6 +54,7 @@ const ShopPage = () => {
           ...item,
           name: product ? product.name : item.name,
           image: product ? product.image[0] : item.image,
+          price_vnd: product ? product.price_vnd : item.price_vnd
         };
       });
 
@@ -128,6 +130,11 @@ const ShopPage = () => {
       title: 'Quantity',
       dataIndex: 'quantity',
       key: 'quantity',
+    },
+    {
+      title: 'Price vnd',
+      dataIndex: 'price_vnd',
+      key: 'price_vnd',
     },
   ];
 
