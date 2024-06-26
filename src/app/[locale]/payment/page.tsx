@@ -102,6 +102,9 @@ const newOrder:IOrder = {
 }
 
 // console.log('newOrder',newOrder)
+// mo loading
+    setIsLoading(true);
+    showDrawer();
 
     orderService
       .createOrder(newOrder)
@@ -110,7 +113,8 @@ const newOrder:IOrder = {
         localStorage.removeItem("cart");
         localStorage.removeItem("count");
       
-        showDrawer();
+       
+      
       })
       .catch((err) => {
         console.log('🚀 ~ file: New order.jsx:49 ~ onFinish ~ err:', err);
@@ -221,14 +225,15 @@ const newOrder:IOrder = {
         </ConfigProvider>
         {paymentMethod == 'bank' ? <img src="/images/bankAccount.jpg" alt="" /> : null}
       </div>
-      <Link href={`/${localeActive}/payment`}>
+      {totalPrice==0? '' :  <Link href={`/${localeActive}/payment`}>
         <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
           <button onClick={onFinishPayment} className="pr-2">
             {t('completeOrder')}
           </button>
         </div>
-      </Link>
-      {isLoading && <Spin />} {/* Show spinner when loading */}
+      </Link>}
+      
+     
       <Drawer
         title=""
         placement="top"
@@ -241,12 +246,14 @@ const newOrder:IOrder = {
       >
         <div>
         <Image width={90} height={90} src="/images/khimhead.png" alt="menu" className={styles.headerImg} />
-        <p className='pt-10 font-bold'>CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</p>
-        <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
+
+        {isLoading ?  <Spin size="large" className='w-full pt-2'/>  : <p className='pt-10 font-bold text-center'>CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</p>} 
+       {isLoading ? "" :   <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
           <button onClick={onClose} className="pr-2">
             ĐÓNG
           </button>
-        </div>
+        </div>}
+      
         
         </div>
   

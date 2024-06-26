@@ -127,16 +127,14 @@ if(localeActive=='vi'){
         <p>{count}</p>
       </div>
       <div className="border-dashed border rounded border-black p-4 mb-2 text-left">
-        <p>{t('subtotal')}</p>
+     
         <div className="flex justify-between">
-        <p>{t('taxes&ship')} </p> <p> {totalPrice.toLocaleString()} {t('currency')}</p>
+        <p>{t('subtotal')}</p>  <p> {totalPrice.toLocaleString()} {t('currency')}</p>
         </div>
-       
+        <p>{t('taxes&ship')} </p> 
       </div>
       <input type="text" placeholder={t('addNote')} value={note} onChange={handleChangeNote}   className="w-full border-dashed border rounded border-black p-4 mb-2 text-left"/>
-      
-      
-      <Link href={`/${localeActive}/information`} >
+     {totalPrice==0 ? '' :    <Link href={`/${localeActive}/information`} >
         <div
           className=" rounded p-4 mb-2  mt-8 text-white flex justify-between   "
           style={{ backgroundColor: "#002549" }}
@@ -144,7 +142,9 @@ if(localeActive=='vi'){
           <button className="pr-2" onClick={handleContinue}> {t('checkOut')}</button>
           <p> {totalPrice.toLocaleString()} {t('currency')}</p>
         </div>
-      </Link>
+      </Link> } 
+      
+   
       <Link href={`/`}>
       <div
         className=" rounded  p-4 mb-2 "
