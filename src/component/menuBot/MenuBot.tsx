@@ -3,19 +3,18 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
-import Image from "next/image";
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
-import {
-SearchOutlined,
-ShoppingCartOutlined 
-} from '@ant-design/icons';
+import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
 import { update } from '@/redux/features/counterSlice';
-
-import { useTranslations } from "next-intl";
+import { Avatar, List } from 'antd';
+import { useTranslations } from 'next-intl';
+import { IProduct } from '@/interfaces/product';
+import { productService } from '@/service/service';
 
 const MenuBot = () => {
   const t = useTranslations('BotMenu');
@@ -29,26 +28,31 @@ const MenuBot = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [tabActive, setTabActive] = useState('');
 
- //console.log("istogled", isToggled);
+  //console.log("istogled", isToggled);
   // console.log("tabActive", tabActive);
   const router = useRouter();
   const pathname = usePathname();
-  const pathnameLocale= pathname.slice(3)
+  const pathnameLocale = pathname.slice(3);
   //console.log("pathname locale", pathnameLocale);
-  //const pathnameDetail = 
+  //const pathnameDetail =
   //lam lai pathname ID ( htem /vn)
   const pathnameId = pathname.slice(8);
-//console.log("pathnameId",pathnameId)
-// const pathnameCategory = pathname.substr(4,8);
-// console.log('pathnameCategory',pathnameCategory)
- const pathnameAdmin = pathname.slice(4,9);
+  //console.log("pathnameId",pathnameId)
+  // const pathnameCategory = pathname.substr(4,8);
+  // console.log('pathnameCategory',pathnameCategory)
+  const pathnameAdmin = pathname.slice(4, 9);
   //const pathnameInfo = pathname.slice(4,15);
-  const pathnameChild = pathname.slice(4,15);
- // const pathnamePayment = pathname.slice(4,11);
-  console.log('pathname pay:',pathnameChild)
+  const pathnameChild = pathname.slice(4, 15);
+  // const pathnamePayment = pathname.slice(4,11);
+  console.log('pathname pay:', pathnameChild);
   let hideMenuBar = false;
-  if (pathnameAdmin === 'admin' || pathnameChild==='information' || pathnameChild ==='payment' || pathnameChild == 'login' ) {
-    hideMenuBar  = true;
+  if (
+    pathnameAdmin === 'admin' ||
+    pathnameChild === 'information' ||
+    pathnameChild === 'payment' ||
+    pathnameChild == 'login'
+  ) {
+    hideMenuBar = true;
   }
 
   //console.log("pathname id", pathnameId);
@@ -56,9 +60,9 @@ const MenuBot = () => {
   // console.log(currentProduct?.status);
 
   const handleToggle = (position: any) => {
-   // console.log('position',position)
+    // console.log('position',position)
     if (tabActive == '') {
-       console.log("mở");
+      console.log('mở');
       setIsToggled(!isToggled);
       setTabActive(position);
     } else if (tabActive == position) {
@@ -71,24 +75,22 @@ const MenuBot = () => {
         setTabActive('deadstock');
       } else if (pathnameLocale == '/cart') {
         setTabActive('cart');
-      } 
+      }
       // else if(tabActive=='shop'){
-        
-      //     // chọn 
+
+      //     // chọn
       //     console.log('case chọn')
       //    // setIsToggled(!isToggled);
       //    setIsToggled(!isToggled);
       //     setTabActive('');
-             
+
       // }
-      
       else {
         // console.log("case 3 đóng");
         setIsToggled(!isToggled);
         setTabActive('');
       }
-    } 
-    else {
+    } else {
       // console.log("chuyển");
 
       setTabActive(position);
@@ -134,11 +136,11 @@ const MenuBot = () => {
 
   const handleFilter = (value: any) => {
     console.log('value filter', value);
-   // getFilterProduct(value.toLowerCase());
-        // chọn 
-       //   console.log('case chọn')
-          setTabActive('');
-          setIsToggled(false);
+    // getFilterProduct(value.toLowerCase());
+    // chọn
+    //   console.log('case chọn')
+    setTabActive('');
+    setIsToggled(false);
   };
 
   // "tShirt":"T-SHIRT",
@@ -151,65 +153,106 @@ const MenuBot = () => {
   // "kid":"KID",
   // "sliver":"SLIVER",
 
-
   const dataShop = [
-    { name: t('t-shirt') , id: 't-shirt' },
+    { name: t('t-shirt'), id: 't-shirt' },
     { name: t('head-wear'), id: 'head-wear' },
     { name: t('body-cover'), id: 'body-coverR' },
     { name: t('bandana'), id: 'bandana' },
-    { name:t('footwear'), id: 'footwear' },
+    { name: t('footwear'), id: 'footwear' },
     { name: t('sliver'), id: 'sliver' },
     { name: t('shirt'), id: 'shirt' },
     { name: t('decoration'), id: 'decoration' },
     { name: t('kid'), id: 'kid' },
   ];
+  // search
+  const [searchInput, setSearchInput] = useState('');
+  console.log('search keyword',searchInput)
+  const [searchResults, setSearchResults] = useState<IProduct[]>([]);
+console.log('searchResults',searchResults)
+  useEffect(() => {
+    if (searchInput.trim() === '') {
+      setSearchResults([]);
+      return;
+    }
 
+    const fetchSearchResults = async () => {
+      try {
+        const res = await productService.searchProduct(searchInput);
+        if (Array.isArray(res.data)) {
+          setSearchResults(res.data);
+        } else {
+          console.warn('Unexpected response data:', res.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      }
+    };
+
+    fetchSearchResults();
+  }, [searchInput]);
+
+  const handleSearchInputChange = (event: any) => {
+    setSearchInput(event.target.value);
+  };
   return (
-   
     <div className={styles.footer}>
- {hideMenuBar? ("") : (  <div className={styles.fContainer}>
-        <div></div>
-        <div
-          className={`${styles.fButtonContainer} ${
-            isToggled && tabActive !== 'deadstock' && tabActive !== 'cart' ? styles.fButtonClick : ''
-          }`}
-        >
-          <div>
-            <div className={`roboto ${isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}`}>
-            <Link href={`https://www.khimdang.com/`  } >
-              <p>{t('about')}</p>
-            </Link>
-              <p>{t('stores')}</p>
-              <p>{t('contact')}</p>
+      {hideMenuBar ? (
+        ''
+      ) : (
+        <div className={styles.fContainer}>
+          <div></div>
+          <div
+            className={`${styles.fButtonContainer} ${
+              isToggled && tabActive !== 'deadstock' && tabActive !== 'cart' ? styles.fButtonClick : ''
+            }`}
+          >
+            <div>
+              <div className={`roboto ${isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}`}>
+                <Link href={`https://www.khimdang.com/`}>
+                  <p>{t('about')}</p>
+                </Link>
+                <p>{t('stores')}</p>
+                <p>{t('contact')}</p>
+              </div>
 
-    
+              <div className={` roboto ${isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}`}>
+                {dataShop.map((item, index) => (
+                  <Link href={`/${localeActive}/category/${item.id}/`} key={index}>
+                    <p onClick={() => handleFilter(item.name)} key={item.id}>
+                      {item.name}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+
+              <div className={isToggled && tabActive == 'search' ? styles.textShow : styles.textHide}>
+                <input type="text" placeholder={t('typeHere')} className={` roboto ${styles.inputBg}`}  value={searchInput}
+        onChange={handleSearchInputChange}  />
+                {/* list tìm */}
+                <List
+                  itemLayout="horizontal"
+                  dataSource={searchResults}
+                  renderItem={(item, index) => (
+                    <List.Item>
+                      <List.Item.Meta
+                        avatar={<Avatar shape="square" size={64} src={`https://api.easybadwork.com/${item.image[0]?.slice(5)}`} />}
+                        title={<a href="https://ant.design">{item.name}</a>}
+                        description=""
+                      />
+                    </List.Item>
+                  )}
+                />
+              </div>
             </div>
 
-            <div className={` roboto ${isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}`}>
-              {dataShop.map((item, index) => (
-                <Link href={`/${localeActive}/category/${item.id}/`  } key={index}>
-                <p onClick={() => handleFilter(item.name)} key={item.id}>
-                  {item.name}
-                </p>
-</Link>
-
-
-
-
-              ))}
-            </div>
-
-            <div className={isToggled && tabActive == 'search' ? styles.textShow : styles.textHide}>
-              <input type="text" placeholder={t('typeHere')} className={` roboto ${styles.inputBg}`} />
-            </div>
-          </div>
-
-          <div className="flex justify-between">
-            <button
-              onClick={() => handleToggle('menu')}
-              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi :  styles.fButton} ${isToggled && tabActive == 'menu' ? styles.fButtonActive : ''}`}
-            >
-              {/* <svg
+            <div className="flex justify-between">
+              <button
+                onClick={() => handleToggle('menu')}
+                className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${
+                  isToggled && tabActive == 'menu' ? styles.fButtonActive : ''
+                }`}
+              >
+                {/* <svg
                 // className="w-5 h-3"
                 style={{ width: '15px', height: 'auto' }}
                 version="1.0"
@@ -243,88 +286,68 @@ const MenuBot = () => {
                   />
                 </g>
               </svg> */}
-              { isToggled && tabActive == 'menu'  ?   <Image
-            width={30}
-            height={30}
-            src="/images/icons/menuActive3.png"
-            alt="menu"
-           
-          /> :  <Image
-          width={30}
-          height={30}
-          src="/images/icons/menu3.png"
-          alt="menu"
-         
-        />}
-               
-            </button>
+                {isToggled && tabActive == 'menu' ? (
+                  <Image width={30} height={30} src="/images/icons/menuActive3.png" alt="menu" />
+                ) : (
+                  <Image width={30} height={30} src="/images/icons/menu3.png" alt="menu" />
+                )}
+              </button>
 
-            <button
-              className={`z-30 roboto   ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'shop' ? styles.fButtonActive : ''}`}
-              onClick={() => handleToggle('shop')}
-            >
-          {t('shop')} 
-            </button>
-            <button
-              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'search' ? styles.fButtonActive : ''}`}
-              onClick={() => handleToggle('search')}
-            >
-           {/* {t('search')}  */}
-           {isToggled && tabActive == 'search' ?   <Image
-            width={30}
-            height={30}
-            src="/images/icons/searchActive3.png"
-            alt="search"
-           
-          />:   <Image
-          width={30}
-          height={30}
-          src="/images/icons/search3.png"
-          alt="search"
-         
-        />}
-         
-           {/* <SearchOutlined style={{ fontSize: "20px" }} /> */}
-            </button>
-            <button
-              className={`z-30 roboto ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton}  ${
-                isToggled && tabActive == 'deadstock' ? styles.fButtonActive : ''
-              }`}
-              onClick={() => handleToggle('deadstock')}
-            >
-              <Link href={`/${localeActive}/deadstock`} className="">
-              {t('deadstock')} 
-              </Link>
-            </button>
+              <button
+                className={`z-30 roboto   ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${
+                  isToggled && tabActive == 'shop' ? styles.fButtonActive : ''
+                }`}
+                onClick={() => handleToggle('shop')}
+              >
+                {t('shop')}
+              </button>
+              <button
+                className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${
+                  isToggled && tabActive == 'search' ? styles.fButtonActive : ''
+                }`}
+                onClick={() => handleToggle('search')}
+              >
+                {/* {t('search')}  */}
+                {isToggled && tabActive == 'search' ? (
+                  <Image width={30} height={30} src="/images/icons/searchActive3.png" alt="search" />
+                ) : (
+                  <Image width={30} height={30} src="/images/icons/search3.png" alt="search" />
+                )}
 
-            <a
-              className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${isToggled && tabActive == 'cart' ? styles.fButtonActive : ''}`}
-              onClick={() => handleToggle('cart')}
-            >
-              <Link href={`/${localeActive}/cart`} className="flex ">
-              {/* {t('cart')}  */}
-              {/* <ShoppingCartOutlined style={{ fontSize: "20px" }}  /> */}
-             { isToggled && tabActive == 'cart' ? <Image
-            width={30}
-            height={30}
-            src="/images/icons/cartActive3.png"
-            alt="cart"
-           className='pr-1'
-          /> :<Image
-          width={30}
-          height={30}
-          src="/images/icons/cart3.png"
-          alt="cart"
-         className='pr-1'
-        /> }  
-          <p className='text-sm roboto'>  {countRedux}</p>
-             
-              </Link>
-            </a>
+                {/* <SearchOutlined style={{ fontSize: "20px" }} /> */}
+              </button>
+              <button
+                className={`z-30 roboto ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton}  ${
+                  isToggled && tabActive == 'deadstock' ? styles.fButtonActive : ''
+                }`}
+                onClick={() => handleToggle('deadstock')}
+              >
+                <Link href={`/${localeActive}/deadstock`} className="">
+                  {t('deadstock')}
+                </Link>
+              </button>
+
+              <a
+                className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${
+                  isToggled && tabActive == 'cart' ? styles.fButtonActive : ''
+                }`}
+                onClick={() => handleToggle('cart')}
+              >
+                <Link href={`/${localeActive}/cart`} className="flex ">
+                  {/* {t('cart')}  */}
+                  {/* <ShoppingCartOutlined style={{ fontSize: "20px" }}  /> */}
+                  {isToggled && tabActive == 'cart' ? (
+                    <Image width={30} height={30} src="/images/icons/cartActive3.png" alt="cart" className="pr-1" />
+                  ) : (
+                    <Image width={30} height={30} src="/images/icons/cart3.png" alt="cart" className="pr-1" />
+                  )}
+                  <p className="text-sm roboto"> {countRedux}</p>
+                </Link>
+              </a>
+            </div>
           </div>
         </div>
-      </div>)}
-    
+      )}
     </div>
   );
 };
