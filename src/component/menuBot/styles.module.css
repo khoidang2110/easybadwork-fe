@@ -147,7 +147,7 @@ height: 1px;
 z-index: 10;
 }
 .inputBg{
-  padding-top: 10px;
+  /* padding-top: 10px; */
   background-color:#f3f3f3;
 z-index: 10;
 min-height: 58px;
@@ -173,3 +173,45 @@ border-bottom: 1px dashed black;
     border-color: transparent;
     position: relative;
 } */
+
+@media only screen and (min-width: 413px) {
+  .fContainer{
+    height: 42px;
+    width: 500px;
+    overflow: hidden;
+    bottom: 1.5rem;
+    position: fixed;
+    border-radius: .375rem;
+      --tw-bg-opacity: 1;
+      background-color: rgb(243 243 243 / var(--tw-bg-opacity));
+      transition-property: all;
+      transition-timing-function: cubic-bezier(.4,0,.2,1);
+      transition-duration: .2s;
+  }
+  .fButtonContainer{
+    width: 500px;
+    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
+    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    /* padding-top: .375rem; */
+      padding-bottom: .375rem;
+      padding-left: .375rem;
+      padding-right: .375rem;
+      --tw-bg-opacity: 1;
+      background-color: rgb(243 243 243 / var(--tw-bg-opacity));
+      border-radius: .5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      z-index: 20;
+      bottom: 0;
+      position: fixed;
+      transition: padding 0.3s ease;
+     
+  
+  }
+  
+
+}

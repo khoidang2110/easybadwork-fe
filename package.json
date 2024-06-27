@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
-    "antd": "^5.16.0",
+    "antd": "^5.18.3",
     "axios": "^1.6.8",
     "i18next": "^23.11.5",
     "moment": "^2.30.1",

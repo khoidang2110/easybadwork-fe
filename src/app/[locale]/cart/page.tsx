@@ -21,6 +21,7 @@ const Cart = () => {
   const localeActive = useLocale();
   const t = useTranslations('cart');
   const [note, setNote] = useState('');
+  const [totalPrice, setTotalPrice] = useState(0);
 console.log('note',note)
   const handleChangeNote = (event:any) => {
     setNote(event.target.value);
@@ -39,12 +40,14 @@ console.log('note',note)
   const cartRedux = useAppSelector((state) => state.cart.items);
    console.log("cartRedux", cartRedux);
 
-  const handleRemove = (index: number) => {
-    count = count - 1;
+  const handleRemove = (index: number,itemQuantity:number) => {
+    console.log("id item remove", index);
+
+    count = count - itemQuantity;
     localStorage.setItem("count", count.toString());
     dispatch(update(count));
 
-    console.log("id item remove", index);
+   
     const updatedCart = cartRedux.filter((_, i) => i !== index);
     console.log("updated cart khi xoa",updatedCart)
    
@@ -57,19 +60,17 @@ const handleContinue =()=>{
 }
 
 
-  let totalPrice: number = 0;
-if(localeActive=='vi'){
-  totalPrice = cartRedux.reduce(
-    (acc, product) => acc + product.price_vnd*product.quantity,
+
+useEffect(() => {
+  const price = cartRedux.reduce(
+    (acc, product) =>
+      localeActive === 'vi'
+        ? acc + product.price_vnd * product.quantity
+        : acc + product.price_usd * product.quantity,
     0
   );
-}else {
-  totalPrice = cartRedux.reduce(
-    (acc, product) => acc + product.price_usd*product.quantity,
-    0
-  );
-}
-  
+  setTotalPrice(price);
+}, [cartRedux, localeActive]);
   // console.log("totalPrice", totalPrice);
   return (
     <div className="text-center pt-20 px-2 roboto">
@@ -111,7 +112,7 @@ if(localeActive=='vi'){
             </div>
             <div className="right-4">
               <Button
-                onClick={() => handleRemove(index)}
+                onClick={() => handleRemove(index,item.quantity)}
                 type="text"
                 shape="circle"
                 icon={<CloseOutlined />}

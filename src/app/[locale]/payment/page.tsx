@@ -7,8 +7,8 @@ import { useLocale } from 'next-intl';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { updateItem } from '@/redux/features/cartSlice';
 import type { RadioChangeEvent } from 'antd';
-import { Input, Radio, Space } from 'antd';
-import { useRouter } from 'next/navigation'
+import { Input, Radio, Space, Modal } from 'antd';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import styles from './styles.module.css';
 import Image from 'next/image';
@@ -16,6 +16,8 @@ import { orderService } from '@/service/service';
 import { ICartItem, IOrder } from '@/interfaces/product';
 import { Button, Drawer } from 'antd';
 import type { DrawerProps } from 'antd';
+
+import { update } from '@/redux/features/counterSlice';
 type FieldType = {
   email: string;
   country: string;
@@ -26,9 +28,11 @@ type FieldType = {
   phone: string;
 };
 const Payment = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // New loading state
+  const [paymentMethod, setPaymentMethod] = useState('cod');
+  const [totalPrice, setTotalPrice] = useState(0);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -38,6 +42,8 @@ const Payment = () => {
     // xoá local storage count, cart
     localStorage.removeItem('count');
     localStorage.removeItem('cart');
+    setTotalPrice(0);
+    dispatch(update(0));
   };
   const dispatch = useAppDispatch();
   const [info, setInfo] = useState<FieldType>({
@@ -56,21 +62,18 @@ const Payment = () => {
   //  console.log('infoRedux',infoRedux)
   const localeActive = useLocale();
 
-  const [paymentMethod, setPaymentMethod] = useState('cod');
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPaymentMethod(e.target.value);
   };
 
   const onFinishPayment = () => {
-    const note = localStorage.getItem('note') || "";
+    const note = localStorage.getItem('note') || '';
 
     const aggregateCartItems = (cart: any[]) => {
       return cart.reduce((acc: ICartItem[], item) => {
-        const existingItem = acc.find(
-          (i) => i.product_id === item.product_id && i.size === item.size
-        );
-    
+        const existingItem = acc.find((i) => i.product_id === item.product_id && i.size === item.size);
+
         if (existingItem) {
           existingItem.quantity += item.quantity;
         } else {
@@ -80,60 +83,49 @@ const Payment = () => {
             quantity: item.quantity,
           });
         }
-    
+
         return acc;
       }, []);
     };
-    
+
     const filteredCart = aggregateCartItems(cartRedux);
     console.log('filteredCart', filteredCart);
 
+    const newOrder: IOrder = {
+      full_name: info.fullName,
+      email: info.email,
+      address: info.address,
+      dist: info.dist,
+      city: info.city,
+      phone: info.phone,
+      note: note,
+      payment: paymentMethod,
+      cart: filteredCart,
+    };
 
-const newOrder:IOrder = {
-  full_name:info.fullName,
-  email: info.email,
-  address: info.address,
-  dist:info.dist,
-  city:info.city,
-  phone:info.phone,
-  note:note,
-  payment:paymentMethod,
-  cart:filteredCart,
-}
-
-// console.log('newOrder',newOrder)
-// mo loading
-    setIsLoading(true);
-    showDrawer();
+    // console.log('newOrder',newOrder)
+    // mo loading
+   // setIsLoading(true);
+    //showDrawer();
+    // mo modal co loading
+    showLoading();
 
     orderService
       .createOrder(newOrder)
       .then((res) => {
         console.log(' New oder.jsx:45 ~ .then ~ res:', res);
-        localStorage.removeItem("cart");
-        localStorage.removeItem("count");
-      
-       
-      
+        localStorage.removeItem('cart');
+        localStorage.removeItem('count');
       })
       .catch((err) => {
         console.log('🚀 ~ file: New order.jsx:49 ~ onFinish ~ err:', err);
         //  message.error("Đăng ký thất bại");
       })
       .finally(() => {
-        setIsLoading(false); // Set loading to false when the payment process ends
+        setLoading(false); // Set loading to false when the payment process ends
       });
-
   };
 
-  let totalPrice: number = 0;
-
-  if (localeActive == 'vi') {
-    totalPrice = cartRedux.reduce((acc, product) => acc + product.price_vnd * product.quantity, 0);
-    console.log('total price vi', totalPrice);
-  } else {
-    totalPrice = cartRedux.reduce((acc, product) => acc + product.price_usd * product.quantity, 0);
-  }
   useEffect(() => {
     const localInfo = JSON.parse(localStorage.getItem('info') || '{}');
     if (localInfo) {
@@ -146,6 +138,30 @@ const newOrder:IOrder = {
       dispatch(updateItem(cart));
     }
   }, []);
+
+  useEffect(() => {
+    const price = cartRedux.reduce((acc, product) => {
+      return localeActive === 'vi'
+        ? acc + product.price_vnd * product.quantity
+        : acc + product.price_usd * product.quantity;
+    }, 0);
+    setTotalPrice(price);
+  }, [cartRedux, localeActive]);
+
+  const [openPay, setOpenPay] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const showLoading = () => {
+    setOpenPay(true);
+     setLoading(true);
+
+    // Simple loading mock. You should add cleanup logic in real world.
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 2000);
+  };
+
+
 
   return (
     <div className="text-center  px-2 roboto">
@@ -225,15 +241,18 @@ const newOrder:IOrder = {
         </ConfigProvider>
         {paymentMethod == 'bank' ? <img src="/images/bankAccount.jpg" alt="" /> : null}
       </div>
-      {totalPrice==0? '' :  <Link href={`/${localeActive}/payment`}>
-        <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
-          <button onClick={onFinishPayment} className="pr-2">
-            {t('completeOrder')}
-          </button>
-        </div>
-      </Link>}
-      
-     
+      {totalPrice == 0 ? (
+        ''
+      ) : (
+        <Link href={`/${localeActive}/payment`}>
+          <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
+            <button onClick={onFinishPayment} className="pr-2">
+              {t('completeOrder')}
+            </button>
+          </div>
+        </Link>
+      )}
+
       <Drawer
         title=""
         placement="top"
@@ -242,22 +261,42 @@ const newOrder:IOrder = {
         closable={false}
         onClose={onClose}
         open={open}
-     style={{}}
+        style={{}}
       >
         <div>
-        <Image width={90} height={90} src="/images/khimhead.png" alt="menu" className={styles.headerImg} />
+          
 
-        {isLoading ?  <Spin size="large" className='w-full pt-2'/>  : <p className='pt-10 font-bold text-center'>CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</p>} 
-       {isLoading ? "" :   <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
-          <button onClick={onClose} className="pr-2">
-            ĐÓNG
-          </button>
-        </div>}
-      
-        
+          {/* {isLoading ? (
+            <Spin size="large" className="w-full pt-2" />
+          ) : (
+            
+          )}
+          {isLoading ? (
+            ''
+          ) : (
+          
+          )} */}
         </div>
-  
       </Drawer>
+    
+      {/* <Button type="primary" onClick={showLoading}>
+        Open Modal
+      </Button> */}
+      <Modal
+        title=''
+        footer=''
+        loading={loading}
+        open={openPay}
+        onCancel={() => setOpenPay(false)}
+      >
+        <Image width={90} height={90} src="/images/ebw_logo2.png" alt="menu" className={styles.headerImg} />
+        <p className="pt-10 font-bold text-center">CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</p>
+         <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
+              <button onClick={onClose} className="pr-2">
+                ĐÓNG
+              </button>
+            </div>
+      </Modal>
     </div>
   );
 };

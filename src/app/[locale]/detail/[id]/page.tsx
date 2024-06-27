@@ -1,66 +1,62 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Drawer, message } from 'antd';
-import { useParams } from "next/navigation";
 
+import { useParams } from "next/navigation";
+import { Button, Modal, message } from 'antd';
 import CarouselComponent from "@/component/carousel/CarouselComponent";
 import styles from './styles.module.css';
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { increment, update } from "@/redux/features/counterSlice";
 import { addItem } from "@/redux/features/cartSlice";
 import { productService, stockService } from '@/service/service';
-import type { DrawerProps, RadioChangeEvent } from 'antd';
+
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
 import { IProduct, IProductCart, IStock } from '@/interfaces/product';
 import { NO_IMAGE } from '@/constant';
+
 const Detail = () => {
-  const handleChange = (value: { value: string; label: React.ReactNode }) => {
-    console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
-  };
-
-
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  let count = useAppSelector((state) => state.counter.count);
+  const t = useTranslations('detail');
   const localeActive = useLocale();
- const t = useTranslations('detail');
-  // console.log('local active',localeActive)
-const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
-console.log("currentProduct", currentProduct);
-// const baseURL = 'http://14.225.218.217:8081';
-const baseURL = 'https://api.easybadwork.com/';
+  const baseURL = 'https://api.easybadwork.com/';
+  const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [stock, setStock] = useState<IStock[]>([]);
+  const [sizeSelect, setSizeSelect] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [itemAvailable, setItemAvailable] = useState(0);
+  const [isToggled, setIsToggled] = useState(true);
+
+
 let fullImageURLs = currentProduct?.image?.map(item => `${baseURL}${item.replace('/app', '')}`)|| [];
 if (fullImageURLs.length == 0){
 fullImageURLs = [NO_IMAGE]
 }
-console.log("fullImageURLs",fullImageURLs);
 
-  const [stock, setStock] = useState<IStock[]>([]);
-// const [sizeOption, setSizeOption] = useState([]);
-const [sizeSelect, setSizeSelect] = useState('');
-const [quantity, setQuantity] = useState(1);
-console.log('sizeSelect',sizeSelect)
-const [itemAvailable, setItemAvailable] = useState(0);
-console.log("item available",itemAvailable)
+//console.log("fullImageURLs",fullImageURLs);
+//console.log('sizeSelect',sizeSelect)
+//console.log("item available",itemAvailable)
 // console.log('sizeOption',sizeOption)
-  console.log('stock',stock)
-
-  const [isToggled, setIsToggled] = useState(true);
+ // console.log('stock',stock)
   //const [sizeActive, setsizeActive] = useState('');
-
-
-  const dispatch = useAppDispatch();
-
-  let count = useAppSelector((state) => state.counter.count);
   //console.log("count add", count);
-  const params = useParams();
   //console.log("params.id",params.id);
 
- // const currentProduct = products.find((product) => product.id === params.id);
+// modal size chart
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
-  // Check if the currentProduct is found
-  // if (!currentProduct) {
-  //   return <div>Product not found</div>;
-  // }
-  //
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const handleClick = () => {
     count = count + quantity;
@@ -179,21 +175,14 @@ if(calculation=="-"){
   
   }, []);
 
-  const [open, setOpen] = useState(false);
- 
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
 
-  const onClose = () => {
-    setOpen(false);
-  };
 
 
 
 
 let sumPrice = '0';
+
 if(currentProduct){
   if(localeActive=='vi'){
     sumPrice = (currentProduct.price_vnd * quantity).toLocaleString();
@@ -229,7 +218,7 @@ showStock = t('lowStock')
 
         <p className='pr-3'>{t('size')}</p> 
         
-        <button onClick={showDrawer} className={styles.SizeChartButton}>{t('sizeChart')}</button>
+        <button onClick={showModal} className={styles.SizeChartButton}>{t('sizeChart')}</button>
         
        
         </div>
@@ -272,18 +261,11 @@ showStock = t('lowStock')
       </div>
      
  
-      <Drawer
-        title="Size Chart"
-        placement='top'
-        closable={false}
-        onClose={onClose}
-        open={open}
-        key={'top'}
-        height='300'
-      >
-  <img src="/images/sizeChart.jpg" alt="" />
-      </Drawer>
-     
+
+    
+      <Modal title="Size Chart" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}  footer=''>
+      <img src="/images/sizeChart.jpg" alt="" />
+      </Modal>
     </section>
   );
 };
