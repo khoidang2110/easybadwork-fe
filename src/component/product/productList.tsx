@@ -91,7 +91,7 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
                 </div>
               }
             >
-              <Meta title={product.name} description={showItem && `${formatNumber(product.price_vnd)} VND`} className='roboto' />
+              <Meta title={product.name} description={showItem && `${formatNumber(product.price_vnd)} VND`} className='roboto text-center' />
             </Card>
           </div>
         ))}
