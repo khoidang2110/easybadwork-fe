@@ -361,7 +361,7 @@ const MenuBot = () => {
                   ) : (
                     <Image width={30} height={30} src="/images/icons/cart3.png" alt="cart" className="pr-1" />
                   )}
-                  <p className="text-sm roboto"> {countRedux}</p>
+                  <p className="text-base roboto"> {countRedux}</p>
                 </Link>
               </a>
             </div>

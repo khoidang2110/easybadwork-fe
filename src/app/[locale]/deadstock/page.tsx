@@ -11,7 +11,7 @@ const DeadStock = () => {
   return (
     <div className="relative">
       <div className=" text-center">
-        <h1 className="py-4 text-xl roboto">DEAD STOCK</h1>
+        <h1 className="py-4 text-xl font-semibold roboto">DEAD STOCK</h1>
         <p>This place showing sold out items</p>
       </div>
       <ProductList filterType='' noStock={true} />
