@@ -23,7 +23,7 @@ export let productService = {
         return axiosClient.put(`/product/delete-product/${product_id}`)
       },
       searchProduct:(keyword:string)=>{
-        return axiosClient.get(`/product/find-product/?keyword=${keyword}&page=1&size=10`)
+        return axiosClient.get(`/product/find-product/?keyword=${keyword}&page=1&size=8`)
       }
   };
 
