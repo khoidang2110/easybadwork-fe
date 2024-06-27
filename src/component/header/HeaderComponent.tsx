@@ -62,15 +62,6 @@ if(pathnameChild=="information" || pathnameChild=='payment' || pathnameAdmin=='a
    { hideHead ? '' :  <div>
     
       <div className="">
-        <div className="flex flex-col justify-between items-center ">
-           <Link href={'/'} className="pt-3">
-            {' '}
-            <Image width={90} height={90} src="/images/ebw_logo2.png" alt="menu" className={styles.headerImg} />
-          </Link> 
-         
-        </div>
-        
-      </div>
       <div className='text-right'>
       <ConfigProvider
   theme={{
@@ -89,6 +80,16 @@ if(pathnameChild=="information" || pathnameChild=='payment' || pathnameAdmin=='a
 </ConfigProvider>
 
       </div>
+        <div className="flex flex-col justify-between items-center ">
+           <Link href={'/'} className=" w-full h-24 ">
+            {' '}
+            <Image width={90} height={90} src="/images/ebw_logo2.png" alt="menu" className={styles.headerImg} />
+          </Link> 
+         
+        </div>
+        
+      </div>
+      
 
     </div>}
     </div>

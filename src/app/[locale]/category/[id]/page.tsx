@@ -14,7 +14,7 @@ const Category = () => {
   
   return (
     <div className="relative">
-      <div className="pt-20 text-center">
+      <div className=" text-center">
         <h1 className="py-4 text-xl font-semibold roboto">{filterType.toUpperCase()}</h1>
         {/* <p>this place showing sold out items</p> */}
       </div>

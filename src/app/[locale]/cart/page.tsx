@@ -73,7 +73,7 @@ useEffect(() => {
 }, [cartRedux, localeActive]);
   // console.log("totalPrice", totalPrice);
   return (
-    <div className="text-center pt-20 px-2 roboto">
+    <div className="text-center  px-2 roboto">
       <h3 className="py-4 text-xl">{t('yourCart')}</h3>
       <div className="flex flex-row justify-between px-3 py-4 text-sm">
         <p>{t('product')}</p>

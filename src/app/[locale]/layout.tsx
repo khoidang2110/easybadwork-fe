@@ -32,7 +32,7 @@ export default async function LocaleLayout({
       {/* <Toaster position="top-right" reverseOrder={false} /> */}
         <HeaderComponent />
         <StoreProvider>
-          <div className="pt-10">
+          <div className="">
             <NextIntlClientProvider messages={messages}>
               {children}
               <MenuBot />
