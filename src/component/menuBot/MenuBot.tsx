@@ -11,7 +11,7 @@ import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
 import { update } from '@/redux/features/counterSlice';
-import { Avatar, List } from 'antd';
+import { Avatar, ConfigProvider, List } from 'antd';
 import { useTranslations } from 'next-intl';
 import { IProduct } from '@/interfaces/product';
 import { productService } from '@/service/service';
@@ -156,7 +156,7 @@ const MenuBot = () => {
   const dataShop = [
     { name: t('t-shirt'), id: 't-shirt' },
     { name: t('head-wear'), id: 'head-wear' },
-    { name: t('body-cover'), id: 'body-coverR' },
+    { name: t('body-cover'), id: 'body-cover' },
     { name: t('bandana'), id: 'bandana' },
     { name: t('footwear'), id: 'footwear' },
     { name: t('sliver'), id: 'sliver' },
@@ -166,34 +166,58 @@ const MenuBot = () => {
   ];
   // search
   const [searchInput, setSearchInput] = useState('');
-  console.log('search keyword',searchInput)
+  console.log('search keyword', searchInput);
   const [searchResults, setSearchResults] = useState<IProduct[]>([]);
-console.log('searchResults',searchResults)
+  console.log('searchResults', searchResults);
   useEffect(() => {
-    if (searchInput.trim() === '') {
-      setSearchResults([]);
-      return;
-    }
+    // if (searchInput.trim() === '') {
+    //   setSearchResults([]);
+    //   return;
+    // }
 
-    const fetchSearchResults = async () => {
-      try {
-        const res = await productService.searchProduct(searchInput);
-        if (Array.isArray(res.data)) {
-          setSearchResults(res.data);
-        } else {
-          console.warn('Unexpected response data:', res.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch products", error);
-      }
-    };
+    // const fetchSearchResults = async () => {
+    //   try {
+    //     const res = await productService.searchProduct(searchInput);
+    //     if (Array.isArray(res.data)) {
+    //       setSearchResults(res.data);
+    //     } else {
+    //       console.warn('Unexpected response data:', res.data);
+    //     }
+    //   } catch (error) {
+    //     console.error("Failed to fetch products", error);
+    //   }
+    // };
 
-    fetchSearchResults();
+    // fetchSearchResults();
+    const delayDebounceFn = setTimeout(() => {
+      productService
+        .searchProduct(searchInput)
+        .then((res) => {
+          if (Array.isArray(res.data)) {
+            setSearchResults(res.data);
+          } else {
+            console.warn('Unexpected response data:', res.data);
+            setSearchResults([]);
+          }
+        })
+        .catch((err) => {
+          console.error('Failed to fetch products', err);
+        });
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [searchInput]);
 
   const handleSearchInputChange = (event: any) => {
     setSearchInput(event.target.value);
   };
+
+  const handleClickItemSearch = (product: any) => {
+    router.push(`/${localeActive}/detail/${product.product_id}/`);
+    setIsToggled(false);
+    setTabActive('');
+  };
+
   return (
     <div className={styles.footer}>
       {hideMenuBar ? (
@@ -226,22 +250,52 @@ console.log('searchResults',searchResults)
               </div>
 
               <div className={isToggled && tabActive == 'search' ? styles.textShow : styles.textHide}>
-                <input type="text" placeholder={t('typeHere')} className={` roboto ${styles.inputBg}`}  value={searchInput}
-        onChange={handleSearchInputChange}  />
+                <input
+                  type="text"
+                  placeholder={t('typeHere')}
+                  className={` roboto ${styles.inputBg}`}
+                  value={searchInput}
+                  onChange={handleSearchInputChange}
+                />
                 {/* list tìm */}
-                <List
+            
+                    <ConfigProvider
+                      theme={{
+                        token: {
+                          colorPrimary: '#002549',
+                        },
+                      }}
+                    >
+                          <List
                   itemLayout="horizontal"
                   dataSource={searchResults}
+                  pagination={{
+                    onChange: (page) => {
+                      // console.log(page);
+                    },
+                    pageSize: 3,
+                  }}
                   renderItem={(item, index) => (
-                    <List.Item>
-                      <List.Item.Meta
-                        avatar={<Avatar shape="square" size={64} src={`https://api.easybadwork.com/${item.image[0]?.slice(5)}`} />}
-                        title={<a href="https://ant.design">{item.name}</a>}
-                        description=""
-                      />
-                    </List.Item>
-                  )}
-                />
+                      <List.Item>
+                        <button onClick={() => handleClickItemSearch(item)} className="w-full text-left">
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                shape="square"
+                                size={64}
+                                src={`https://api.easybadwork.com/${item.image[0]?.slice(5)}`}
+                              />
+                            }
+                            title={<a href="">{item.name}</a>}
+                            description=""
+                            key={index}
+                          />
+                        </button>
+                      </List.Item>
+   )}
+   />
+                    </ConfigProvider>
+               
               </div>
             </div>
 
@@ -252,40 +306,6 @@ console.log('searchResults',searchResults)
                   isToggled && tabActive == 'menu' ? styles.fButtonActive : ''
                 }`}
               >
-                {/* <svg
-                // className="w-5 h-3"
-                style={{ width: '15px', height: 'auto' }}
-                version="1.0"
-                xmlns="http://www.w3.org/2000/svg"
-                width="64.000000pt"
-                height="64.000000pt"
-                viewBox="0 0 64.000000 64.000000"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <g
-                  className={`z-30 ${styles.fButton} ${isToggled && tabActive == 'menu' ? styles.fButtonActive : ''}`}
-                  transform="translate(0.000000,64.000000) scale(0.100000,-0.100000)"
-                  fill="#000000"
-                  stroke="none"
-                >
-                  <path
-                    d="M9 624 c-9 -11 -10 -20 -2 -32 9 -15 41 -17 313 -17 272 0 304 2 313
-17 8 12 7 21 -2 32 -12 14 -52 16 -311 16 -259 0 -299 -2 -311 -16z"
-                  />
-                  <path
-                    d="M5 430 c-15 -48 -3 -50 315 -50 318 0 330 2 315 50 -6 20 -13 20
--315 20 -302 0 -309 0 -315 -20z"
-                  />
-                  <path
-                    d="M10 255 c-6 -8 -9 -23 -5 -35 6 -20 13 -20 315 -20 302 0 309 0 315
-20 15 48 3 50 -315 50 -248 0 -300 -2 -310 -15z"
-                  />
-                  <path
-                    d="M9 54 c-9 -11 -10 -20 -2 -32 9 -15 41 -17 313 -17 272 0 304 2 313
-17 8 12 7 21 -2 32 -12 14 -52 16 -311 16 -259 0 -299 -2 -311 -16z"
-                  />
-                </g>
-              </svg> */}
                 {isToggled && tabActive == 'menu' ? (
                   <Image width={30} height={30} src="/images/icons/menuActive3.png" alt="menu" />
                 ) : (
