@@ -32,10 +32,12 @@ const Payment = () => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // New loading state
   const [paymentMethod, setPaymentMethod] = useState('cod');
+  const [shippingMethod, setShippingMethod] = useState('domestic');
   const [totalPrice, setTotalPrice] = useState(0);
   const showDrawer = () => {
     setOpen(true);
   };
+
   const onClose = () => {
     setOpen(false);
     router.push(`/${localeActive}/`);
@@ -59,12 +61,20 @@ const Payment = () => {
   //const infoRedux = useAppSelector((state) => state.info.info);
   const cartRedux = useAppSelector((state) => state.cart.items);
   console.log('card redux', cartRedux);
+  const totalQuantity = cartRedux.reduce((sum, product) => sum + product.quantity, 0);
+
+  console.log("Total Quantity:", totalQuantity);
   //  console.log('infoRedux',infoRedux)
   const localeActive = useLocale();
 
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPaymentMethod(e.target.value);
+  };
+
+  const onChangeShipping = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+    setShippingMethod(e.target.value);
   };
 
   const onFinishPayment = () => {
@@ -91,6 +101,8 @@ const Payment = () => {
     const filteredCart = aggregateCartItems(cartRedux);
     console.log('filteredCart', filteredCart);
 
+    const shippingCost = shippingMethod === 'international' ? totalQuantity * 10 : 0;
+
     const newOrder: IOrder = {
       full_name: info.fullName,
       email: info.email,
@@ -98,8 +110,8 @@ const Payment = () => {
       dist: info.dist,
       city: info.city,
       phone: info.phone,
-      note: note,
-      payment: paymentMethod,
+      note: note + (shippingMethod === 'international' ? `giao hàng quốc tế: ${shippingMethod} cước giao hàng: ${shippingCost}` : ''),
+      payment:(shippingMethod === 'international' ? "paypal" : paymentMethod),
       cart: filteredCart,
     };
 
@@ -193,7 +205,8 @@ const Payment = () => {
         <p>{t('orderTotal')}:</p>
         <p>
           {' '}
-          {totalPrice.toLocaleString()} {t('currency')}
+          {shippingMethod=='international' ? (totalPrice+25*totalQuantity).toLocaleString() : totalPrice.toLocaleString()  }
+         {t('currency')}
         </p>
       </div>
 
@@ -208,8 +221,26 @@ const Payment = () => {
           <p className="pl-2">{`${info.address ? info.address : ''} ${info.dist ? info.dist : ''} ${
             info.city ? info.city : ''
           }`}</p>
-          {/* <p>SHIPPING METHOD</p>
-      <p>INTERNATIONAL 25USD/ITEM</p> */}
+
+          {localeActive=="en" ? <div>   <p>SHIPPING METHOD</p>
+          <ConfigProvider
+          theme={{
+            token: {
+              /* here is your global tokens */
+              // colorPrimary:"black",
+              colorPrimary: '#002549',
+            },
+          }}
+        >
+          <Radio.Group onChange={onChangeShipping} value={shippingMethod}>
+            <Space>
+              <Radio value={'international'} className='roboto text-base'>International Shipping 10USD/item</Radio>
+              <Radio value={'domestic'} className='roboto text-base'>Domestic Shipping</Radio>
+            </Space>
+          </Radio.Group>
+        </ConfigProvider> </div> : '' }
+       
+      
         </div>
         <div className="w-24">
           <Link href={`/${localeActive}/information`}>
@@ -223,7 +254,7 @@ const Payment = () => {
         <p>{t('paymentMethod')}</p>
       </div>
       <div className="border-dashed border rounded border-black p-4 mb-2 text-left">
-        <ConfigProvider
+        {localeActive=='en' ? <div className='roboto'>Paypal: @khimkhim</div> :     <ConfigProvider
           theme={{
             token: {
               /* here is your global tokens */
@@ -238,7 +269,8 @@ const Payment = () => {
               <Radio value={'bank'}>{t('banking')}</Radio>
             </Space>
           </Radio.Group>
-        </ConfigProvider>
+        </ConfigProvider>}
+    
         {paymentMethod == 'bank' ? <img src="/images/bankAccount.jpg" alt="" /> : null}
       </div>
       {totalPrice == 0 ? (
@@ -290,10 +322,10 @@ const Payment = () => {
         onCancel={() => setOpenPay(false)}
       >
         <Image width={90} height={90} src="/images/ebw_logo2.png" alt="menu" className={styles.headerImg} />
-        <p className="pt-10 font-bold text-center">CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</p>
+        <p className="pt-10 font-bold text-center">{t("congratulation")}</p>
          <div className=" rounded p-4 mb-2  mt-8 text-center text-white " style={{ backgroundColor: '#002549' }}>
               <button onClick={onClose} className="pr-2">
-                ĐÓNG
+                {t('close')}
               </button>
             </div>
       </Modal>

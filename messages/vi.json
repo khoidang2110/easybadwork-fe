@@ -78,6 +78,22 @@
         "paymentMethod": "PHƯƠNG THỨC THANH TOÁN",
         "banking": "CHUYỂN KHOẢN",
         "completeOrder":"HOÀN TẤT ĐẶT HÀNG",
-        "currency":"VND"
+        "currency":"VND",
+        "congratulation":"CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG",
+        "close":"ĐÓNG"
+    },
+    "contact":{
+        "contact":"LIÊN HỆ",
+        "order":"Đặt hàng / Chăm sóc khách hàng:"
+    },
+    "stores":{
+        "stores":"CỬA HÀNG",
+        "hours":"Giờ hoạt động",
+        "mondayToSunDay":"Thứ Hai đến Chủ Nhật",
+        "seeLocation":"Xem vị trí",
+        "ohquaoAddress":"58/12 Phạm Ngọc Thạch, P.6, Q3, HCM",
+        "ohquao19Address":"19 Đường 38, P.Thảo Điền, Q2, HCM",
+        "glabAddress":"135/58 Trần Hưng Đạo, P.Cầu ông Lãnh, Q1, HCM",
+        "dauhangAddress":"26/78 Nguyễn Bỉnh Khiêm, P.Đa kao, Q1, HCM"
     }
 }

@@ -24,6 +24,7 @@ interface DataType {
   email: string;
   phone: string;
   payment: string;
+  note:string;
   order_cart?: LittleDataType[];
 }
 
@@ -95,6 +96,12 @@ const ShopPage = () => {
       title: 'Payment',
       key: 'payment',
       dataIndex: 'payment',
+    },
+    ,
+    {
+      title: 'Note',
+      key: 'note',
+      dataIndex: 'note',
     },
     {
       title: 'Action',

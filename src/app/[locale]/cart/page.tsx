@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { updateItem } from "@/redux/features/cartSlice";
 import { update } from "@/redux/features/counterSlice";
-import { IProduct } from "@/interfaces/product";
+import { IProduct, IProductCart } from "@/interfaces/product";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { NO_IMAGE } from "@/constant";
@@ -42,13 +42,13 @@ console.log('note',note)
 
   const handleRemove = (index: number,itemQuantity:number) => {
     console.log("id item remove", index);
-
+console.log("so luong cua item",itemQuantity)
     count = count - itemQuantity;
     localStorage.setItem("count", count.toString());
     dispatch(update(count));
 
    
-    const updatedCart = cartRedux.filter((_, i) => i !== index);
+    const updatedCart = uniqueProducts.filter((_, i) => i !== index);
     console.log("updated cart khi xoa",updatedCart)
    
  
@@ -72,6 +72,22 @@ useEffect(() => {
   setTotalPrice(price);
 }, [cartRedux, localeActive]);
   // console.log("totalPrice", totalPrice);
+
+  const uniqueProducts = cartRedux.reduce<IProductCart[]>((acc, product) => {
+    const existingProduct = acc.find(p => p.product_id === product.product_id && p.size === product.size);
+    if (existingProduct) {
+      existingProduct.quantity += product.quantity;
+    } else {
+      acc.push({ ...product });
+    }
+    return acc;
+  }, []);
+
+  console.log("uniqueProducts", uniqueProducts);
+
+
+
+
   return (
     <div className="text-center  px-2 roboto">
       <h3 className="py-4 text-xl">{t('yourCart')}</h3>
@@ -81,14 +97,9 @@ useEffect(() => {
       </div>
       {/*  nơi chứa list item */}
       <div>
-        {cartRedux.map((item,index) => (
+        {uniqueProducts.map((item,index) => (
           <div className="border-dashed border rounded border-black p-4 flex flex-row mb-2 " key={index}>
-            {/* <img
-              src={ item.image[0] ?? NO_IMAGE}
-              alt=""
-              className="mr-3"
-              style={{ width: "65px", height: "auto", objectFit: "cover" }}
-            /> */}
+         
             {item.image && item.image.length > 0 ? (
               <img
                 src={item.image[0]}
@@ -106,7 +117,7 @@ useEffect(() => {
             )}
             <div className="mr-10 w-full text-left">
               <p>{item.name}</p>
-              <p>{t('size')}: {item.size}</p>
+              <p>{t('size')}: {item.size.toUpperCase()}</p>
               <p>{t('quantity')}: {item.quantity}</p>
               <p>{localeActive=='vi' ? (item?.price_vnd*(item.quantity) ).toLocaleString():(item?.price_usd*(item.quantity) ).toLocaleString() } {t('currency')}</p>
             </div>

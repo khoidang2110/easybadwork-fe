@@ -40,7 +40,7 @@ fullImageURLs = [NO_IMAGE]
 //console.log('sizeSelect',sizeSelect)
 //console.log("item available",itemAvailable)
 // console.log('sizeOption',sizeOption)
- // console.log('stock',stock)
+  console.log('stock',stock)
   //const [sizeActive, setsizeActive] = useState('');
   //console.log("count add", count);
   //console.log("params.id",params.id);
@@ -145,6 +145,10 @@ if(calculation=="-"){
 
         // filter size hết
         const filteredInventory:IStock[] = res.data.filter((item:IStock) => item.stock !== 0);
+        const sizeOrder = ["xs","s", "m", "l", "xl", "xxl"];
+        filteredInventory.sort((a, b) => {
+          return sizeOrder.indexOf(a.size) - sizeOrder.indexOf(b.size);
+        });
         setStock(filteredInventory);
         // const options = filteredInventory.map(item=>({
         //   value:item.size,
@@ -259,10 +263,6 @@ showStock = t('lowStock')
         </div>
        } 
       </div>
-     
- 
-
-    
       <Modal title="Size Chart" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}  footer=''>
       <img src="/images/sizeChart.jpg" alt="" />
       </Modal>

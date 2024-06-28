@@ -77,22 +77,24 @@ const ProductList: FC<ProductListProps> = ({filterType,noStock }) => {
       <div className="flex flex-wrap justify-center">
         {filteredData?.reverse().map((product) => (
           <div className={styles.CardItem}>
+             <Link href={`/${localeActive}/detail/${product.product_id}/`  }>
             <Card
               key={product.product_id} // assuming each product has an id
               hoverable
               style={{ width: '100%' }}
               cover={
                 <div className={styles.cardImg}>
-                  <Link href={`/${localeActive}/detail/${product.product_id}/`  }>
+                 
                     {/* <img alt={product.name} src={product.image[0]} /> */}
                     {/* <img alt={product.name} src={product.image[0] ? `http://14.225.218.217:8081/${product.image[0]?.slice(5)}` : NO_IMAGE} /> */}
                     <img alt={product.name} src={product.image[0] ? `https://api.easybadwork.com/${product.image[0]?.slice(5)}` : NO_IMAGE} />
-                  </Link>
+                 
                 </div>
               }
             >
               <Meta title={product.name} description={showItem && `${formatNumber(product.price_vnd)} VND`} className='roboto text-center' />
             </Card>
+            </Link>
           </div>
         ))}
       </div>

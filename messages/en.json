@@ -77,6 +77,22 @@
         "paymentMethod": "PAYMENT METHOD",
         "banking": "BANKING",
         "completeOrder":"COMPLETE ORDER", 
-        "currency":"USD"
+        "currency":"USD",
+        "congratulation":"CONGRATULATIONS ON YOUR SUCCESSFUL ORDER",
+        "close":"CLOSE"
+    },
+    "contact":{
+        "contact":"CONTACT",
+        "order":"Orders / Customer Service:"
+    },
+    "stores":{
+        "stores":"STORES",
+        "hours":"Hours",
+        "mondayToSunDay":"Monday to Sunday",
+        "seeLocation":"SEE LOCATION",
+        "ohquaoAddress":"58/12 Pham Ngoc Thach, Vo Thi Sau Ward, District 3, Ho Chi Minh City",
+        "ohquao19Address":"19 Street 38, Thao Dien Ward, District 2, Ho Chi Minh City",
+        "glabAddress":"135/58 Tran Hung Dao, Cau Ong Lanh Ward, District 1, Ho Chi Minh City",
+        "dauhangAddress":"26/78 Nguyen Binh Khiem, Da kao Ward, District 1, Ho Chi Minh City"
     }
 }
