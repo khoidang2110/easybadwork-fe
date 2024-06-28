@@ -9,7 +9,7 @@ const Stores = () => {
       <p className="text-2xl font-semibold text-center roboto ">STORES</p>
       <div className={styles.storeContainer}>
         <div className={styles.storeInfoDiv}>
-          <p className="text-2xl font-semibold">OHQUAO</p>
+          <p className="text-2xl font-semibold pb-5">OHQUAO</p>
           <p className="text-xl">Hẻm 58 Phạm Ngọc Thạch, p.6, Q.3</p>
           <p>-</p>
           <p className="text-xl"> Hours: 08:00-20:00</p>
@@ -25,7 +25,7 @@ const Stores = () => {
       </div>
       <div className={`${styles.storeContainer} ${styles.reverse}`}>
         <div className={styles.storeInfoDiv}>
-          <p className="text-2xl font-semibold">GLAB</p>
+          <p className="text-2xl font-semibold pb-5">GLAB</p>
           <p className="text-xl">135/58 Trần Hưng Đạo, p.Cầu ông Lãnh, Q1</p>
           <p>-</p>
           <p className="text-xl"> Hours: 10:30-20:00</p>
@@ -40,7 +40,7 @@ const Stores = () => {
       </div>
       <div className={styles.storeContainer}>
         <div className={styles.storeInfoDiv}>
-          <p className="text-2xl font-semibold">OHQUAO 19</p>
+          <p className="text-2xl font-semibold pb-5">OHQUAO 19</p>
           <p className="text-xl">Đường 38, p. Thảo Điền, Q2</p>
           <p>-</p>
           <p className="text-xl"> Hours: 08:00-20:00</p>
@@ -55,7 +55,7 @@ const Stores = () => {
       </div>
       <div className={`${styles.storeContainer} ${styles.reverse}`}>
         <div className={styles.storeInfoDiv}>
-          <p className="text-2xl font-semibold">DAU HANG</p>
+          <p className="text-2xl font-semibold pb-5">DAU HANG</p>
           <p className="text-xl">26/78 Nguyễn Bỉnh Khiêm, Đa kao, Q1</p>
           <p>-</p>
           <p className="text-xl"> Hours: 10:00-20:30</p>
