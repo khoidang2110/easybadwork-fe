@@ -218,6 +218,18 @@ const MenuBot = () => {
     setTabActive('');
   };
 
+  const handleStoresClick = () => {
+  
+    router.push(`/${localeActive}/stores`);
+    setTabActive('');
+    setIsToggled(false);
+  };
+  const handleContactClick = () => {
+    router.push(`/${localeActive}/contact`);
+    setTabActive('');
+    setIsToggled(false);
+  }
+
   return (
     <div className={styles.footer}>
       {hideMenuBar ? (
@@ -235,8 +247,14 @@ const MenuBot = () => {
                 <Link href={`https://www.khimdang.com/`}>
                   <p>{t('about')}</p>
                 </Link>
+                <button onClick={handleStoresClick}>
                 <p>{t('stores')}</p>
-                <p>{t('contact')}</p>
+                </button>
+                <br></br>
+               <button onClick={handleContactClick}>
+               <p>{t('contact')}</p>
+               </button>
+                
               </div>
 
               <div className={` roboto ${isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}`}>

@@ -11,7 +11,7 @@ const t = useTranslations('Index');
   return(
   <div className="App">
  
-<img src="/images/kos6.jpg" alt="" className='pt-8'/>
+<img src="/images/kos9.jpg" alt="" className='pt-8'/>
 {/* <div>{t('title')}</div> */}
   </div>
 );}
