@@ -97,7 +97,7 @@ const ShopPage = () => {
       key: 'payment',
       dataIndex: 'payment',
     },
-    ,
+    
     {
       title: 'Note',
       key: 'note',
