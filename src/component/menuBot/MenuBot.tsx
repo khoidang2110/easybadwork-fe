@@ -402,7 +402,7 @@ const handleCloseSearch = () =>{
                   ) : (
                     <Image width={30} height={30} src="/images/icons/cart3.png" alt="cart" className="pr-1" />
                   )}
-                  <p className="text-base roboto text-[#002549] font-semibold"> {countRedux}</p>
+                  <p className={isToggled && tabActive == 'cart' ?`text-base roboto text-white font-semibold ` : `text-base roboto text-[#002549] font-semibold`}> {countRedux}</p>
                 </Link>
               </a>
             </div>
