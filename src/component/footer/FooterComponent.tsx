@@ -17,7 +17,7 @@ const FooterComponent: React.FC = () => {
 
   return (
     <div>
-{adminPage ? ( ""):(<div className="text-center py-20">
+{adminPage ? ( ""):(<div className="text-center py-20 text-[#002549]">
   EasyBadWork copyright 2024
 </div>)}
     </div>

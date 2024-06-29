@@ -10,7 +10,7 @@ import ProductList from '@/component/product/productList';
 const DeadStock = () => {
   return (
     <div className="relative">
-      <div className=" text-center">
+      <div className="text-center text-[#002549]">
         <h1 className="py-4 text-xl font-semibold roboto">DEAD STOCK</h1>
         <p>This place showing sold out items</p>
       </div>

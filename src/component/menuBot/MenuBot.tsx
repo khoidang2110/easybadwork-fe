@@ -6,12 +6,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
-import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { CloseOutlined  } from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
 import { update } from '@/redux/features/counterSlice';
-import { Avatar, ConfigProvider, List } from 'antd';
+import { Avatar, ConfigProvider, List,Button } from 'antd';
 import { useTranslations } from 'next-intl';
 import { IProduct } from '@/interfaces/product';
 import { productService } from '@/service/service';
@@ -229,6 +229,10 @@ const MenuBot = () => {
     setTabActive('');
     setIsToggled(false);
   }
+const handleCloseSearch = () =>{
+  setTabActive('');
+  setIsToggled(false);
+}
 
   return (
     <div className={styles.footer}>
@@ -243,16 +247,16 @@ const MenuBot = () => {
             }`}
           >
             <div>
-              <div className={`roboto ${isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}`}>
+              <div className={`roboto  ${isToggled && tabActive == 'menu' ? styles.textShow : styles.textHide}`}>
                 <Link href={`https://www.khimdang.com/`}>
-                  <p>{t('about')}</p>
+                  <p className='text-[#002549] font-semibold'>{t('about')}</p>
                 </Link>
                 <button onClick={handleStoresClick}>
-                <p>{t('stores')}</p>
+                <p className='text-[#002549] font-semibold'>{t('stores')}</p>
                 </button>
                 <br></br>
                <button onClick={handleContactClick}>
-               <p>{t('contact')}</p>
+               <p className='text-[#002549] font-semibold'>{t('contact')}</p>
                </button>
                 
               </div>
@@ -260,7 +264,7 @@ const MenuBot = () => {
               <div className={` roboto ${isToggled && tabActive == 'shop' ? styles.textShow : styles.textHide}`}>
                 {dataShop.map((item, index) => (
                   <Link href={`/${localeActive}/category/${item.id}/`} key={index}>
-                    <p onClick={() => handleFilter(item.name)} key={item.id}>
+                    <p onClick={() => handleFilter(item.name)} key={item.id} className='text-[#002549] font-semibold'>
                       {item.name}
                     </p>
                   </Link>
@@ -268,13 +272,32 @@ const MenuBot = () => {
               </div>
 
               <div className={isToggled && tabActive == 'search' ? styles.textShow : styles.textHide}>
+                <div className='flex justify-between'>
                 <input
                   type="text"
                   placeholder={t('typeHere')}
-                  className={` roboto ${styles.inputBg}`}
+                  className={` roboto ${styles.inputBg} text-[#002549]`}
                   value={searchInput}
                   onChange={handleSearchInputChange}
                 />
+                  <ConfigProvider
+                      theme={{
+                        components: {
+                          Button: {
+                            primaryShadow:'0 2px 0 rgba(0, 0, 0, 0.02)',
+                            
+                          },
+                        },
+                        token: {
+                          colorPrimary: '#002549',
+                          
+                        },
+                      }}
+                    >
+                 <Button  type="primary" onClick={handleCloseSearch} shape="circle"  size='small' icon={<CloseOutlined />} className='mt-3 mr-3'/>
+                 </ConfigProvider>
+                </div>
+            
                 {/* list tìm */}
             
                     <ConfigProvider
@@ -337,10 +360,10 @@ const MenuBot = () => {
                 }`}
                 onClick={() => handleToggle('shop')}
               >
-                {t('shop')}
+               <p className={ isToggled && tabActive == 'shop' ?`font-semibold text-white ` :`text-[#002549] font-semibold`}>{t('shop')} </p> 
               </button>
               <button
-                className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${
+                className={`z-30  ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${
                   isToggled && tabActive == 'search' ? styles.fButtonActive : ''
                 }`}
                 onClick={() => handleToggle('search')}
@@ -360,7 +383,7 @@ const MenuBot = () => {
                 }`}
                 onClick={() => handleToggle('deadstock')}
               >
-                <Link href={`/${localeActive}/deadstock`} className="">
+                <Link href={`/${localeActive}/deadstock`} className={ isToggled && tabActive == 'deadstock' ?`font-semibold text-white ` :`text-[#002549] font-semibold`}>
                   {t('deadstock')}
                 </Link>
               </button>
@@ -379,7 +402,7 @@ const MenuBot = () => {
                   ) : (
                     <Image width={30} height={30} src="/images/icons/cart3.png" alt="cart" className="pr-1" />
                   )}
-                  <p className="text-base roboto"> {countRedux}</p>
+                  <p className="text-base roboto text-[#002549] font-semibold"> {countRedux}</p>
                 </Link>
               </a>
             </div>
