@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Space, Table, DatePicker, Drawer } from 'antd';
+import { Space, Table, DatePicker, Drawer,Button , Modal, ConfigProvider,  List, Avatar, Input} from 'antd';
 import type { TableProps } from 'antd';
 import type { DatePickerProps } from 'antd';
-import { orderService, productService } from '@/service/service';
-import type { DrawerProps } from 'antd';
+import { orderService, productService, stockService } from '@/service/service';
+import { IProduct, IStock } from '@/interfaces/product';
+import { NO_IMAGE } from '@/constant';
+import styles from './styles.module.css';
 
 interface LittleDataType {
   order_cart_id: number;
@@ -29,18 +31,66 @@ interface DataType {
 }
 
 const ShopPage = () => {
+  const [searchInput, setSearchInput] = useState('');
+
+  console.log('search input',searchInput)
+
+  const [stock, setStock] = useState<IStock[]>([]);
+  const [searchResults, setSearchResults] = useState<IProduct[]>([]);
+console.log('ket qua tim kiem',searchResults)
+
+  const [isModalOpenProduct, setIsModalOpenProduct] = useState(false);
   const [allProduct, setAllProduct] = useState<any[]>([]);
   console.log('all product', allProduct);
   const [dayPick, setDayPick] = useState<string>('');
   const [orderList, setOrderList] = useState<DataType[]>([]);
   const [open, setOpen] = useState(false);
+  const [openDrawerProduct, setOpenDrawerProduct] = useState(false);
   const [currentOrder, setCurrentOrder] = useState<DataType | null>(null);
+  const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
+  console.log('product pick',currentProduct)
   console.log('order list', orderList);
   console.log('day pick', dayPick);
+  const [randomNumber, setRandomNumber] = useState(11);
+  const [isToggled, setIsToggled] = useState(true);
+  const [sizeSelect, setSizeSelect] = useState('');
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     setDayPick(dateString.toString());
   };
+
+  const handleSearchInputChange = (event: any) => {
+    setSearchInput(event.target.value);
+  };
+  const handleSizeChange = (position: string) => {
+   
+    
+    
+      }
+  // gọi api hàng
+  useEffect(() => {
+    if (searchInput.trim() === '') {
+      setSearchResults([]); // Clear search results if search input is empty
+      return;
+    }
+    const delayDebounceFn = setTimeout(() => {
+      productService
+        .searchProduct(searchInput)
+        .then((res) => {
+          if (Array.isArray(res.data)) {
+            setSearchResults(res.data);
+          } else {
+            console.warn('Unexpected response data:', res.data);
+            setSearchResults([]);
+          }
+        })
+        .catch((err) => {
+          console.error('Failed to fetch products', err);
+        });
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchInput]);
 
   console.log('currentOrder', currentOrder);
 
@@ -174,16 +224,70 @@ const ShopPage = () => {
       });
   }, []);
 
+//Drawer tạo sp
+  const onCloseDrawerProduct = () => {
+    setOpenDrawerProduct(false);
+   // setCurrentOrder(null);
+  };
+
+// Modal tìm sp
+  const showModalProduct = () => {
+    setIsModalOpenProduct(true);
+  };
+
+// tắt trang tìm sp
+  const handleCancelProduct = () => {
+    setIsModalOpenProduct(false);
+  };
+  // chọn sp
+  const handleClickItemSearch = (product: any) => {
+    setCurrentProduct(null); // Clear the current product to force re-render
+    setTimeout(() => {
+      setCurrentProduct(product);
+      setIsModalOpenProduct(false);
+    
+    }, 0);
+  
+
+  };
+
+  // gọi stock size theo id
+  useEffect(() => {
+    stockService
+      .getStockById(Number(currentProduct?.product_id))
+      .then((res) => {
+       // console.log("stock api", res);
+        // setProducts(res.data.content);
+
+        // filter size hết
+        const filteredInventory:IStock[] = res.data.filter((item:IStock) => item.stock !== 0);
+        const sizeOrder = ["xs","s", "m", "l", "xl", "xxl"];
+        filteredInventory.sort((a, b) => {
+          return sizeOrder.indexOf(a.size) - sizeOrder.indexOf(b.size);
+        });
+        setStock(filteredInventory);
+      
+       // setSizeSelect(filteredInventory[0].size)
+       // setItemAvailable(filteredInventory[0].stock-1)
+      })
+      .catch((err) => {});
+  }, [currentProduct]);
+
   return (
     <>
-      <div className='flex'>
+      <div className='flex justify-between'>
+        <div className='flex'>
         <p className='pb-2 pr-2'>Xem đơn đặt hàng theo ngày</p>
-        <DatePicker className='mb-2' onChange={onChange} size='large' />
+         
+         <DatePicker className='mb-2' onChange={onChange} size='large' />
+        </div>
+   
+        <Button type="primary" onClick={()=>setOpenDrawerProduct(true)}>Tạo đơn hàng</Button>
       </div>
 
       <Table columns={columns} dataSource={orderList} />
-
-      <Drawer
+        {/* detail */}
+        <Drawer
         title="Order Detail"
         placement='left'
         closable={false}
@@ -199,6 +303,95 @@ const ShopPage = () => {
         <p>Đơn hàng</p>
         <Table columns={LittleColumns} dataSource={currentOrder?.order_cart} />
       </Drawer>
+     
+      {/* tạo order */}
+      <Drawer
+        title="Tạo đơn hàng"
+        placement='left'
+        closable={false}
+        onClose={onCloseDrawerProduct}
+        size='default'
+        open={openDrawerProduct}
+        key='left'
+      >
+        <div className=''>
+        <Button onClick={showModalProduct}>Chọn Sản phẩm </Button>
+        <div className='flex pt-2'> 
+            <img
+                src={currentProduct?.image[0] ? `https://api.easybadwork.com/${currentProduct?.image[0]?.slice(5)}` : NO_IMAGE}
+                alt=""
+                className="mr-3"
+                style={{ width: "65px", height: "auto", objectFit: "contain" }}
+              />
+              <div>
+              <p>{currentProduct?.name}</p>
+              <p> {currentProduct?.price_vnd.toLocaleString()} VND</p>
+              </div>
+              <div className='flex pt-2'>
+        {stock?.map(item =>(
+            <div className='pr-2'>
+            <button className={`${styles.SizeButton} ${isToggled && sizeSelect == item.size ? styles.SizeButtonActive : '' }`}  onClick={() => handleSizeChange(item?.size)}> 
+              {item.size}
+              </button>
+            </div>
+        ))}
+          </div>
+              </div>
+        </div>
+       
+     
+        
+      </Drawer>
+      {/* chọn sp */}
+      <Modal title="Chọn Sản Phẩm" open={isModalOpenProduct} footer='' onCancel={handleCancelProduct}>
+      <div className='flex justify-between'>
+               
+                <Input placeholder="nhập tên sản phẩm"    value={searchInput}
+                  onChange={handleSearchInputChange} />
+                
+             
+                </div>
+            
+                {/* list tìm */}
+            
+                    <ConfigProvider
+                      theme={{
+                        token: {
+                          colorPrimary: '#002549',
+                        },
+                      }}
+                    >
+                          <List
+                  itemLayout="horizontal"
+                  dataSource={searchResults}
+                  pagination={{
+                    onChange: (page) => {
+                      // console.log(page);
+                    },
+                    pageSize: 3,
+                  }}
+                  renderItem={(item, index) => (
+                      <List.Item>
+                        <button onClick={() => handleClickItemSearch(item)} className="w-full text-left">
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                shape="square"
+                                size={64}
+                                src={`https://api.easybadwork.com/${item.image[0]?.slice(5)}`}
+                              />
+                            }
+                            title={<a href="">{item.name}</a>}
+                            description=""
+                            key={index}
+                          />
+                        </button>
+                      </List.Item>
+   )}
+   />
+                    </ConfigProvider>
+      </Modal>
+    
     </>
   );
 };

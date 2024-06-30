@@ -1,0 +1,46 @@
+.SizeButton{
+  width: 60px;
+  display: flex;
+    height: 30px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: transparent;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+    position: relative;
+    background-Color:#f3f3f3;
+ 
+}
+.SizeChartButton{
+ 
+  display: flex;
+    height: 30px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: transparent;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+    position: relative;
+    background-Color:#f3f3f3;
+ 
+}
+.SizeButtonActive{
+  background-Color:#002549;
+  color:white;
+}
+
+

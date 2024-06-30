@@ -169,26 +169,9 @@ const MenuBot = () => {
   console.log('search keyword', searchInput);
   const [searchResults, setSearchResults] = useState<IProduct[]>([]);
   console.log('searchResults', searchResults);
+  
   useEffect(() => {
-    // if (searchInput.trim() === '') {
-    //   setSearchResults([]);
-    //   return;
-    // }
-
-    // const fetchSearchResults = async () => {
-    //   try {
-    //     const res = await productService.searchProduct(searchInput);
-    //     if (Array.isArray(res.data)) {
-    //       setSearchResults(res.data);
-    //     } else {
-    //       console.warn('Unexpected response data:', res.data);
-    //     }
-    //   } catch (error) {
-    //     console.error("Failed to fetch products", error);
-    //   }
-    // };
-
-    // fetchSearchResults();
+ 
     const delayDebounceFn = setTimeout(() => {
       productService
         .searchProduct(searchInput)
@@ -280,6 +263,7 @@ const handleCloseSearch = () =>{
                   value={searchInput}
                   onChange={handleSearchInputChange}
                 />
+                
                   <ConfigProvider
                       theme={{
                         components: {
