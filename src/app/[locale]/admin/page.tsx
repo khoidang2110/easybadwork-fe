@@ -380,7 +380,7 @@ console.log('chọn sp',product)
                                 src={`https://api.easybadwork.com/${item.image[0]?.slice(5)}`}
                               />
                             }
-                            title={<a href="">{item.name}</a>}
+                            title={<p >{item.name}</p>}
                             description=""
                             key={index}
                           />
