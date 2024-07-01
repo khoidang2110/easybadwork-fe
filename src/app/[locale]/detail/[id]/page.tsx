@@ -227,8 +227,8 @@ showStock = t('lowStock')
        
         </div>
         <div className='flex pt-2'>
-        {stock.map(item =>(
-            <div className='pr-2'>
+        {stock.map((item,index) =>(
+            <div className='pr-2' key={index}>
             <button className={`${styles.SizeButton} ${isToggled && sizeSelect == item.size ? styles.SizeButtonActive : '' }`}  onClick={() => handleSizeChange(item?.size)}> 
               {item.size}
               </button>

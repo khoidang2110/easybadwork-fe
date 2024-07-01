@@ -69,11 +69,12 @@ console.log('ket qua tim kiem',searchResults)
       }
   // gọi api hàng
   useEffect(() => {
-    if (searchInput.trim() === '') {
-      setSearchResults([]); // Clear search results if search input is empty
-      return;
-    }
+    // if (searchInput.trim() === '') {
+    //   setSearchResults([]); // Clear search results if search input is empty
+    //   return;
+    // }
     const delayDebounceFn = setTimeout(() => {
+      if (searchInput.trim() !== '') {
       productService
         .searchProduct(searchInput)
         .then((res) => {
@@ -87,6 +88,7 @@ console.log('ket qua tim kiem',searchResults)
         .catch((err) => {
           console.error('Failed to fetch products', err);
         });
+      }
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
@@ -240,15 +242,11 @@ console.log('ket qua tim kiem',searchResults)
     setIsModalOpenProduct(false);
   };
   // chọn sp
-  const handleClickItemSearch = (product: any) => {
-    setCurrentProduct(null); // Clear the current product to force re-render
-    setTimeout(() => {
-      setCurrentProduct(product);
-      setIsModalOpenProduct(false);
-    
-    }, 0);
+  const handleClickItemSearch = (product:IProduct) => {
+console.log('chọn sp',product)
   
-
+   // setCurrentProduct(product);
+   // setIsModalOpenProduct(false);
   };
 
   // gọi stock size theo id
@@ -294,7 +292,7 @@ console.log('ket qua tim kiem',searchResults)
         onClose={onClose}
         size='large'
         open={open}
-        key='left'
+        // key='left'
       >
         <p>Số order {currentOrder?.order_id}</p>
         <p>Tên {currentOrder?.full_name}</p>
@@ -328,8 +326,8 @@ console.log('ket qua tim kiem',searchResults)
               <p> {currentProduct?.price_vnd.toLocaleString()} VND</p>
               </div>
               <div className='flex pt-2'>
-        {stock?.map(item =>(
-            <div className='pr-2'>
+        {stock?.map((item,index) =>(
+            <div className='pr-2' key={index}>
             <button className={`${styles.SizeButton} ${isToggled && sizeSelect == item.size ? styles.SizeButtonActive : '' }`}  onClick={() => handleSizeChange(item?.size)}> 
               {item.size}
               </button>

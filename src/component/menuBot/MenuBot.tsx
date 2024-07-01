@@ -173,6 +173,7 @@ const MenuBot = () => {
   useEffect(() => {
  
     const delayDebounceFn = setTimeout(() => {
+      if (searchInput.trim() !== '') {
       productService
         .searchProduct(searchInput)
         .then((res) => {
@@ -186,6 +187,7 @@ const MenuBot = () => {
         .catch((err) => {
           console.error('Failed to fetch products', err);
         });
+      }
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
@@ -193,9 +195,11 @@ const MenuBot = () => {
 
   const handleSearchInputChange = (event: any) => {
     setSearchInput(event.target.value);
+
   };
 
-  const handleClickItemSearch = (product: any) => {
+  const handleClickItemSearch = (product:IProduct) => {
+    //console.log('product click picker',product)
     router.push(`/${localeActive}/detail/${product.product_id}/`);
     setIsToggled(false);
     setTabActive('');
@@ -311,7 +315,7 @@ const handleCloseSearch = () =>{
                                 src={`https://api.easybadwork.com/${item.image[0]?.slice(5)}`}
                               />
                             }
-                            title={<a href="">{item.name}</a>}
+                            title={<p >{item.name}</p>}
                             description=""
                             key={index}
                           />
@@ -372,7 +376,7 @@ const handleCloseSearch = () =>{
                 </Link>
               </button>
 
-              <a
+              <div
                 className={`z-30 ${localeActive == 'vi' ? styles.fButtonVi : styles.fButton} ${
                   isToggled && tabActive == 'cart' ? styles.fButtonActive : ''
                 }`}
@@ -388,7 +392,7 @@ const handleCloseSearch = () =>{
                   )}
                   <p className={isToggled && tabActive == 'cart' ?`text-base roboto text-white font-semibold ` : `text-base roboto text-[#002549] font-semibold`}> {countRedux}</p>
                 </Link>
-              </a>
+              </div>
             </div>
           </div>
         </div>
