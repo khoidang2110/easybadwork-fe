@@ -244,10 +244,10 @@ const ShopPage = () => {
   };
   // chọn sp
   const handleClickItemSearch = (product:IProduct) => {
-console.log('chọn sp',product)
+// console.log('chọn sp',product)
   
-   // setCurrentProduct(product);
-   // setIsModalOpenProduct(false);
+   setCurrentProduct(product);
+   setIsModalOpenProduct(false);
   };
 
   // gọi stock size theo id
