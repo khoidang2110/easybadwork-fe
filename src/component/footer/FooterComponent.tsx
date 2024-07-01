@@ -9,7 +9,7 @@ const FooterComponent: React.FC = () => {
   const pathname = usePathname();
 
   const pathnameAdmin = pathname.slice(4,9);
-  console.log('pathname admin:',pathnameAdmin)
+  //console.log('pathname admin:',pathnameAdmin)
   let adminPage = false;
   if (pathnameAdmin === 'admin') {
     adminPage = true;

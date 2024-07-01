@@ -33,24 +33,24 @@ interface DataType {
 const ShopPage = () => {
   const [searchInput, setSearchInput] = useState('');
 
-  console.log('search input',searchInput)
+  //console.log('search input',searchInput)
 
   const [stock, setStock] = useState<IStock[]>([]);
   const [searchResults, setSearchResults] = useState<IProduct[]>([]);
-console.log('ket qua tim kiem',searchResults)
+//console.log('ket qua tim kiem',searchResults)
 
   const [isModalOpenProduct, setIsModalOpenProduct] = useState(false);
   const [allProduct, setAllProduct] = useState<any[]>([]);
-  console.log('all product', allProduct);
+  //console.log('all product', allProduct);
   const [dayPick, setDayPick] = useState<string>('');
   const [orderList, setOrderList] = useState<DataType[]>([]);
   const [open, setOpen] = useState(false);
   const [openDrawerProduct, setOpenDrawerProduct] = useState(false);
   const [currentOrder, setCurrentOrder] = useState<DataType | null>(null);
   const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
-  console.log('product pick',currentProduct)
-  console.log('order list', orderList);
-  console.log('day pick', dayPick);
+  //console.log('product pick',currentProduct)
+  //console.log('order list', orderList);
+  //console.log('day pick', dayPick);
   const [randomNumber, setRandomNumber] = useState(11);
   const [isToggled, setIsToggled] = useState(true);
   const [sizeSelect, setSizeSelect] = useState('');
@@ -94,7 +94,7 @@ console.log('ket qua tim kiem',searchResults)
     return () => clearTimeout(delayDebounceFn);
   }, [searchInput]);
 
-  console.log('currentOrder', currentOrder);
+ // console.log('currentOrder', currentOrder);
 
   const showDrawer = async (order: DataType) => {
     console.log('order pick', order);
@@ -215,6 +215,7 @@ console.log('ket qua tim kiem',searchResults)
   }, [dayPick]);
 
   useEffect(() => {
+    
     productService
       .getAllProduct()
       .then((res) => {

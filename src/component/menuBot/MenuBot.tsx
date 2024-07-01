@@ -44,7 +44,7 @@ const MenuBot = () => {
   //const pathnameInfo = pathname.slice(4,15);
   const pathnameChild = pathname.slice(4, 15);
   // const pathnamePayment = pathname.slice(4,11);
-  console.log('pathname pay:', pathnameChild);
+  //console.log('pathname pay:', pathnameChild);
   let hideMenuBar = false;
   if (
     pathnameAdmin === 'admin' ||
@@ -143,15 +143,7 @@ const MenuBot = () => {
     setIsToggled(false);
   };
 
-  // "tShirt":"T-SHIRT",
-  // "headWear":"HEAD WEAR",
-  // "bandana":"BANDANA",
-  // "bodyCover":"BODY COVER",
-  // "footWear":"FOOT WEAR",
-  // "shirt":"SHIRT",
-  // "decoration":"DECORATION",
-  // "kid":"KID",
-  // "sliver":"SLIVER",
+
 
   const dataShop = [
     { name: t('t-shirt'), id: 't-shirt' },
@@ -166,9 +158,9 @@ const MenuBot = () => {
   ];
   // search
   const [searchInput, setSearchInput] = useState('');
-  console.log('search keyword', searchInput);
+  //console.log('search keyword', searchInput);
   const [searchResults, setSearchResults] = useState<IProduct[]>([]);
-  console.log('searchResults', searchResults);
+  //console.log('searchResults', searchResults);
   
   useEffect(() => {
  
